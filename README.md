@@ -5,12 +5,23 @@
 - 가이드(배포): https://weather-hackathon-guide.vercel.app
 - 본문: `index.html`
 
+## 문서 목록
+
+| 문서 | 내용 |
+|---|---|
+| [GitHub 연결 가이드](GITHUB-SETUP-GUIDE.md) | GitHub 리포지토리 연결 방법 (개인 액세스 토큰 / GitHub 로그인) |
+
 ## 가이드 구성
 
 - 시작하기 → 만들기 → CLAUDE.md 추가 → 배포(Vercel) → 제출
 - 팀 협업 PR (브랜치 → PR → 리뷰 → 머지)
 - 기상 데이터 API (data.go.kr 동네예보, apihub.kma.go.kr)
 - 심사 기준 · FAQ
+
+## 빠른 시작
+
+1. **GitHub 리포지토리 연결** — [GITHUB-SETUP-GUIDE.md](GITHUB-SETUP-GUIDE.md)를 참고해 Claude Code와 GitHub를 연결합니다.
+2. **작업 시작** — 연결 후 해커톤 프로젝트 리포지토리에서 작업을 시작합니다.
 
 ## 참가자용 CLAUDE.md
 
@@ -22,6 +33,10 @@
 - 운영팀 저장소입니다. 변경은 PR + 코드오너 리뷰 후 머지 (`.github/CODEOWNERS`, `CLAUDE.md`).
 - 출품작 데모(forecaster)는 별도 저장소 `weather-hackathon-demo`에서 관리합니다.
 
-## 라이선스
+## 기여
 
-[MIT](LICENSE)
+문서 수정은 `main` 대상 PR로만 진행합니다. 자세한 규칙은 [CLAUDE.md](CLAUDE.md)를 참고하세요.
+
+## 문의
+
+문제가 발생하면 해커톤 스태프에게 문의하세요.
