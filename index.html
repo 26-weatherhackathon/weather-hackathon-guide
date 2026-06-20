@@ -247,7 +247,6 @@
     <a href="#claudemd">3. CLAUDE.md</a>
     <a href="#vercel">4. 배포</a>
     <a href="#submit">5. 제출</a>
-    <a href="#example">개발 예시</a>
     <a href="#pr">팀 협업 PR</a>
     <a href="#copyright">저작권</a>
     <a href="#judge">심사 기준</a>
@@ -551,55 +550,6 @@
       <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> 기상청 API 키가 코드에 노출되어 있지 않은가</li>
     </ul>
   </div>
-</section>
-
-<!-- ===== EXAMPLE / LIVE DEMO ===== -->
-<section class="section" id="example">
-  <div class="section-num">Example</div>
-  <div class="section-title">개발 예시: 체감온도 계산기</div>
-  <div class="section-desc">
-    아래는 실제로 동작하는 예시입니다. index.html 파일 하나로 만든 결과물이며, "데이터를 직접 조작하며 학습"이라는 심사 기준에 딱 맞는 형태입니다.
-  </div>
-
-
-  <div class="demo">
-    <div class="demo-title">체감온도 체험하기</div>
-    <div class="demo-caption">기온과 바람의 세기를 바꿔보며 체감온도가 어떻게 달라지는지 알아보세요.</div>
-    <label>기온: <span id="tempVal">5</span>°C</label>
-    <input type="range" id="temp" min="-20" max="20" value="5" />
-    <label>풍속: <span id="windVal">10</span> km/h</label>
-    <input type="range" id="wind" min="5" max="60" value="10" />
-    <div class="demo-result" id="result">체감온도 <span>-</span></div>
-  </div>
-
-  <div class="code-block"><span class="code-label">index.html</span><span class="tag">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;html lang="ko"&gt;</span>
-<span class="tag">&lt;head&gt;</span>
-  <span class="tag">&lt;meta charset="UTF-8"&gt;</span>
-  <span class="tag">&lt;meta</span> name=<span class="str">"viewport"</span> content=<span class="str">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
-  <span class="tag">&lt;title&gt;</span>체감온도 체험하기<span class="tag">&lt;/title&gt;</span>
-<span class="tag">&lt;/head&gt;</span>
-<span class="tag">&lt;body&gt;</span>
-  <span class="tag">&lt;h1&gt;</span>체감온도 체험하기<span class="tag">&lt;/h1&gt;</span>
-  <span class="tag">&lt;label&gt;</span>기온: <span class="tag">&lt;span</span> id=<span class="str">"tempVal"</span><span class="tag">&gt;</span>5<span class="tag">&lt;/span&gt;</span>°C<span class="tag">&lt;/label&gt;</span>
-  <span class="tag">&lt;input</span> type=<span class="str">"range"</span> id=<span class="str">"temp"</span> min=<span class="str">"-20"</span> max=<span class="str">"20"</span> value=<span class="str">"5"</span><span class="tag">&gt;</span>
-  <span class="tag">&lt;label&gt;</span>풍속: <span class="tag">&lt;span</span> id=<span class="str">"windVal"</span><span class="tag">&gt;</span>10<span class="tag">&lt;/span&gt;</span> km/h<span class="tag">&lt;/label&gt;</span>
-  <span class="tag">&lt;input</span> type=<span class="str">"range"</span> id=<span class="str">"wind"</span> min=<span class="str">"5"</span> max=<span class="str">"60"</span> value=<span class="str">"10"</span><span class="tag">&gt;</span>
-  <span class="tag">&lt;div</span> id=<span class="str">"result"</span><span class="tag">&gt;</span>체감온도: -<span class="tag">&lt;/div&gt;</span>
-  <span class="tag">&lt;script&gt;</span>
-    <span class="comment">// 기상청 체감온도 공식 (풍속 단위 km/h)</span>
-    const temp = document.getElementById('temp');
-    const wind = document.getElementById('wind');
-    function update() {
-      const T = Number(temp.value), V = Number(wind.value);
-      const wc = 13.12 + 0.6215*T - 11.37*Math.pow(V,0.16) + 0.3965*T*Math.pow(V,0.16);
-      tempVal.textContent = T; windVal.textContent = V;
-      result.textContent = '체감온도: ' + wc.toFixed(1) + '°C';
-    }
-    temp.oninput = wind.oninput = update; update();
-  <span class="tag">&lt;/script&gt;</span>
-<span class="tag">&lt;/body&gt;</span>
-<span class="tag">&lt;/html&gt;</span></div>
 </section>
 
 <!-- ===== PR COLLABORATION ===== -->
