@@ -375,7 +375,15 @@ vercel --prod
 | 엔드포인트 | 기능 |
 |---|---|
 | `api/reflect.js` | 학습자의 "무엇을 놓쳤나" 리플렉션 입력 → Claude가 맞춤 피드백 생성 |
+| `api/chat.js` | **WeatherAssistant 챗봇** — 체험 중 자연어 질문 → 현재 레이어·단계 맥락으로 2~4문장 답변 (Edge Function, 스트리밍) |
 | `api/caption.js` | 위성·레이더 영상 색상 의미를 학습 수준에 맞게 해설 (사전 생성 후 정적화 권장) |
+
+**WeatherAssistant 챗봇 (`src/components/assistant/WeatherAssistant.tsx`):**
+- 우하단 고정 FAB → 클릭 시 320×480 채팅 패널 (모바일은 bottom-sheet)
+- 현재 케이스·단계·활성 레이어·시각을 자동으로 컨텍스트에 주입
+- 활성 레이어별 빠른 질문 칩 3개 (레이더: "빨간 에코가 뭔가요?" 등)
+- 정답 직접 알려주기 금지 — "~이 뜻하므로 ~를 고려해보세요" 수준으로만
+- 상세 스펙: `forecaster-build-spec.md §5-E`
 
 > **검증 원칙**: AI가 만든 기상 해설·수치·인과관계는 반드시 기상청 자료와 대조한다.
 > 이미지는 "분위기/연출"에만 쓰고, **판단 근거가 되는 데이터는 100% 실측**으로 유지한다.
@@ -451,6 +459,8 @@ public/
 - [ ] 위성영상 해설 오버레이 (AI 캡션)
 - [ ] 결과 연출 + 성장 배지 5종
 - [ ] `api/reflect.js` Claude 리플렉션 피드백 엔드포인트
+- [ ] `api/chat.js` WeatherAssistant 스트리밍 엔드포인트 (Edge Function)
+- [ ] `WeatherAssistant.tsx` 챗봇 컴포넌트 (FAB + 패널 + 빠른 질문 칩 + 스트리밍 타이핑)
 
 ### 컴포넌트 개발
 - [ ] `BaseLayout.astro` (헤더·푸터)

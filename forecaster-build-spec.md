@@ -42,7 +42,7 @@
 | 데이터 | 위성·레이더·ASOS·예보(2발표시각)·실황 실데이터 ×3케이스 | 실시간 API 호출(전부 정적 사전수집) |
 | 채점 | Brier(강수확률) + 형태 + 기온 합산 + **누적 추세** | 풍속·습도 등 추가 변수 |
 | 크래프트 | 결과 반전 연출·점수 카운트업·레이더 타임라인 인터랙션·모션 폴리시 | (집중 투자 영역) |
-| AI | 이미지 케이스당 15~20장 + Claude 리플렉션 피드백 | 음성, 실시간 이미지 생성 |
+| AI | 이미지 케이스당 15~20장 + Claude 리플렉션 피드백 + **문맥 인식 교육 챗봇** | 음성, 실시간 이미지 생성 |
 | 저장 | localStorage 단일 기기, 케이스별 결과 누적 | 서버 계정·로그인 |
 
 ### 1.5 3케이스 난이도 곡선 (확정)
@@ -152,6 +152,8 @@ forecaster-experience/
 │   │   ├── onboarding/
 │   │   │   ├── ConceptCards.tsx           # (island) 4장 카드 슬라이드
 │   │   │   └── ConceptQuiz.tsx            # (island) 3문항 확인 퀴즈
+│   │   ├── assistant/
+│   │   │   └── WeatherAssistant.tsx       # (island) 문맥 인식 기상 교육 챗봇 (§5-E)
 │   │   └── shell/
 │   │       ├── StageStepper.astro         # 5단계 진행 표시
 │   │       └── ForecasterAvatar.tsx       # 표정 바뀌는 예보관 아바타
@@ -172,7 +174,8 @@ forecaster-experience/
 │   │   └── caseStore.ts                   # 단계 진행 상태(@preact/signals)
 │   └── styles/global.css
 ├── api/
-│   └── reflect.js                         # Claude 리플렉션 피드백 (§11)
+│   ├── reflect.js                         # Claude 리플렉션 피드백 (§11)
+│   └── chat.js                            # WeatherAssistant 스트리밍 엔드포인트 (§5-E)
 ├── scripts/
 │   ├── fetch-case.ts                      # 실데이터 수집 (§4, 전체 코드)
 │   ├── fetch-satellite.ts  fetch-radar.ts # 위성·레이더 영상
@@ -471,6 +474,197 @@ beat 4 (2.8s)  반사실 한 줄("50%였다면 75점") 슬라이드업
 - 비교 기준선: "안전하게 매번 50%" 가상선과 내 곡선을 겹쳐 표시 → 확률적 사고의 이득 가시화.
 - 데이터 유형별 강·약점: 케이스별 `keyEvidence`를 봤는지로 "레이더를 잘 본다/모델 의존이 강하다" 집계.
 - 1·2케이스만 풀어도 부분 표시(빈 상태 금지, 진행도에 맞춰 점진 노출).
+
+---
+
+---
+
+## 5-E. WeatherAssistant — 문맥 인식 기상 교육 챗봇
+
+### E0. 목적과 원칙
+
+학습자가 체험 도중 "이 빨간 에코가 뭔가요?", "강수확률을 높게 줘야 하나요?" 같은 자연어 질문을 하면 **현재 케이스·단계·활성 레이어·시각**에 맞게 2~4문장으로 답하는 교육 보조 챗봇.
+
+핵심 제약 (시스템 프롬프트에 하드코딩):
+1. **정답·예측값은 절대 알려주지 않는다.** "~이 뜻하므로 ~를 고려해보세요" 수준.
+2. **탈문맥 금지.** 현재 활성 레이어·케이스와 연결해서만 설명한다.
+3. **중학생 언어.** 전문 용어는 괄호에 한 번만 풀이.
+4. **2~4문장 이내.** 초과 시 잘라내고 "더 궁금하면 물어보세요"로 마무리.
+5. **출처 자연스럽게.** 기상청 실 관측·예보 데이터임을 1문장 안에 녹인다.
+
+### E1. 컴포넌트 — `src/components/assistant/WeatherAssistant.tsx`
+
+```tsx
+// (Preact island — client:visible로 지연 로드)
+interface WeatherAssistantProps {
+  caseId: string;
+  caseTitle: string;
+  difficulty: Difficulty;
+  // 아래 세 값은 caseStore signals로 구독 (props 아님)
+  // activeLayer: Signal<LayerKey>
+  // activeTimeIdx: Signal<number>
+  // currentStage: Signal<1|2|3|4|5>
+}
+```
+
+UI 구조:
+- **우하단 FAB** 56×56px — 기상 아이콘(사운드웨이브 형태). `--score-mid` 색.
+- **클릭 시 패널** 320×480px (position: fixed, bottom-right, z-index: 50)
+  - 상단 바: 현재 컨텍스트 태그 `[레이더 / -6h / 종관분석]` + 닫기(×)
+  - 빠른 질문 칩 3개 (§E3에서 activeLayer에 따라 교체)
+  - 채팅 영역 (스크롤, 최대 10 turn 보관)
+  - 텍스트 입력 + 전송 버튼
+- **모바일**: 패널 대신 전체화면 bottom-sheet 드로어로 전환
+- 패널 열려 있을 때 activeLayer·activeTimeIdx 변경 → 상단 컨텍스트 태그 즉시 갱신
+
+### E2. 서버리스 엔드포인트 — `api/chat.js`
+
+```js
+// api/chat.js
+// Vercel Edge Function — 스트리밍 응답
+import Anthropic from '@anthropic-ai/sdk';
+
+const LAYER_DESC = {
+  satellite: '천리안위성 2A호 적외영상 (기상청 API허브). 흰색=두꺼운 구름, 어두울수록 맑음.',
+  radar:     '기상청 HSR 레이더 합성영상. dBZ 단위 에코 강도: 35+ = 강한 비, 55+ = 매우 강한 비.',
+  asos:      '기상청 ASOS 지상자동관측소 시간자료. 실측 기온·강수량·기압·풍속.',
+  model:     '기상청 단기예보(getVilageFcst) 두 발표시각 비교. 같은 날 다른 발표가 예보를 바꾼 이유에 주목.',
+};
+
+const STAGE_NAME = {
+  1: '종관 기상 분석',
+  2: '수치예보 모델 검토',
+  3: '불확실성 판단',
+  4: '최종 예보 입력',
+  5: '결과 확인 및 리플렉션',
+};
+
+export const config = { runtime: 'edge' };
+
+export default async function handler(req) {
+  if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
+
+  const { messages, context } = await req.json();
+  // context: { caseId, caseTitle, difficulty, stage, activeLayer, timeLabel, kst }
+
+  const systemPrompt = `당신은 기상 예보 교육 보조 도우미입니다.
+
+현재 케이스: "${context.caseTitle}" (난이도: ${context.difficulty})
+현재 단계: ${STAGE_NAME[context.stage] ?? '알 수 없음'} 단계
+활성 데이터: ${LAYER_DESC[context.activeLayer] ?? context.activeLayer}
+현재 시각 프레임: ${context.timeLabel} (KST ${context.kst})
+
+규칙:
+1. 예측 정답(강수확률·형태·기온 수치)은 절대 알려주지 않는다. "이 데이터는 X를 시사하므로 Y를 고려해보세요" 수준으로만.
+2. 반드시 현재 활성 데이터와 시각에 맞춰 설명한다. 현 맥락과 무관한 일반 설명은 금지.
+3. 중학생이 이해할 수 있는 언어로 답한다. 전문 용어는 괄호 안에 한 번만 설명.
+4. 2~4문장 이내. 더 길어지면 "더 궁금한 점이 있으면 물어보세요."로 마무리한다.
+5. 기상청 실제 관측 또는 예보 데이터임을 자연스럽게 1회 언급한다.`;
+
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+  const stream = await client.messages.stream({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 300,
+    system: systemPrompt,
+    messages: messages.slice(-10),   // 최대 10 turn (오래된 것 버림)
+  });
+
+  return new Response(stream.toReadableStream(), {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'X-Accel-Buffering': 'no',
+    },
+  });
+}
+```
+
+### E3. 빠른 질문 칩 (activeLayer 교체)
+
+```ts
+// src/components/assistant/WeatherAssistant.tsx 내부
+const QUICK_CHIPS: Record<LayerKey, [string, string, string]> = {
+  satellite: [
+    '이 흰 구름은 뭔가요?',
+    '비가 올 구름인지 어떻게 알아요?',
+    '구름이 이 방향으로 이동하는 게 중요한가요?',
+  ],
+  radar: [
+    '빨간 에코가 뭔가요?',
+    '에코 강도가 높으면 비가 얼마나 강한 건가요?',
+    '에코가 정체하면 왜 위험한가요?',
+  ],
+  asos: [
+    '강수량이 갑자기 치솟았는데 어떤 의미인가요?',
+    '기압이 떨어지면 비가 오나요?',
+    '기온 변화가 예보에 왜 중요한가요?',
+  ],
+  model: [
+    '두 발표가 왜 이렇게 달라요?',
+    '더 최신 발표를 항상 믿으면 되나요?',
+    '강수확률 60%는 높은 건가요?',
+  ],
+};
+```
+
+칩 클릭 → 해당 문자열을 입력창에 채우고 즉시 전송(사용자 메시지로 추가 후 API 호출).
+
+### E4. caseStore 시그널 연동
+
+`src/stores/caseStore.ts`에 추가:
+```ts
+import { signal } from '@preact/signals';
+export const activeLayer  = signal<LayerKey>('satellite');
+export const activeTimeIdx = signal<number>(0);
+export const currentStage  = signal<1|2|3|4|5>(1);
+```
+
+- `LayerViewer.tsx`: 탭 전환 시 `activeLayer.value = newLayer`
+- `TimeSlider.tsx`: 스크럽 시 `activeTimeIdx.value = idx`
+- `case/[caseId].astro`: 단계 전환 시 `currentStage.value = nextStage`
+- `WeatherAssistant.tsx`: 세 시그널을 직접 구독 → `context` 객체 구성 후 `api/chat.js`에 전달
+
+### E5. 디자인 통합 (관제실 에디토리얼 모티프)
+
+| 요소 | 스펙 |
+|---|---|
+| FAB 색 | `--score-mid` (#f59e0b 계열) — "중립·도움" 감 |
+| 패널 배경 | `--bg-surface` + `--border` 1px + `backdrop-blur(4px)` |
+| 사용자 버블 | 우측, `--bg-elevated`, 라운드 16px(우하단 4px) |
+| 어시스턴트 버블 | 좌측, `--bg-surface`, 라운드 16px(좌하단 4px) |
+| 타이핑 효과 | cursor blink (`|`) + 청크 단위 append, sans 폰트 |
+| 빠른 질문 칩 | pill, `--border` 1px, hover → `--score-mid` 10% 틴트 |
+| 컨텍스트 태그 | mono 폰트, `--fg-muted` 색, `[레이더 · -6h · 종관분석]` |
+| 모바일 드로어 | 전체 화면 너비, 화면 높이 70%, 하단 safe area 패딩 |
+
+### E6. 비용·남용 방어
+
+```js
+// api/chat.js 추가 가드
+const MAX_USER_MSG_LEN = 300;      // 글자 수 초과 시 400 반환
+const MAX_TURNS = 10;              // messages.length > 20(turn×2) 시 최근 10만
+
+if (!messages || !context) return new Response('Bad Request', { status: 400 });
+const lastUser = messages.at(-1);
+if (!lastUser || lastUser.role !== 'user') return new Response('Bad Request', { status: 400 });
+if (lastUser.content.length > MAX_USER_MSG_LEN)
+  return new Response('메시지가 너무 깁니다.', { status: 400 });
+```
+
+- `max_tokens: 300` 으로 응답 길이 캡. 비용 ≈ 케이스당 최대 5~10회 대화 × 300토큰 = 소량.
+- 클라이언트에서 ANTHROPIC_API_KEY 노출 없음(edge function에서만).
+
+### E7. DoD (완료 기준)
+
+- [ ] FAB 클릭 → 패널(데스크톱)/드로어(모바일) 열림·닫힘
+- [ ] 빠른 질문 칩이 activeLayer 변경 시 즉시 교체됨
+- [ ] 스트리밍 응답이 타이핑 효과로 표시됨(청크 단위 append)
+- [ ] 컨텍스트 태그가 레이어·시각 변경 시 실시간 갱신됨
+- [ ] 정답(예측 수치)이 포함된 응답이 나오지 않음 — 3케이스 × 5질문 수동 QA 통과
+- [ ] API 실패 시 "잠시 후 다시 시도해주세요" 표시, 앱 흐름 중단 없음
+- [ ] Lighthouse 점수 영향 없음 (`client:visible` island 지연 로드)
+- [ ] 패널 열린 채로 단계 이동 → 컨텍스트만 갱신되고 대화 유지
 
 ---
 

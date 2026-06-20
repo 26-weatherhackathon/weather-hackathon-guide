@@ -92,7 +92,8 @@ budget S(짧음)/M/L = 대략적 대화 길이(=한도 소모).
 |---|---|---|---|---|---|---|
 | G1 | 온보딩 + 케이스 라이브러리 | ux-spec §5.1,§5.2 | 랜딩·온보딩·잠금카드 | Sonnet | M | |
 | G2 | 대시보드(3점 추세) | build-spec §5-D | GrowthChart·배지 | Sonnet | M | |
-| G3 | AI 리플렉션 엔드포인트 | build-spec §11 | `api/reflect.js`(Claude) | Sonnet | S | 🚀 |
+| G3 | AI 리플렉션 엔드포인트 | build-spec §11 | `api/reflect.js`(Claude) | Sonnet | S | |
+| G3.5 | WeatherAssistant 챗봇 | build-spec §5-E | `WeatherAssistant.tsx` + `api/chat.js`(스트리밍) | Sonnet | M | 🚀 |
 | G4 | 안티-제너릭·a11y·성능 QA | ux-spec §6,§7,§11 | Lighthouse·검수 통과 | Sonnet | M | 🚀 |
 
 ---
@@ -116,6 +117,9 @@ budget S(짧음)/M/L = 대략적 대화 길이(=한도 소모).
 4. **이미지 생성은 별도 도구**로(코딩 세션에서 생성 금지). 결과 파일만 `public/ai/`에 넣음.
 5. **테스트가 있는 건 테스트로 검증**(B2). "브라우저에서 눌러봐줘" 왕복을 줄임.
 6. **한 세션 = 한 PR/커밋**. 리뷰·롤백 단위가 명확해 재작업(=토큰) 감소.
+7. **G3.5 WeatherAssistant 세션 시작 멘트 템플릿**:
+   > "build-spec §5-E만 읽고 `src/components/assistant/WeatherAssistant.tsx`와 `api/chat.js`를 만들어. caseStore의 activeLayer·activeTimeIdx·currentStage 시그널을 구독해서 context를 구성하고, Edge Function 스트리밍으로 응답을 받아."
+   G3(`reflect.js`)를 먼저 완료한 뒤 시작한다. 패턴이 동일해 M 예산으로 충분.
 
 ---
 
