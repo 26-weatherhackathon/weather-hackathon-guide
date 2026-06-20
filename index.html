@@ -631,7 +631,26 @@
 
   <!-- STEP 5 -->
   <div class="step">
-    <div class="step-header"><div class="step-badge">5</div><h3>리뷰 반영하기</h3></div>
+    <div class="step-header"><div class="step-badge">5</div><h3>리뷰 요청하기</h3></div>
+    <p>PR을 올린 뒤에는 팀원에게 리뷰를 요청해야 합니다. Claude Code에게 팀원 GitHub 아이디를 알려주면 리뷰어로 지정해줍니다.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">이 PR에 영욱님 리뷰를 요청해줘.</div>
+      <div class="chat-bubble bot">PR에 ywkim님을 리뷰어로 추가했습니다.</div>
+    </div>
+    <p style="margin-top:16px;"><strong>또는 GitHub 웹에서 직접 요청하기</strong></p>
+    <ol class="step-list">
+      <li>GitHub에서 PR 페이지를 엽니다</li>
+      <li>오른쪽 사이드바 <strong>Reviewers</strong> 옆의 톱니바퀴(⚙️) 아이콘 클릭</li>
+      <li>드롭다운에서 리뷰를 요청할 팀원 선택</li>
+      <li>선택하는 즉시 그 팀원에게 리뷰 요청 알림이 전송됩니다</li>
+    </ol>
+    <div class="step-note"><strong>팁</strong> PR을 올리는 김에 바로 리뷰 요청까지 같이 시키면 한 번에 끝낼 수 있습니다. 예: "feature/wind-chart 브랜치를 main에 합치는 PR 올리고, 영욱님 리뷰도 요청해줘."</div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-header"><div class="step-badge">6</div><h3>리뷰 반영하기</h3></div>
     <p>팀원이 코드를 검토하고 수정 요청(리뷰)을 남기면, 그 내용을 Claude Code에게 전달해 반영합니다.</p>
     <div class="chat-demo">
       <div class="chat-label">Claude Code 프롬프트 예시</div>
@@ -643,9 +662,9 @@
     <div class="step-note">리뷰 내용은 GitHub PR 페이지에서 확인한 뒤, 그대로 복사해서 Claude Code에게 전달하면 됩니다.</div>
   </div>
 
-  <!-- STEP 6 -->
+  <!-- STEP 7 -->
   <div class="step">
-    <div class="step-header"><div class="step-badge">6</div><h3>머지(Merge)하기</h3></div>
+    <div class="step-header"><div class="step-badge">7</div><h3>머지(Merge)하기</h3></div>
     <p>리뷰가 완료되고 팀원의 승인을 받으면 main 브랜치에 합칩니다. 머지 후 Vercel이 자동으로 최신 버전을 다시 배포합니다.</p>
     <div class="chat-demo">
       <div class="chat-label">Claude Code 프롬프트 예시</div>
