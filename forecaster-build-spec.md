@@ -37,22 +37,40 @@
 
 | 구분 | 포함 (Must) | 제외 (Out of scope, v1.1 이후) |
 |---|---|---|
-| 케이스 | **3개 난이도 곡선** (§1.5) 모두 실데이터 완전체 | 4번째(태풍)는 빈 슬롯 잠금 UI로 확장성만 |
+| 케이스 | **3티어 풀(easy/hard/trap), 세션마다 티어별 랜덤 1개** (§1.5) | 4번째(태풍)는 빈 슬롯 잠금 UI로 확장성만 |
 | 루프 | 온보딩→종관분석→모델검토→불확실성→판단→검증→리플렉션→대시보드 | 멀티플레이어, 리더보드 |
-| 데이터 | 위성·레이더·ASOS·예보(2발표시각)·실황 실데이터 ×3케이스 | 실시간 API 호출(전부 정적 사전수집) |
+| 데이터 | 위성·레이더·ASOS·예보(2발표시각)·실황 실데이터 — 풀에 있는 케이스 전부 | 실시간 API 호출(전부 정적 사전수집) |
 | 채점 | Brier(강수확률) + 형태 + 기온 합산 + **누적 추세** | 풍속·습도 등 추가 변수 |
 | 크래프트 | 결과 반전 연출·점수 카운트업·레이더 타임라인 인터랙션·모션 폴리시 | (집중 투자 영역) |
 | AI | 이미지 케이스당 15~20장 + Claude 리플렉션 피드백 + **문맥 인식 교육 챗봇** | 음성, 실시간 이미지 생성 |
 | 저장 | localStorage 단일 기기, 케이스별 결과 누적 | 서버 계정·로그인 |
 
-### 1.5 3케이스 난이도 곡선 (확정)
-| 순서 | caseId | 상황 | 난이도 | 학습 포인트 | 핵심 근거 |
-|---|---|---|---|---|---|
-| 1 | `easy-highpressure` | 안정적 고기압, 맑고 건조 | easy | 데이터 읽기 기초·성공 경험 | 위성(맑음)·모델 일치 |
-| 2 | `20220808-seoul` | 수도권 집중호우 | hard | 모델 불일치·확률적 사고 | 레이더·ASOS |
-| 3 | `trap-echo` | 모델은 맑음, 레이더엔 에코 | trap | 관측 vs 모델 충돌·예보관 보정 | 레이더(관측 우선) |
-> 난이도 곡선 = 학습 곡선. 1로 성공 경험 → 2에서 갈등 → 3에서 "데이터를 의심하라". 대시보드가 세 점을 잇는다.
-> 케이스 1·3의 날짜·지점은 Day 3 데이터 탐색에서 **모델이 실제로 일치/충돌한 날**로 확정한다(실데이터 우선).
+### 1.5 3티어 케이스 풀 — 랜덤 추첨 구조
+
+> **설계 원칙**: 케이스 번호를 고정하지 않는다. 각 세션 시작 시 `case-pool.json`에서 티어별로 1개씩 랜덤 추첨한다.
+> 동일 플레이어가 "이미 본 케이스"는 localStorage로 제외하고, 다 봤으면 풀을 리셋한다.
+> → **암기 방지·재플레이성·부스 다인 체험** 모두 해결. 케이스 추가 시 `case-pool.json`에 id만 append하면 됨.
+
+#### 티어별 케이스 풀 (시작 시 각 1개, 한도 보며 점진 확장)
+
+| 티어 | 특징 | 첫 번째 케이스 (`case-pool.json` 시작 값) | 추가 예시 |
+|---|---|---|---|
+| `easy` | 안정적 고기압·맑음, 데이터 읽기 성공 경험 | `easy-highpressure` | 겨울 고기압 맑음, 이동성 고기압 등 |
+| `hard` | 모델 불일치·집중호우, 확률적 사고 갈등 | `20220808-seoul` | 다른 호우 사례, 대설 사례 등 |
+| `trap` | 모델은 맑음, 레이더엔 에코 — 관측 우선 반전 | `trap-echo` | 국지 소나기 팝업, 안개 오판 등 |
+
+**`public/data/case-pool.json` (시작 형태)**
+```json
+{
+  "easy": ["easy-highpressure"],
+  "hard": ["20220808-seoul"],
+  "trap": ["trap-echo"]
+}
+```
+> 새 케이스 추가 = 수집 완료 후 해당 티어 배열에 id 추가. 코드 변경 불필요.
+
+**난이도 곡선**: 세션은 항상 easy → hard → trap 순서. 랜덤은 "어떤 사례냐"지 "어떤 순서냐"가 아니다.
+> 케이스 날짜·지점은 Day 3 데이터 탐색에서 **모델이 실제로 일치/충돌한 날**로 확정(실데이터 우선).
 
 ### 1.3 타깃 & 디바이스
 - 학습자: 중3~고1 + 일반 시민. 전공 지식 0 가정.
@@ -111,6 +129,7 @@ ANTHROPIC_API_KEY=    # Claude 리플렉션 피드백용 (서버리스에서만 
 ```
 forecaster-experience/
 ├── public/
+│   ├── data/case-pool.json               # 티어별 케이스 id 목록 (랜덤 추첨 풀)
 │   ├── data/cases/20220808-seoul/        # 실데이터 (정적)
 │   │   ├── meta.json                     # 케이스 메타 + groundTruth (§5.1)
 │   │   ├── satellite/ir_{0..5}.png       # 천리안2A 적외 시계열 6장
@@ -297,6 +316,13 @@ main().catch((e) => { console.error(e); process.exit(1); });
 ```ts
 // src/lib/types.ts
 export type Difficulty = 'easy' | 'normal' | 'hard' | 'trap';
+export type Tier = 'easy' | 'hard' | 'trap';          // 세션 내 3티어 순서
+
+// 케이스 풀 (public/data/case-pool.json 형태)
+export interface CasePool { easy: string[]; hard: string[]; trap: string[]; }
+
+// 세션 시작 시 티어별 랜덤 추첨 결과
+export type SessionPlan = Record<Tier, CaseMeta>;
 export type PrecipType = '없음' | '비' | '비/눈' | '눈' | '소나기';
 
 export interface ForecastSeriesPoint { d: string; t: string; v: string; }
@@ -474,8 +500,71 @@ beat 4 (2.8s)  반사실 한 줄("50%였다면 75점") 슬라이드업
 - 비교 기준선: "안전하게 매번 50%" 가상선과 내 곡선을 겹쳐 표시 → 확률적 사고의 이득 가시화.
 - 데이터 유형별 강·약점: 케이스별 `keyEvidence`를 봤는지로 "레이더를 잘 본다/모델 의존이 강하다" 집계.
 - 1·2케이스만 풀어도 부분 표시(빈 상태 금지, 진행도에 맞춰 점진 노출).
+- 재플레이 시: 같은 티어에서 다른 케이스가 뽑히므로 대시보드 기록이 쌓임(풀이 횟수 누적).
 
 ---
+
+## 5-E-PRE. caseLoader.ts — 랜덤 추첨 로직 (전체 코드)
+
+```ts
+// src/lib/caseLoader.ts
+import type { CaseMeta, CasePool, SessionPlan, Tier } from './types';
+
+const TIERS: Tier[] = ['easy', 'hard', 'trap'];
+const SEEN_KEY = 'forecaster:seenCases';  // localStorage key
+
+// localStorage에서 "이미 본 케이스" 맵 읽기
+function getSeenCases(): Record<Tier, string[]> {
+  try {
+    return JSON.parse(localStorage.getItem(SEEN_KEY) ?? '{}');
+  } catch {
+    return { easy: [], hard: [], trap: [] };
+  }
+}
+
+// 해당 티어에서 본 케이스 기록
+function markSeen(tier: Tier, caseId: string): void {
+  const seen = getSeenCases();
+  const list = seen[tier] ?? [];
+  if (!list.includes(caseId)) {
+    seen[tier] = [...list, caseId];
+    localStorage.setItem(SEEN_KEY, JSON.stringify(seen));
+  }
+}
+
+// 풀에서 랜덤 1개 추첨 (안 본 것 우선, 다 봤으면 리셋)
+function pickFromTier(pool: string[], seenInTier: string[]): string {
+  const unseen = pool.filter(id => !seenInTier.includes(id));
+  const candidates = unseen.length > 0 ? unseen : pool;  // 다 봤으면 리셋
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
+
+// 단일 케이스 메타 fetch
+export async function fetchCaseMeta(caseId: string): Promise<CaseMeta> {
+  const res = await fetch(`/data/cases/${caseId}/meta.json`);
+  if (!res.ok) throw new Error(`케이스 로드 실패: ${caseId}`);
+  return res.json() as Promise<CaseMeta>;
+}
+
+// 세션 시작: 3티어에서 각 1개 랜덤 추첨 → SessionPlan 반환
+export async function pickSession(): Promise<SessionPlan> {
+  const poolRes = await fetch('/data/case-pool.json');
+  if (!poolRes.ok) throw new Error('case-pool.json 로드 실패');
+  const pool: CasePool = await poolRes.json();
+  const seen = getSeenCases();
+
+  const plan = {} as SessionPlan;
+  for (const tier of TIERS) {
+    const caseId = pickFromTier(pool[tier] ?? [], seen[tier] ?? []);
+    plan[tier] = await fetchCaseMeta(caseId);
+    markSeen(tier, caseId);
+  }
+  return plan;  // { easy: CaseMeta, hard: CaseMeta, trap: CaseMeta }
+}
+```
+
+> `pages/index.astro`(케이스 라이브러리)에서 `pickSession()`을 호출해 세션 계획을 만들고,
+> `case/[caseId].astro`에 caseId를 순서대로 넘긴다. 네트워크는 `case-pool.json` 1회 + 케이스별 `meta.json` 3회만 사용(정적 파일, CDN).
 
 ---
 
