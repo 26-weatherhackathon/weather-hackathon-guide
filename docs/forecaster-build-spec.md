@@ -132,14 +132,24 @@ forecaster-experience/
 │   ├── data/case-pool.json               # 티어별 케이스 id 목록 (랜덤 추첨 풀)
 │   ├── data/cases/20220808-seoul/        # 실데이터 (정적)
 │   │   ├── meta.json                     # 케이스 메타 + groundTruth (§5.1)
-│   │   ├── satellite/ir_{0..5}.png       # 천리안2A 적외 시계열 6장
+│   │   ├── synoptic/                     # 종관 일기도 시계열 (6프레임)
+│   │   │   ├── surface_{0..5}.png        # 지상 일기도 (전선·저기압·고기압)
+│   │   │   ├── h850_{0..5}.png           # 850hPa 바람·온도장
+│   │   │   └── h500_{0..5}.png           # 500hPa 고도장·기압골
+│   │   ├── satellite/                    # 위성 3채널
+│   │   │   ├── ir_{0..5}.png             # 적외(IR) 시계열
+│   │   │   ├── vis_{0..5}.png            # 가시(VIS)
+│   │   │   └── wv_{0..5}.png             # 수증기(WV) — 수분 유입 파악
 │   │   ├── radar/hsr_{0..5}.png          # HSR 합성영상 시계열 6장
 │   │   ├── asos.json                     # ASOS 시간자료 추세 (§5.2)
-│   │   ├── model_A.json                  # 0200 발표 단기예보 (§5.3)
+│   │   ├── radiosonde.json               # 고층 레윈존데 연직 프로파일 (SKEW-T용)
+│   │   ├── model_A.json                  # 2300 발표 단기예보 (§5.3)
 │   │   ├── model_B.json                  # 0800 발표 단기예보 (§5.3)
-│   │   └── raw/                           # 원본 API 응답 (증빙용, 빌드 제외)
+│   │   ├── ensemble.json                 # 앙상블 예보 분포 (스프레드)
+│   │   └── raw/                          # 원본 API 응답 (증빙용, 빌드 제외)
 │   │       ├── sat_raw.json  radar_raw.json  asos_raw.json
-│   │       ├── fcst_0200_raw.json  fcst_0800_raw.json  truth_raw.json
+│   │       ├── synoptic_raw.json  radiosonde_raw.json  ensemble_raw.json
+│   │       ├── fcst_2300_raw.json  fcst_0800_raw.json  truth_raw.json
 │   ├── ai/cases/20220808-seoul/          # AI 비주얼 (§10)
 │   │   ├── briefing.webp
 │   │   ├── forecaster_{thinking,confident,surprised}.webp
@@ -154,8 +164,11 @@ forecaster-experience/
 │   │   │   ├── Card.astro  Button.astro  Badge.astro  Tooltip.astro
 │   │   │   └── SourceTag.astro            # "출처: 기상청 API허브" 라벨
 │   │   ├── viewer/
-│   │   │   ├── LayerViewer.tsx            # (island) 4레이어 토글 + 시간 슬라이더
-│   │   │   ├── TimeSlider.tsx             # (island) -24h~now 재생
+│   │   │   ├── SynopticViewer.tsx         # (island) 종관 일기도 3종 (지상·850·500hPa) + 타임라인
+│   │   │   ├── LayerViewer.tsx            # (island) 위성3채널·레이더·ASOS·AWS 레이어 토글 + 시간 슬라이더
+│   │   │   ├── SkewTDiagram.tsx           # (island) 라디오존데 SKEW-T 인터랙티브 + 안정도 지수
+│   │   │   ├── EnsembleSpread.tsx         # (island) 앙상블 스프레드 바 차트
+│   │   │   ├── TimeSlider.tsx             # (island) -24h~now 재생 (마스터 타임 동기화)
 │   │   │   └── ModelCompare.tsx           # (island) A/B 발표시각 비교
 │   │   ├── decision/
 │   │   │   ├── ForecastInput.tsx          # (island) 확률·형태·기온 입력
@@ -220,11 +233,17 @@ forecaster-experience/
 | A | 단기예보(모델 A/B) | `apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst` | serviceKey | ✅검증됨 (forecast.js) |
 | B | ASOS 시간자료 | `apis.data.go.kr/1360000/AsosHourlyInfoService/getWthrDataList` | serviceKey | ⚠️검증필요 |
 | C | ASOS 일자료(실황) | `apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList` | serviceKey | ⚠️검증필요 |
-| D | 위성 GK2A 적외 | API허브 위성 영상 API (`apihub.kma.go.kr` 위성 분야) | authKey | ⚠️검증필요 |
-| E | 레이더 HSR 합성 | API허브 레이더 영상 API (`apihub.kma.go.kr` 레이더 분야) | authKey | ⚠️검증필요 |
+| D | 위성 GK2A 3채널 | API허브 위성 영상 API (IR·VIS·WV 각 채널) `apihub.kma.go.kr` 위성 분야 | authKey | ⚠️검증필요 |
+| E | 레이더 HSR 합성 | API허브 레이더 영상 API `apihub.kma.go.kr` 레이더 분야 | authKey | ⚠️검증필요 |
+| F | 종관 일기도 이미지 | API허브 수치예보 분야 — GDAPS/LDAPS 지상·850·500hPa 일기도 이미지 | authKey | ⚠️검증필요 |
+| G | 고층관측(라디오존데) | API허브 고층관측 분야 (`/api/typ01/url/snd_file_list.php` 등) — 연직 기온·이슬점·바람 | authKey | ⚠️검증필요 |
+| H | 앙상블 예보 | API허브 수치예보 앙상블 분야 — 강수 앙상블 분포 | authKey | ⚠️검증필요 |
+| I | 초단기예보(낙뢰LGT) | `apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst` | serviceKey | ⚠️검증필요 |
+| J | AWS 방재관측 | `apis.data.go.kr/1360000/AwsRltmInfoService/getAwsRltmList` | serviceKey | ⚠️검증필요 |
 
-> **Day 3 최우선 Task**: B~E를 실제 1회씩 호출해 응답 형식을 확정하고 이 표를 ✅로 갱신한다.
-> 위성·레이더 영상 API가 막히면 §16 리스크 대응(해당 레이어만 AI 재현)으로 전환.
+> **Day 3 최우선 Task**: B~J를 실제 1회씩 호출해 응답 형식을 확정하고 이 표를 ✅로 갱신한다.
+> 우선순위: A(단기예보) → E(레이더) → D(위성) → B/C(ASOS) → G(라디오존데) → F(일기도) → H(앙상블) → I(낙뢰) → J(AWS)
+> F·G·H가 막히면 §16 리스크 대응: 일기도=기상청 홈 아카이브 캡처, 라디오존데=data.kma.go.kr 대안 경로.
 
 ### 4.2 "모델 불일치"를 실데이터로 만드는 방법 (핵심 트릭)
 
