@@ -179,6 +179,18 @@
     padding: 8px 14px; background: var(--gray-50); border-radius: 8px; line-height: 1.7;
   }
 
+  /* ===== SCREENSHOT FIGURE ===== */
+  .screenshot-row { display: flex; gap: 16px; margin: 16px 0; flex-wrap: wrap; }
+  .screenshot-figure { flex: 1 1 260px; min-width: 220px; }
+  .screenshot-figure img {
+    width: 100%; display: block; border: 1px solid var(--gray-200);
+    border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .screenshot-figure figcaption {
+    font-size: 12px; color: var(--gray-400); margin-top: 8px; line-height: 1.6;
+  }
+  .screenshot-figure figcaption strong { color: var(--gray-600); }
+
   /* ===== CHAT BUBBLE ===== */
   .chat-demo { background: var(--gray-50); border-radius: 16px; padding: 24px; margin: 16px 0; }
   .chat-label { font-size: 10px; font-weight: 700; color: var(--gray-400); margin-bottom: 4px; letter-spacing: 0.04em; }
@@ -354,9 +366,20 @@
     <div class="step-header"><div class="step-badge">2</div><h3>claude.ai/code 접속 후 GitHub 연결</h3></div>
     <ol>
       <li><strong>claude.ai/code</strong> 접속 → 제공받은 계정으로 로그인</li>
-      <li>좌측 사이드바에서 <strong>Connect GitHub</strong> 클릭</li>
-      <li>방금 만든 저장소(<strong>weather-project</strong>) 선택 후 연결</li>
+      <li>입력창 아래쪽의 <strong>"+ 레포 선택..."</strong> 버튼 클릭</li>
+      <li>목록에서 방금 만든 저장소(예: <strong>weather-project</strong>) 선택</li>
+      <li>선택이 끝나면 버튼 자리에 <strong>저장소 이름</strong>과 <strong>브랜치 이름</strong>(예: master)이 표시됩니다</li>
     </ol>
+    <div class="screenshot-row">
+      <figure class="screenshot-figure">
+        <img src="assets/images/repo-select-before.png" alt="레포 선택 전 — 입력창 아래 '+ 레포 선택...' 버튼이 보이는 화면">
+        <figcaption><strong>레포 선택 전</strong> — 입력창 아래 "+ 레포 선택..." 버튼을 클릭하세요.</figcaption>
+      </figure>
+      <figure class="screenshot-figure">
+        <img src="assets/images/repo-select-after.png" alt="레포 선택 후 — 저장소 이름과 브랜치 이름이 버튼 자리에 표시되는 화면">
+        <figcaption><strong>레포 선택 후</strong> — 저장소 이름(weather-hackathon-guide)과 브랜치 이름(master)이 표시되면 연결 완료.</figcaption>
+      </figure>
+    </div>
     <div class="step-note">이 연결을 한 번만 해두면 이후 Claude Code가 코드를 짤 때마다 GitHub에 자동으로 저장합니다.</div>
   </div>
 </section>
