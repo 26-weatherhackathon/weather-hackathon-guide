@@ -1,4 +1,9 @@
 {
+  "rewrites": [
+    { "source": "/", "destination": "/demos/index.html" },
+    { "source": "/demo-forecast", "destination": "/demos/demo-forecast.html" },
+    { "source": "/demo-typhoon", "destination": "/demos/demo-typhoon.html" }
+  ],
   "functions": {
     "api/*.js": {
       "memory": 256,
