@@ -319,11 +319,6 @@
     <div class="glossary-def">GitHub에 올린 코드를 실제 인터넷 주소(URL)로 만들어 누구나 접속하게 해주는 서비스. 이 과정을 배포라고 합니다.</div>
     <div class="glossary-analogy">비유: 내 전단지를 거리에 붙여서 모두가 볼 수 있게 하는 것.</div>
   </div>
-  <div class="glossary-item">
-    <div class="glossary-term">공공데이터 API</div>
-    <div class="glossary-def">기상청 공공데이터포털(data.go.kr)에서 실제 기온·강수 같은 데이터를 코드로 불러오는 통로. 필수는 아니며, 공식이나 예시 데이터로도 충분합니다.</div>
-    <div class="glossary-analogy">비유: 기상청 창고에서 데이터를 꺼내오는 출입증.</div>
-  </div>
 </section>
 
 <!-- ===== READY ===== -->
@@ -406,7 +401,6 @@
       <li><strong>기본형</strong> — "[기온]과 [풍속] 슬라이더로 [체감온도]를 보여주는 웹페이지를 index.html 하나로 만들어줘."</li>
       <li><strong>응용형</strong> — "[강수량] 슬라이더를 조절하면 [홍수 위험도]가 바뀌는 인터랙티브 웹페이지를 초등학생도 이해하게 만들어줘. index.html 하나로."</li>
       <li><strong>디자인</strong> — "방금 페이지를 더 보기 좋게 꾸며줘. 파란 하늘색 계열, 모바일에서도 잘 보이게."</li>
-      <li><strong>데이터 연동</strong> — "기상청 공공데이터포털의 [기온] API를 불러와 화면에 표시해줘. API 키는 내가 넣을 수 있게 표시해줘."</li>
       <li><strong>오류 해결</strong> — "방금 페이지에서 [오류 메시지]가 나와. 원인을 알려주고 고쳐줘."</li>
     </ul>
     <div class="step-note"><strong>팁</strong> 한 번에 완벽하지 않아도 됩니다. "여기를 이렇게 바꿔줘"라고 계속 대화하며 다듬으세요. 수정할 때마다 GitHub에 자동 저장됩니다.</div>
@@ -419,13 +413,13 @@
   <div class="section-title">CLAUDE.md 설정하기</div>
   <div class="section-desc">
     CLAUDE.md는 Claude Code에게 "이 프로젝트에서 지켜야 할 규칙"을 미리 알려주는 설명서 파일입니다.
-    기상청 API 키, 데이터 형식, 코딩 규칙을 여기 써두면 매번 설명하지 않아도 됩니다.
+    코딩 규칙과 프로젝트 설정을 여기 써두면 매번 설명하지 않아도 됩니다.
     아래 CLAUDE.md 내용을 복사해 저장소에 추가하세요 (운영팀 제공).
   </div>
 
   <div class="callout important">
     <div class="callout-title">CLAUDE.md가 뭔가요?</div>
-    <p>Claude Code가 프로젝트를 열 때 가장 먼저 읽는 파일입니다. 여기 써둔 내용은 매 대화마다 자동으로 적용됩니다. "기상청 API는 이렇게 써", "파일 이름은 index.html로 고정해" 같은 규칙을 넣어두면 됩니다.</p>
+    <p>Claude Code가 프로젝트를 열 때 가장 먼저 읽는 파일입니다. 여기 써둔 내용은 매 대화마다 자동으로 적용됩니다. "파일 이름은 index.html로 고정해", "한국어로 응답해" 같은 규칙을 넣어두면 됩니다.</p>
   </div>
 
   <div class="step">
@@ -445,20 +439,9 @@
   - 혼자(1인 팀)면: PR을 올려 변경 내용(diff)을 스스로 확인한 뒤 머지
 - main에는 항상 정상 동작하는 코드만 둡니다.
 
-## 기상청 API
-- API_KEY: 여기에_발급받은_키를_넣으세요
-- 저장소는 Private으로 두세요. 배포(Vercel) 시에는 환경변수 KMA_API_KEY 사용을 권장합니다.</div>
+</div>
   </div>
 
-  <div class="step">
-    <div class="step-header"><div class="step-badge">2</div><h3>기상청 API 키 넣기</h3></div>
-    <ol>
-      <li>공공데이터포털(data.go.kr)에서 발급받은 API 키를 준비</li>
-      <li>CLAUDE.md 파일 안의 <strong>API_KEY</strong> 항목에 붙여넣기</li>
-      <li>Claude Code에서 "기상청 API로 현재 기온 불러와줘"라고 요청하면 바로 연동됩니다</li>
-    </ol>
-    <div class="step-note"><strong>주의</strong> API 키는 GitHub에 공개된 파일에 직접 노출하지 마세요. Claude Code 내에서만 입력하거나, 운영팀 안내에 따라 처리하세요.</div>
-  </div>
 </section>
 
 <!-- ===== STEP 4: VERCEL ===== -->
@@ -547,7 +530,6 @@
       <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> GitHub 저장소가 Private으로 설정되어 있는가</li>
       <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> 커밋 히스토리가 개발 과정 전체를 포함하는가</li>
       <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> 사용한 외부 리소스(이미지, 폰트, 오픈소스)의 출처와 라이선스를 README에 명시했는가</li>
-      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> 기상청 API 키가 코드에 노출되어 있지 않은가</li>
     </ul>
   </div>
 </section>
@@ -794,11 +776,7 @@
   </div>
   <div class="callout">
     <div class="callout-title">백엔드 서버가 꼭 필요한가요?</div>
-    <p>아닙니다. 브라우저에서 동작하는 웹페이지(index.html) 하나로 충분합니다. 서버 없이도 기상청 API를 불러올 수 있습니다.</p>
-  </div>
-  <div class="callout">
-    <div class="callout-title">데이터는 어디서 가져오나요?</div>
-    <p>공식을 직접 넣어도 되고(예: 체감온도 공식), 기상청 공공데이터포털(data.go.kr)의 API를 활용해도 됩니다. 운영팀이 제공하는 CLAUDE.md에 API 사용 방법이 안내되어 있습니다.</p>
+    <p>아닙니다. 브라우저에서 동작하는 웹페이지(index.html) 하나로 충분합니다.</p>
   </div>
   <div class="callout">
     <div class="callout-title">팀원과 함께 작업하려면?</div>
@@ -806,7 +784,7 @@
   </div>
   <div class="callout">
     <div class="callout-title">기술·도구 문의는 어디에 하나요?</div>
-    <p>Slack의 <strong>#질문-공통</strong> 채널에 올려주세요. 도구·기술 문의는 운영팀이 직접 응대하고, 기상청 API 관련 문의는 운영팀 접수 후 기상청 담당자를 통해 회신합니다. 정규 응대일은 매주 공지를 확인해주세요.</p>
+    <p>Slack의 <strong>#질문-공통</strong> 채널에 올려주세요. 운영팀이 직접 응대합니다. 정규 응대일은 매주 공지를 확인해주세요.</p>
   </div>
   <div class="callout">
     <div class="callout-title">Claude Code 계정은 어떻게 받나요?</div>
