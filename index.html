@@ -670,6 +670,35 @@
     </div>
   </div>
 
+  <!-- SSH 키 에러 해결 -->
+  <div class="step">
+    <div class="step-header"><div class="step-badge">!</div><h3>Push할 때 SSH 키 에러가 날 때</h3></div>
+    <p>새 브랜치를 GitHub에 올리려고 할 때 <strong>"Permission denied (publickey)"</strong> 같은 에러가 날 수 있습니다. 웹 Claude Code는 개인 SSH 키를 전혀 쓰지 않고 <strong>GitHub App 연결(설치)</strong>로 인증하기 때문에, 이 에러는 거의 항상 <strong>App 설치·권한 문제</strong>입니다.</p>
+    <ol>
+      <li><strong>GitHub App이 이 저장소에 설치되어 있지 않은 경우</strong> — Step 1에서 다른 저장소만 연결했거나, 저장소를 새로 만든 뒤 App 연결을 갱신하지 않은 경우입니다.</li>
+      <li><strong>App 권한이 읽기 전용인 경우</strong> — 연결 당시 쓰기(write) 권한을 허용하지 않으면 push 단계에서 거부됩니다.</li>
+    </ol>
+    <div class="step">
+      <div class="step-header"><div class="step-badge">A</div><h3>GitHub App 설치·권한 다시 연결하기</h3></div>
+      <ol>
+        <li>GitHub 우측 상단 프로필 → <strong>Settings</strong> → 좌측 메뉴 <strong>Applications</strong> → <strong>Installed GitHub Apps</strong></li>
+        <li>Claude(또는 연결된 GitHub App) 옆 <strong>Configure</strong> 클릭</li>
+        <li><strong>Repository access</strong>에서 작업 중인 저장소가 포함되어 있는지 확인 (없으면 <strong>Select repositories</strong>로 추가)</li>
+        <li>권한 목록에서 <strong>Contents: Read and write</strong>, <strong>Pull requests: Read and write</strong>가 허용되어 있는지 확인</li>
+        <li>변경 후 claude.ai/code로 돌아와 <strong>"+ 레포 선택..."</strong> 버튼으로 저장소를 다시 선택</li>
+      </ol>
+      <div class="step-note">권한을 바꾼 직후에는 바로 반영되지 않을 수 있습니다. claude.ai/code 페이지를 새로고침한 뒤 저장소를 다시 선택해보세요.</div>
+    </div>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">브랜치를 push하려는데 "Permission denied (publickey)" 에러가 나. 원인이 뭔지 확인해줘.</div>
+      <div class="chat-bubble bot">현재 origin 주소를 확인했습니다. GitHub App 연결에 이 저장소가 포함되어 있지 않은 것으로 보입니다. GitHub Settings → Applications에서 저장소 접근 권한을 추가한 뒤, "+ 레포 선택..."으로 다시 연결해주세요.</div>
+    </div>
+    <div class="step-note">
+      <strong>핵심</strong> 웹 환경에서는 SSH 키를 직접 만들거나 암호를 바꿀 필요가 없습니다. 에러 메시지에 "SSH"나 "publickey"가 보여도, 해결은 항상 <strong>GitHub App 설치 화면에서 저장소·권한을 다시 확인</strong>하는 것입니다.
+    </div>
+  </div>
+
   <div class="callout">
     <div class="callout-title">팀 작업 권장 흐름</div>
     <p>기능별로 브랜치를 나눈다 → 각자 개발 후 PR → 팀원 1명 이상 리뷰 → 머지 → Vercel 자동 배포. main 브랜치에는 항상 동작하는 코드만 유지하는 것이 원칙입니다.</p>
