@@ -9,7 +9,6 @@
 
 - 시작하기 → 만들기 → CLAUDE.md 추가 → 배포(Vercel) → 제출
 - 팀 협업 PR (브랜치 → PR → 리뷰 → 머지)
-- 기상 데이터 API (data.go.kr 동네예보, apihub.kma.go.kr)
 - 심사 기준 · FAQ
 
 ## 빠른 시작
