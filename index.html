@@ -199,18 +199,6 @@
   .chat-bubble.user { background: var(--black); color: var(--white); margin-left: auto; border-bottom-right-radius: 4px; }
   .chat-bubble.bot { background: var(--white); border: 1px solid var(--gray-200); margin-right: auto; border-bottom-left-radius: 4px; }
 
-  /* ===== LIVE DEMO ===== */
-  .demo {
-    border: 2px solid var(--black); border-radius: 16px;
-    padding: 28px; margin: 20px 0; background: var(--white);
-  }
-  .demo-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-  .demo-caption { font-size: 12px; color: var(--gray-400); margin-bottom: 20px; }
-  .demo label { display: block; font-size: 13px; font-weight: 600; margin: 16px 0 6px; }
-  .demo input[type=range] { width: 100%; accent-color: var(--black); }
-  .demo-result { font-size: 44px; font-weight: 900; letter-spacing: -0.02em; margin-top: 24px; }
-  .demo-result span { color: var(--gray-300); font-size: 16px; font-weight: 600; }
-
   /* ===== FOOTER ===== */
   .doc-footer {
     text-align: center; padding: 48px 40px;
@@ -804,23 +792,6 @@
 </footer>
 
 <script>
-  // 라이브 데모: 체감온도
-  (function () {
-    var temp = document.getElementById('temp');
-    var wind = document.getElementById('wind');
-    var result = document.getElementById('result');
-    function update() {
-      var T = Number(temp.value), V = Number(wind.value);
-      var wc = 13.12 + 0.6215 * T - 11.37 * Math.pow(V, 0.16) + 0.3965 * T * Math.pow(V, 0.16);
-      document.getElementById('tempVal').textContent = T;
-      document.getElementById('windVal').textContent = V;
-      result.innerHTML = '체감온도 ' + wc.toFixed(1) + '°C';
-    }
-    temp.addEventListener('input', update);
-    wind.addEventListener('input', update);
-    update();
-  })();
-
   // 스크롤에 따라 상단 네비 active 갱신
   (function () {
     var links = Array.prototype.slice.call(document.querySelectorAll('.topbar-nav a'));
