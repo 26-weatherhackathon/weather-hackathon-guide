@@ -5,12 +5,6 @@
 - 가이드(배포): https://weather-hackathon-guide.vercel.app
 - 본문: `index.html`
 
-## 문서 목록
-
-| 문서 | 내용 |
-|---|---|
-| [GitHub 연결 가이드](GITHUB-SETUP-GUIDE.md) | GitHub 리포지토리 연결 방법 (개인 액세스 토큰 / GitHub 로그인) |
-
 ## 가이드 구성
 
 - 시작하기 → 만들기 → CLAUDE.md 추가 → 배포(Vercel) → 제출
