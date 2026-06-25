@@ -5,104 +5,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>기상·기후 AI 해커톤 2026 — 개발·배포 가이드</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/wanted-sans@1.0.3/fonts/webfonts/variable/split/WantedSansVariable.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* ===========================================================
+     Design tokens — KRDS (대한민국 범정부 UI/UX 디자인시스템)
+     Catalog: CaesiumY/ko-design-md · services/krds.md (CC BY 4.0)
+     Source spec: krds.go.kr (행정안전부·디지털플랫폼정부위원회)
+     정부 톤: informational·neutral·respectful (not marketing).
+     평면 표면, 장식 그라디언트 없음, 코너 라운드 상한 12px,
+     액센트(워밍 레드)는 화면의 5% 미만 — 알럿 전용. 이모지 미사용.
+     =========================================================== */
   :root {
-    --black: #111; --gray-800: #333; --gray-600: #666; --gray-400: #999;
-    --gray-300: #bbb; --gray-200: #d9d9d9; --gray-100: #eee; --gray-50: #f7f7f7;
-    --white: #fff;
+    /* gray scale (KRDS 13-step, cool) */
+    --black: #131416;     /* gray-100 · fg-1 primary text, bg-inverse */
+    --gray-800: #464C53;  /* gray-80 · fg-2 secondary text */
+    --gray-600: #6D7882;  /* gray-60 · fg-3 tertiary / placeholder */
+    --gray-400: #8A949E;  /* gray-50 · border-strong, disabled */
+    --gray-300: #B1B8BE;  /* gray-40 */
+    --gray-200: #CDD1D5;  /* gray-30 · border-default (1px workhorse) */
+    --gray-100: #CDD1D5;  /* card/divider border */
+    --gray-50:  #F4F5F6;  /* gray-10 · bg-subtle */
+    --white: #fff; --parchment: #F4F5F6; --bg-muted: #EEF2F7; /* secondary-10 · hero */
+    /* primary — government blue */
+    --accent: #256EF4;        /* primary-50 · brand, primary button, focus */
+    --accent-hover: #0B50D0;  /* primary-60 · hover/pressed */
+    --accent-on-dark: #5B92F4;/* primary-40 · link/title on dark surface */
+    --link: #0B50D0;          /* fg-link */
+    /* warm red accent — alerts only, <5% of a screen */
+    --alert: #E84B4B;
+    /* restrained elevation (KRDS shadow-2) — supports the 1px divider, never decorative */
+    --shadow-card: 0 2px 6px rgba(19,20,22,0.08), 0 1px 2px rgba(19,20,22,0.04);
   }
   body {
-    font-family: 'Pretendard', -apple-system, sans-serif;
+    font-family: "Pretendard", "Gothic A1", -apple-system, BlinkMacSystemFont,
+      "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
     background: var(--white); color: var(--black);
-    line-height: 1.7; -webkit-font-smoothing: antialiased;
+    font-size: 17px; line-height: 1.75; letter-spacing: -0.01em;
+    word-break: keep-all; overflow-wrap: anywhere;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* 한글 디스플레이 — 단어 보존 + 큰 제목일수록 자간을 좁혀 또렷하게 */
+  h1, h2, h3, .section-title, .step h3, .glossary-term {
+    word-break: keep-all; letter-spacing: -0.02em;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+  a { color: var(--link); text-underline-offset: 2px; }
+  /* KRDS: focus ring is always visible — 2px primary outline, 2px offset */
+  a:focus-visible, button:focus-visible, .check-box:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
   }
 
   /* ===== TOP BAR ===== */
   .topbar {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--gray-100);
+    background: rgba(255,255,255,0.88); backdrop-filter: saturate(150%) blur(16px);
+    border-bottom: 1px solid var(--gray-200);
     padding: 0 32px; display: flex; align-items: center; height: 56px;
   }
-  .topbar-logo { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; margin-right: 32px; white-space: nowrap; }
-  .topbar-nav { display: flex; gap: 4px; flex: 1; overflow-x: auto; }
+  .topbar-logo { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin-right: 32px; white-space: nowrap; }
+  .topbar-nav { display: flex; gap: 2px; flex: 1; overflow-x: auto; }
   .topbar-nav a {
-    padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600;
-    text-decoration: none; color: var(--gray-400); white-space: nowrap;
-    transition: all 0.15s;
+    padding: 8px 12px; font-size: 13px; font-weight: 500;
+    text-decoration: none; color: var(--gray-600); white-space: nowrap;
+    box-shadow: inset 0 0 0 0 transparent; transition: color 0.15s, box-shadow 0.15s;
   }
-  .topbar-nav a:hover { color: var(--black); background: var(--gray-50); }
-  .topbar-nav a.active { color: var(--white); background: var(--black); }
-
-  /* ===== HERO ===== */
-  .hero {
-    padding: 80px 40px 60px; text-align: center;
-    border-bottom: 1px solid var(--gray-100);
-  }
-  .hero-tag {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--gray-400); margin-bottom: 16px;
-  }
-  .hero h1 {
-    font-size: clamp(32px, 5vw, 52px); font-weight: 800;
-    line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 16px;
-  }
-  .hero h1 em { font-style: normal; color: var(--gray-300); }
-  .hero-desc {
-    font-size: 15px; color: var(--gray-600); max-width: 560px;
-    margin: 0 auto 32px; line-height: 1.8;
-  }
-  .hero-meta {
-    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
-    font-size: 12px; color: var(--gray-400);
-  }
-  .hero-meta strong { color: var(--black); font-weight: 600; }
+  .topbar-nav a:hover { color: var(--black); }
+  .topbar-nav a.active { color: var(--accent-hover); font-weight: 700; box-shadow: inset 0 -3px 0 var(--accent); }
 
   /* ===== SECTION ===== */
   .section { max-width: 860px; margin: 0 auto; padding: 64px 40px; }
   .section + .section { border-top: 1px solid var(--gray-100); }
+  /* 타입 스케일 — Toss/Wanted 디자인시스템 따름: 제목 700(절대 800↑ 금지),
+     크기 클수록 자간 좁힘(-2%대), 본문 400/행간 1.6 */
   .section-num {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-    color: var(--gray-400); text-transform: uppercase; margin-bottom: 8px;
+    display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 0;
+    color: var(--accent-hover); margin-bottom: 8px;
   }
   .section-title {
-    font-size: clamp(22px, 3vw, 32px); font-weight: 800;
-    letter-spacing: -0.02em; margin-bottom: 8px;
+    font-family: "Wanted Sans Variable", "Wanted Sans", "Pretendard", "Gothic A1", sans-serif;
+    font-size: clamp(23px, 2.8vw, 30px); font-weight: 700;
+    line-height: 1.32; letter-spacing: -0.022em; margin-bottom: 12px;
   }
   .section-desc {
-    font-size: 14px; color: var(--gray-600); max-width: 600px;
-    line-height: 1.8; margin-bottom: 32px;
+    font-size: 17px; color: var(--gray-800); max-width: 620px;
+    line-height: 1.6; letter-spacing: -0.005em; margin-bottom: 36px;
   }
 
   /* ===== STEP CARD ===== */
   .step {
-    border: 1px solid var(--gray-100); border-radius: 16px;
+    border: 1px solid var(--gray-200); border-radius: 12px;
     padding: 28px 28px; margin-bottom: 16px;
-    background: var(--white); transition: box-shadow 0.2s;
+    background: var(--white);
   }
-  .step:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.05); }
   .step-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
   .step-badge {
-    width: 36px; height: 36px; border-radius: 10px;
-    background: var(--black); color: var(--white);
+    width: 34px; height: 34px; border-radius: 6px;
+    background: var(--accent); color: var(--white);
     display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 900; flex-shrink: 0;
+    font-size: 15px; font-weight: 700; flex-shrink: 0;
   }
-  .step h3 { font-size: 17px; font-weight: 700; }
-  .step p { font-size: 13px; color: var(--gray-600); line-height: 1.8; margin-bottom: 12px; }
-  .step ol, .step ul { font-size: 13px; color: var(--gray-600); line-height: 1.9; padding-left: 20px; margin-bottom: 8px; }
+  .step h3 { font-size: 18px; font-weight: 700; line-height: 1.4; letter-spacing: -0.015em; }
+  .step p { font-size: 15px; color: var(--gray-800); line-height: 1.55; margin-bottom: 12px; }
+  .step ol, .step ul { font-size: 15px; color: var(--gray-800); line-height: 1.7; padding-left: 20px; margin-bottom: 8px; }
   .step-note {
-    font-size: 12px; color: var(--gray-400); line-height: 1.7;
-    padding: 12px 16px; background: var(--gray-50); border-radius: 8px; margin-top: 8px;
+    font-size: 13px; color: var(--gray-800); line-height: 1.55;
+    padding: 14px 16px; background: var(--gray-50); border-radius: 8px; margin-top: 8px;
   }
-  .step-note strong { color: var(--gray-600); }
+  .step-note strong { color: var(--black); }
 
   /* ===== CODE BLOCK ===== */
   .code-block {
     background: var(--black); color: #e0e0e0;
-    border-radius: 12px; padding: 20px 24px;
-    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    border-radius: 8px; padding: 20px 24px;
+    font-family: 'SF Mono', ui-monospace, 'Fira Code', 'Consolas', monospace;
     font-size: 12.5px; line-height: 1.7; overflow-x: auto;
     margin: 12px 0 8px; position: relative; white-space: pre;
   }
@@ -118,14 +137,14 @@
   .diagram {
     display: flex; align-items: center; justify-content: center;
     gap: 0; flex-wrap: wrap; margin: 24px 0;
-    padding: 32px 20px; background: var(--gray-50); border-radius: 16px;
+    padding: 40px 20px; background: var(--gray-50); border-radius: 12px;
   }
   .diagram-node {
-    padding: 12px 20px; border-radius: 12px;
-    font-size: 13px; font-weight: 700; text-align: center; min-width: 100px;
+    padding: 14px 20px; border-radius: 8px;
+    font-size: 14px; font-weight: 700; text-align: center; min-width: 100px;
   }
   .diagram-node.person { background: var(--black); color: var(--white); }
-  .diagram-node.agent { background: var(--white); border: 2px solid var(--black); color: var(--black); }
+  .diagram-node.agent { background: var(--white); border: 1px solid var(--gray-200); color: var(--black); }
   .diagram-node .sub { font-size: 10px; font-weight: 500; opacity: 0.6; display: block; margin-top: 2px; }
   .diagram-arrow { font-size: 18px; color: var(--gray-300); padding: 0 8px; font-weight: 300; }
 
@@ -144,18 +163,25 @@
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     transition: all 0.15s;
   }
-  .check-box.checked { background: var(--black); border-color: var(--black); }
+  .check-box {
+    border-color: var(--gray-200);
+  }
+  .check-box.checked { background: var(--accent); border-color: var(--accent); }
   .check-box.checked::after { content: ""; display: block; width: 6px; height: 10px;
     border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); margin-top: -2px; }
 
   /* ===== CALLOUT ===== */
-  .callout { padding: 20px 24px; border-radius: 12px; border: 1px solid var(--gray-200); margin: 20px 0; }
-  .callout-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-  .callout p { font-size: 13px; color: var(--gray-600); line-height: 1.7; }
-  .callout.important { border-color: var(--black); border-width: 2px; }
+  .callout { padding: 22px 24px; border-radius: 12px; border: 1px solid var(--gray-200); background: var(--white); margin: 20px 0; }
+  .callout-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .callout p { font-size: 15px; color: var(--gray-800); line-height: 1.55; }
+  /* "important" = KRDS bg-inverse tile (gray-100); weight without a second hue */
+  .callout.important { background: var(--black); border-color: var(--black); }
+  .callout.important .callout-title { color: var(--accent-on-dark); }
+  .callout.important p { color: #E6E8EA; }
+  .callout.important a { color: var(--accent-on-dark); }
 
   /* ===== COMPARE TABLE ===== */
-  .compare-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+  .compare-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; letter-spacing: -0.01em; }
   .compare-table th {
     text-align: left; padding: 12px 16px; font-weight: 700;
     border-bottom: 2px solid var(--black); font-size: 11px;
@@ -171,12 +197,12 @@
   /* ===== GLOSSARY ===== */
   .glossary-item { padding: 20px 0; border-bottom: 1px solid var(--gray-100); }
   .glossary-item:last-child { border-bottom: none; }
-  .glossary-term { font-size: 15px; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.01em; }
-  .glossary-aka { font-size: 11px; font-weight: 600; color: var(--gray-400); margin-left: 8px; letter-spacing: 0.02em; }
-  .glossary-def { font-size: 13px; color: var(--gray-600); line-height: 1.8; }
+  .glossary-term { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.015em; }
+  .glossary-aka { font-size: 12px; font-weight: 500; color: var(--gray-600); margin-left: 8px; }
+  .glossary-def { font-size: 15px; color: var(--gray-800); line-height: 1.55; }
   .glossary-analogy {
-    font-size: 12px; color: var(--gray-400); margin-top: 6px;
-    padding: 8px 14px; background: var(--gray-50); border-radius: 8px; line-height: 1.7;
+    font-size: 13px; color: var(--gray-800); margin-top: 10px;
+    padding: 10px 14px; background: var(--gray-50); border-radius: 8px; line-height: 1.55;
   }
 
   /* ===== SCREENSHOT FIGURE ===== */
@@ -184,32 +210,32 @@
   .screenshot-figure { flex: 1 1 260px; min-width: 220px; }
   .screenshot-figure img {
     width: 100%; display: block; border: 1px solid var(--gray-200);
-    border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border-radius: 12px; box-shadow: var(--shadow-card);
   }
   .screenshot-figure figcaption {
-    font-size: 12px; color: var(--gray-400); margin-top: 8px; line-height: 1.6;
+    font-size: 13px; color: var(--gray-400); margin-top: 12px; line-height: 1.5;
   }
   .screenshot-figure figcaption strong { color: var(--gray-600); }
 
   /* ===== CHAT BUBBLE ===== */
-  .chat-demo { background: var(--gray-50); border-radius: 16px; padding: 24px; margin: 16px 0; }
-  .chat-label { font-size: 10px; font-weight: 700; color: var(--gray-400); margin-bottom: 4px; letter-spacing: 0.04em; }
-  .chat-bubble { max-width: 88%; padding: 12px 18px; border-radius: 16px; font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
+  .chat-demo { background: var(--gray-50); border-radius: 12px; padding: 24px; margin: 16px 0; }
+  .chat-label { font-size: 12px; font-weight: 700; color: var(--gray-600); margin-bottom: 8px; }
+  .chat-bubble { max-width: 88%; padding: 12px 18px; border-radius: 12px; font-size: 15px; line-height: 1.55; margin-bottom: 10px; }
   .chat-bubble:last-child { margin-bottom: 0; }
-  .chat-bubble.user { background: var(--black); color: var(--white); margin-left: auto; border-bottom-right-radius: 4px; }
+  .chat-bubble.user { background: var(--accent); color: var(--white); margin-left: auto; border-bottom-right-radius: 4px; }
   .chat-bubble.bot { background: var(--white); border: 1px solid var(--gray-200); margin-right: auto; border-bottom-left-radius: 4px; }
 
   /* ===== FOOTER ===== */
   .doc-footer {
-    text-align: center; padding: 48px 40px;
-    border-top: 1px solid var(--gray-100);
-    font-size: 12px; color: var(--gray-400); line-height: 1.8;
+    text-align: center; padding: 56px 40px;
+    background: var(--black); color: var(--gray-300);
+    font-size: 13px; line-height: 1.8;
   }
+  .doc-footer strong { color: #fff; font-weight: 700; }
 
   @media (max-width: 700px) {
     .section { padding: 40px 16px; }
     .topbar { padding: 0 12px; }
-    .hero { padding: 60px 20px 40px; }
     .step { padding: 20px 18px; }
     .code-block { font-size: 11px; padding: 16px 18px; }
     .diagram { gap: 4px; padding: 20px 12px; }
@@ -227,7 +253,7 @@
 <nav class="topbar">
   <div class="topbar-logo">기상·기후 AI 해커톤</div>
   <div class="topbar-nav">
-    <a href="#overview" class="active">개요</a>
+    <a href="#how" class="active">개요</a>
     <a href="#glossary">용어</a>
     <a href="#ready">준비물</a>
     <a href="#start">1. 시작하기</a>
@@ -242,31 +268,14 @@
   </div>
 </nav>
 
-<!-- ===== HERO ===== -->
-<section class="hero" id="overview">
-  <div class="hero-tag">기상·기후 AI 해커톤 2026 / 참가자 가이드</div>
-  <h1>설치도 터미널도 없이<br><em>웹 Claude Code</em>로 만든다</h1>
-  <p class="hero-desc">
-    이 대회의 결과물은 누구나 웹에서 접속해 직접 조작하는 인터랙티브 도구입니다.
-    웹브라우저에서 Claude Code(claude.ai/code)에게 한국어로 요청하면 코드를 만들고
-    GitHub에 자동 저장까지 해줍니다. 그 뒤 Vercel로 한 번 연결하면 제출용 링크가 완성됩니다.
-  </p>
-  <div class="hero-meta">
-    <span>결과물 <strong>웹 인터랙티브 도구</strong></span>
-    <span>난이도 <strong>완전 초보 OK</strong></span>
-    <span>총상금 <strong>1,000만원</strong></span>
-    <span>모집 <strong>~7월 3일</strong></span>
-  </div>
-</section>
-
 <!-- ===== HOW IT WORKS ===== -->
 <section class="section" id="how">
-  <div class="section-num">How It Works</div>
+  <div class="section-num">한눈에 보기</div>
   <div class="section-title">무엇을 만드나요?</div>
   <div class="section-desc">
-    기상·기후 데이터를 학습자가 직접 조작하며 배우는 웹 도구를 만듭니다.
-    예보관 체험, 기압·바람 인터랙티브 맵처럼요.
-    서버나 앱 없이 웹페이지 파일 하나(index.html)로도 충분히 제출할 수 있습니다.
+    날씨·기후 데이터를 직접 만지면서 배우는 웹 도구를 만들어요.
+    예보관 체험, 기압·바람 인터랙티브 맵 같은 거요.
+    서버도 앱도 필요 없어요. 웹페이지 파일 하나(index.html)면 제출 끝이에요.
   </div>
   <div class="diagram">
     <div class="diagram-node person">아이디어<span class="sub">기상 데이터 + 체험</span></div>
@@ -276,61 +285,61 @@
     <div class="diagram-node person">Vercel<span class="sub">웹 링크 배포</span></div>
   </div>
   <div class="callout important">
-    <div class="callout-title">한 줄 요약</div>
-    <p>Claude Code에게 말로 시키면 코드 작성과 GitHub 저장까지 끝. Vercel만 한 번 연결하면 제출용 링크가 나옵니다.</p>
+    <div class="callout-title">딱 한 줄 요약</div>
+    <p>말로 시키면 코드 작성이랑 GitHub 저장까지 끝나요. Vercel만 한 번 연결하면 제출용 링크가 나와요.</p>
   </div>
 </section>
 
 <!-- ===== GLOSSARY ===== -->
 <section class="section" id="glossary">
-  <div class="section-num">Before You Start</div>
+  <div class="section-num">시작 전에 잠깐</div>
   <div class="section-title">처음 보는 용어가 많다면</div>
-  <div class="section-desc">아래 5개만 알면 끝까지 따라올 수 있습니다. 지금 다 외울 필요는 없어요.</div>
+  <div class="section-desc">딱 4개만 알면 끝까지 무리 없어요. 지금 외우진 말고 그냥 한번 훑고 넘어가요.</div>
 
   <div class="glossary-item">
     <div class="glossary-term">웹 Claude Code <span class="glossary-aka">claude.ai/code</span></div>
-    <div class="glossary-def">설치 없이 웹브라우저에서 대화만으로 코딩하는 AI 도구. 한국어로 "이런 웹페이지 만들어줘"라고 요청하면 코드를 대신 작성하고, 연결된 GitHub 저장소에 자동으로 저장까지 해줍니다.</div>
-    <div class="glossary-analogy">비유: 코드를 대신 써주고 정리·저장까지 해주는 만능 비서. 말로 설명만 하면 됩니다.</div>
+    <div class="glossary-def">설치 없이 브라우저에서 대화만으로 코딩하는 AI예요. "이런 웹페이지 만들어줘"라고 한국어로 말하면 코드를 대신 짜주고, 연결된 GitHub 저장소에 자동으로 저장까지 해줘요.</div>
+    <div class="glossary-analogy">쉽게 말하면 — 코드 대신 써주고 정리·저장까지 해주는 만능 비서예요. 말로만 시키면 돼요.</div>
   </div>
   <div class="glossary-item">
     <div class="glossary-term">index.html <span class="glossary-aka">/ 정적 웹페이지</span></div>
-    <div class="glossary-def">브라우저에서 바로 열리는 웹페이지 파일 한 개. 글, 그림, 버튼, 슬라이더 같은 인터랙션이 이 안에 다 들어갑니다.</div>
-    <div class="glossary-analogy">비유: 한 장짜리 완성된 전단지. 이 파일만 있으면 웹사이트가 됩니다.</div>
+    <div class="glossary-def">브라우저에서 바로 열리는 웹페이지 파일 한 개예요. 글, 그림, 버튼, 슬라이더 같은 인터랙션이 이 안에 다 들어가요.</div>
+    <div class="glossary-analogy">쉽게 말하면 — 한 장짜리 완성된 전단지예요. 이 파일만 있으면 웹사이트가 돼요.</div>
   </div>
   <div class="glossary-item">
     <div class="glossary-term">GitHub <span class="glossary-aka">/ Repository(저장소)</span></div>
-    <div class="glossary-def">코드 파일을 인터넷에 보관하는 창고. 저장소(repository)는 그 안의 프로젝트 폴더 하나입니다. 웹 Claude Code가 만든 코드는 여기에 자동으로 저장됩니다.</div>
-    <div class="glossary-analogy">비유: 코드를 올려두는 구글 드라이브. 저장소 = 폴더 하나.</div>
+    <div class="glossary-def">코드 파일을 인터넷에 보관하는 창고예요. 저장소(repository)는 그 안의 프로젝트 폴더 하나고요. Claude Code가 만든 코드는 여기 자동으로 쌓여요.</div>
+    <div class="glossary-analogy">쉽게 말하면 — 코드 올려두는 구글 드라이브예요. 저장소 = 폴더 하나.</div>
   </div>
   <div class="glossary-item">
     <div class="glossary-term">Vercel <span class="glossary-aka">/ 배포(deploy)</span></div>
-    <div class="glossary-def">GitHub에 올린 코드를 실제 인터넷 주소(URL)로 만들어 누구나 접속하게 해주는 서비스. 이 과정을 배포라고 합니다.</div>
-    <div class="glossary-analogy">비유: 내 전단지를 거리에 붙여서 모두가 볼 수 있게 하는 것.</div>
+    <div class="glossary-def">GitHub에 올린 코드를 진짜 인터넷 주소(URL)로 만들어서 누구나 접속하게 해주는 서비스예요. 이 과정을 '배포'라고 불러요.</div>
+    <div class="glossary-analogy">쉽게 말하면 — 내 전단지를 거리에 붙여서 모두가 보게 하는 거예요.</div>
   </div>
 </section>
 
 <!-- ===== READY ===== -->
 <section class="section" id="ready">
-  <div class="section-num">Checklist</div>
-  <div class="section-title">준비물 (모두 무료)</div>
-  <div class="section-desc">시작 전에 계정 3개만 만들어 두세요. 설치할 프로그램은 없고, 웹브라우저만 있으면 됩니다.</div>
+  <div class="section-num">딱 3개만 준비해요</div>
+  <div class="section-title">준비물 (전부 무료)</div>
+  <div class="section-desc">시작 전에 계정 3개만 만들어 두면 돼요. 깔 프로그램은 없고, 브라우저만 있으면 충분해요.</div>
   <ul class="checklist">
     <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Claude 계정 — <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> (Claude Code 사용. 본선팀 제공 플랜으로 로그인)</li>
     <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> GitHub 계정 가입 — <a href="https://github.com" target="_blank" rel="noopener">github.com</a> (코드 저장, Claude Code와 연결)</li>
     <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Vercel 계정 가입 — <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> (GitHub 계정으로 바로 로그인 가능)</li>
   </ul>
   <div class="callout">
-    <div class="callout-title">설치할 게 없습니다</div>
-    <p>터미널, Node.js 같은 프로그램 설치는 필요 없습니다. 세 사이트 모두 웹브라우저에서 로그인만 하면 됩니다.</p>
+    <div class="callout-title">깔 게 하나도 없어요</div>
+    <p>터미널이나 Node.js 같은 거 설치 안 해도 돼요. 세 사이트 다 브라우저에서 로그인만 하면 끝이에요.</p>
   </div>
 </section>
 
 <!-- ===== STEP 1: START ===== -->
 <section class="section" id="start">
-  <div class="section-num">Step 1</div>
+  <div class="section-num">1단계</div>
   <div class="section-title">웹 Claude Code 시작하기</div>
   <div class="section-desc">
-    claude.ai/code에 접속해 GitHub 저장소를 연결하는 단계입니다. 한 번만 설정해두면 이후부터는 대화만으로 코딩과 저장이 자동으로 됩니다.
+    claude.ai/code에 접속해서 GitHub 저장소를 연결하는 단계예요. 한 번만 설정해두면 그 다음부턴 대화만으로 코딩이랑 저장이 자동으로 돼요.
   </div>
 
   <div class="step">
@@ -367,11 +376,11 @@
 
 <!-- ===== STEP 2: MAKE ===== -->
 <section class="section" id="make">
-  <div class="section-num">Step 2</div>
+  <div class="section-num">2단계</div>
   <div class="section-title">Claude Code로 만들기</div>
   <div class="section-desc">
-    핵심 단계입니다. 만들고 싶은 걸 한국어로 설명하면 Claude가 코드를 짜고 GitHub에 자동 저장합니다.
-    요청할 때 (1) 무엇을 보여줄지 (2) 어떻게 조작할지 (3) 파일 이름(index.html), 이 3가지만 넣으면 됩니다.
+    여기가 핵심이에요. 만들고 싶은 걸 한국어로 말하면 Claude가 코드를 짜고 GitHub에 자동 저장해줘요.
+    요청할 때 ① 뭘 보여줄지 ② 어떻게 조작할지 ③ 파일 이름(index.html), 이 세 가지만 챙기면 돼요.
   </div>
 
   <div class="chat-demo">
@@ -397,17 +406,17 @@
 
 <!-- ===== STEP 3: CLAUDE.md ===== -->
 <section class="section" id="claudemd">
-  <div class="section-num">Step 3</div>
+  <div class="section-num">3단계</div>
   <div class="section-title">CLAUDE.md 설정하기</div>
   <div class="section-desc">
-    CLAUDE.md는 Claude Code에게 "이 프로젝트에서 지켜야 할 규칙"을 미리 알려주는 설명서 파일입니다.
-    코딩 규칙과 프로젝트 설정을 여기 써두면 매번 설명하지 않아도 됩니다.
-    아래 CLAUDE.md 내용을 복사해 저장소에 추가하세요 (운영팀 제공).
+    CLAUDE.md는 Claude Code한테 "이 프로젝트에선 이렇게 해줘"라고 미리 일러두는 설명서 파일이에요.
+    코딩 규칙이랑 설정을 여기 적어두면 매번 설명 안 해도 돼요.
+    아래 내용을 복사해서 저장소에 넣으면 돼요 (운영팀 제공).
   </div>
 
   <div class="callout important">
     <div class="callout-title">CLAUDE.md가 뭔가요?</div>
-    <p>Claude Code가 프로젝트를 열 때 가장 먼저 읽는 파일입니다. 여기 써둔 내용은 매 대화마다 자동으로 적용됩니다. "파일 이름은 index.html로 고정해", "한국어로 응답해" 같은 규칙을 넣어두면 됩니다.</p>
+    <p>Claude Code가 프로젝트를 열 때 가장 먼저 읽는 파일이에요. 여기 써둔 내용은 매 대화마다 자동으로 적용돼요. "파일 이름은 index.html로 고정해", "한국어로 답해" 같은 규칙을 넣어두면 돼요.</p>
   </div>
 
   <div class="step">
@@ -434,9 +443,9 @@
 
 <!-- ===== STEP 4: VERCEL ===== -->
 <section class="section" id="vercel">
-  <div class="section-num">Step 4</div>
+  <div class="section-num">4단계</div>
   <div class="section-title">Vercel로 배포하기</div>
-  <div class="section-desc">GitHub 저장소를 연결하면 인터넷 주소가 자동으로 생성됩니다.</div>
+  <div class="section-desc">GitHub 저장소만 연결하면 인터넷 주소가 자동으로 만들어져요.</div>
 
   <div class="step">
     <div class="step-header"><div class="step-badge">1</div><h3>GitHub로 로그인 후 프로젝트 가져오기</h3></div>
@@ -489,16 +498,16 @@
 
   <div class="callout">
     <div class="callout-title">배포 후 확인</div>
-    <p>휴대폰이나 다른 컴퓨터에서도 링크가 열리는지, 슬라이더 등 인터랙티브 기능이 잘 작동하는지 꼭 확인하세요.</p>
+    <p>휴대폰이나 다른 컴퓨터에서도 링크가 열리는지, 슬라이더 같은 인터랙티브 기능이 잘 도는지 꼭 확인해요.</p>
   </div>
 </section>
 
 <!-- ===== STEP 5: SUBMIT ===== -->
 <section class="section" id="submit">
-  <div class="section-num">Step 5</div>
+  <div class="section-num">5단계</div>
   <div class="section-title">제출하기</div>
   <div class="section-desc">
-    완성된 결과물을 제출할 때는 아래 3가지를 모두 준비합니다. Vercel 링크 하나만 있으면 안 되니 주의하세요.
+    제출할 땐 아래 3가지를 다 챙겨야 해요. Vercel 링크 하나만 내면 안 되니까 주의해요!
   </div>
 
   <div class="step">
@@ -524,17 +533,17 @@
 
 <!-- ===== PR COLLABORATION ===== -->
 <section class="section" id="pr">
-  <div class="section-num">Team Collaboration</div>
+  <div class="section-num">팀이라면</div>
   <div class="section-title">팀 협업: GitHub PR 사용법</div>
   <div class="section-desc">
-    팀원이 각자 다른 기능을 개발할 때는 브랜치를 나눠서 작업하고 PR(Pull Request)로 합칩니다.
-    Claude Code에게 말로 시키면 브랜치 생성부터 PR 올리기까지 전부 대신 해줍니다.
-    각 단계마다 아래 프롬프트를 그대로 복사해서 쓰세요.
+    팀원이 각자 다른 기능을 만들 땐 브랜치를 나눠서 작업하고 PR(Pull Request)로 합쳐요.
+    Claude Code한테 말로 시키면 브랜치 만들기부터 PR 올리기까지 다 대신 해줘요.
+    단계마다 아래 프롬프트를 그대로 복사해서 쓰면 돼요.
   </div>
 
   <div class="callout">
     <div class="callout-title">PR이 뭔가요?</div>
-    <p>Pull Request — 내가 만든 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것입니다. 팀원이 코드를 검토하고 OK하면 합쳐집니다. 충돌 없이 협업하는 표준 방식입니다.</p>
+    <p>Pull Request — 내가 만든 브랜치 변경분을 팀 메인 코드에 합치자고 요청하는 거예요. 팀원이 코드를 보고 OK하면 합쳐져요. 충돌 없이 협업하는 표준 방식이고요.</p>
   </div>
 
   <!-- STEP 1 -->
@@ -682,21 +691,21 @@
 
   <div class="callout">
     <div class="callout-title">팀 작업 권장 흐름</div>
-    <p>기능별로 브랜치를 나눈다 → 각자 개발 후 PR → 팀원 1명 이상 리뷰 → 머지 → Vercel 자동 배포. main 브랜치에는 항상 동작하는 코드만 유지하는 것이 원칙입니다.</p>
+    <p>기능별로 브랜치 나누기 → 각자 개발 후 PR → 팀원 1명 이상 리뷰 → 머지 → Vercel 자동 배포. main 브랜치엔 항상 잘 도는 코드만 두는 게 원칙이에요.</p>
   </div>
 </section>
 
 <!-- ===== COPYRIGHT ===== -->
 <section class="section" id="copyright">
-  <div class="section-num">Copyright</div>
+  <div class="section-num">꼭 읽어요</div>
   <div class="section-title">저작권 가이드라인</div>
   <div class="section-desc">
-    이 대회의 결과물은 기상청에서 활용할 수 있습니다. 라이선스 문제가 있는 리소스를 쓰면 수상이 취소될 수 있으니 아래 기준을 꼭 확인하세요.
+    이 대회 결과물은 기상청에서 실제로 쓸 수 있어요. 라이선스 문제 있는 리소스를 쓰면 수상이 취소될 수도 있으니 아래 기준 꼭 확인해요.
   </div>
 
   <div class="callout important">
-    <div class="callout-title">표절 및 저작권 검증을 실시합니다</div>
-    <p>제출된 코드는 팀 간·외부 출처 표절 검증, GitHub 커밋 히스토리 확인, Claude 대화 세션 확인을 통해 검증됩니다. AI를 사용한 것 자체는 문제없지만, 다른 팀이나 외부 출처의 코드를 그대로 쓰는 것은 허용되지 않습니다.</p>
+    <div class="callout-title">표절·저작권 검증, 진짜 합니다</div>
+    <p>제출된 코드는 팀 간·외부 출처 표절 검증, GitHub 커밋 히스토리, Claude 대화 세션으로 다 확인해요. AI 쓴 건 전혀 문제없지만, 다른 팀이나 외부 코드를 그대로 가져다 쓰는 건 안 돼요.</p>
   </div>
 
   <table class="compare-table">
@@ -738,9 +747,9 @@
 
 <!-- ===== JUDGE ===== -->
 <section class="section" id="judge">
-  <div class="section-num">Scoring</div>
+  <div class="section-num">어떻게 평가하나요</div>
   <div class="section-title">심사 기준</div>
-  <div class="section-desc">만들 때 아래 배점을 떠올리면 방향을 잡기 쉽습니다. 실현 가능성과 체험형 설계 비중이 가장 큽니다.</div>
+  <div class="section-desc">만들 때 이 배점을 떠올리면 방향 잡기 쉬워요. 실현 가능성이랑 체험형 설계 비중이 제일 커요.</div>
   <table class="compare-table">
     <thead><tr><th>기준</th><th>배점</th><th>무엇을 보나</th></tr></thead>
     <tbody>
@@ -755,32 +764,32 @@
 
 <!-- ===== FAQ ===== -->
 <section class="section" id="faq">
-  <div class="section-num">FAQ</div>
+  <div class="section-num">궁금해요</div>
   <div class="section-title">자주 묻는 질문</div>
 
   <div class="callout">
-    <div class="callout-title">코딩을 전혀 못하는데 가능한가요?</div>
-    <p>가능합니다. 웹 Claude Code에 한국어로 요청하면 코드를 대신 짜줍니다. 이 가이드의 순서대로만 따라 하면 됩니다.</p>
+    <div class="callout-title">코딩 1도 모르는데 가능해요?</div>
+    <p>가능해요. 웹 Claude Code한테 한국어로 말하면 코드를 대신 짜줘요. 이 가이드 순서대로만 따라오면 돼요.</p>
   </div>
   <div class="callout">
-    <div class="callout-title">백엔드 서버가 꼭 필요한가요?</div>
-    <p>아닙니다. 브라우저에서 동작하는 웹페이지(index.html) 하나로 충분합니다.</p>
+    <div class="callout-title">백엔드 서버 꼭 있어야 해요?</div>
+    <p>아니요. 브라우저에서 도는 웹페이지(index.html) 하나면 충분해요.</p>
   </div>
   <div class="callout">
-    <div class="callout-title">팀원과 함께 작업하려면?</div>
-    <p>GitHub 저장소 Settings → Collaborators에서 팀원을 추가하면 됩니다. 각자 Claude Code에서 같은 저장소에 연결해 작업할 수 있습니다.</p>
+    <div class="callout-title">팀원이랑 같이 하려면?</div>
+    <p>GitHub 저장소 Settings → Collaborators에서 팀원을 추가하면 돼요. 각자 Claude Code에서 같은 저장소에 연결해서 작업하면 되고요.</p>
   </div>
   <div class="callout">
-    <div class="callout-title">기술·도구 문의는 어디에 하나요?</div>
-    <p>Slack의 <strong>#질문-공통</strong> 채널에 올려주세요. 운영팀이 직접 응대합니다. 정규 응대일은 매주 공지를 확인해주세요.</p>
+    <div class="callout-title">기술·도구 질문은 어디에 해요?</div>
+    <p>Slack <strong>#질문-공통</strong> 채널에 올려주세요. 운영팀이 직접 답해드려요. 정규 응대일은 매주 공지를 확인해주세요.</p>
   </div>
   <div class="callout">
-    <div class="callout-title">Claude Code 계정은 어떻게 받나요?</div>
-    <p>본선 진출 15팀에게 운영팀이 이메일로 계정을 발급합니다. 계정 접속 문제는 Slack #질문-공통 채널 또는 긴급 시 운영팀에 직접 연락하세요.</p>
+    <div class="callout-title">Claude Code 계정은 어떻게 받아요?</div>
+    <p>본선 진출 15팀에게 운영팀이 이메일로 계정을 보내드려요. 접속이 안 되면 Slack #질문-공통 채널에, 급하면 운영팀에 바로 연락주세요.</p>
   </div>
   <div class="callout">
-    <div class="callout-title">AI가 만든 코드를 그대로 제출해도 되나요?</div>
-    <p>됩니다. 이 대회는 AI 활용을 권장합니다. 단, 다른 팀이나 외부 출처의 코드를 그대로 복사하는 것은 표절로 처리됩니다. AI로 생성했더라도 우리 팀의 아이디어와 구성이 담겨 있어야 합니다.</p>
+    <div class="callout-title">AI가 만든 코드 그대로 내도 돼요?</div>
+    <p>돼요. 이 대회는 오히려 AI 활용을 권장해요. 단, 다른 팀이나 외부 코드를 그대로 복붙하는 건 표절이에요. AI로 만들었어도 우리 팀 아이디어랑 구성이 담겨 있어야 해요.</p>
   </div>
 </section>
 
