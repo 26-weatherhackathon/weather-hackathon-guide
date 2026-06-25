@@ -56,6 +56,11 @@
   a { color: var(--link); text-underline-offset: 2px; }
   /* MZ/숏폼 전략의 "키워드 후킹"을 절제해서 — 형광펜 마커 한 톤만 */
   .mark { background: linear-gradient(180deg, transparent 58%, rgba(37,110,244,0.18) 58%); font-weight: 700; padding: 0 1px; }
+  /* Meteocons 스타일 인라인 날씨 아이콘 — 천천히 도는 햇살 한 개만 (오픈소스 애니메이션 절제 적용) */
+  .wx-sun { vertical-align: -0.18em; margin-right: 8px; flex-shrink: 0; }
+  .wx-sun-rays { transform-box: fill-box; transform-origin: center; animation: wxSpin 20s linear infinite; }
+  @keyframes wxSpin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .wx-sun-rays { animation: none; } }
   /* KRDS: focus ring is always visible — 2px primary outline, 2px offset */
   a:focus-visible, button:focus-visible, .check-box:focus-visible {
     outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
@@ -273,7 +278,7 @@
 <!-- ===== HOW IT WORKS ===== -->
 <section class="section" id="how">
   <div class="section-num">한눈에 보기</div>
-  <div class="section-title">무엇을 만드나요?</div>
+  <div class="section-title"><svg class="wx-sun" width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><g class="wx-sun-rays" stroke="#FFB020" stroke-width="2.4" stroke-linecap="round"><line x1="16" y1="3" x2="16" y2="7"/><line x1="16" y1="25" x2="16" y2="29"/><line x1="3" y1="16" x2="7" y2="16"/><line x1="25" y1="16" x2="29" y2="16"/><line x1="6.7" y1="6.7" x2="9.5" y2="9.5"/><line x1="22.5" y1="22.5" x2="25.3" y2="25.3"/><line x1="6.7" y1="25.3" x2="9.5" y2="22.5"/><line x1="22.5" y1="9.5" x2="25.3" y2="6.7"/></g><circle cx="16" cy="16" r="6.5" fill="#FFC23D"/></svg>무엇을 만드나요?</div>
   <div class="section-desc">
     날씨·기후 데이터를 <span class="mark">직접 만지면서 배우는</span> 웹 도구를 만들어요.
     예보관 체험, 기압·바람 인터랙티브 맵 같은 거요.
