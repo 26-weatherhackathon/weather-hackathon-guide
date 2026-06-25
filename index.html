@@ -54,6 +54,8 @@
   }
   ::selection { background: var(--accent); color: #fff; }
   a { color: var(--link); text-underline-offset: 2px; }
+  /* MZ/숏폼 전략의 "키워드 후킹"을 절제해서 — 형광펜 마커 한 톤만 */
+  .mark { background: linear-gradient(180deg, transparent 58%, rgba(37,110,244,0.18) 58%); font-weight: 700; padding: 0 1px; }
   /* KRDS: focus ring is always visible — 2px primary outline, 2px offset */
   a:focus-visible, button:focus-visible, .check-box:focus-visible {
     outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
@@ -273,7 +275,7 @@
   <div class="section-num">한눈에 보기</div>
   <div class="section-title">무엇을 만드나요?</div>
   <div class="section-desc">
-    날씨·기후 데이터를 직접 만지면서 배우는 웹 도구를 만들어요.
+    날씨·기후 데이터를 <span class="mark">직접 만지면서 배우는</span> 웹 도구를 만들어요.
     예보관 체험, 기압·바람 인터랙티브 맵 같은 거요.
     서버도 앱도 필요 없어요. 웹페이지 파일 하나(index.html)면 제출 끝이에요.
   </div>
@@ -322,7 +324,7 @@
 <section class="section" id="ready">
   <div class="section-num">딱 3개만 준비해요</div>
   <div class="section-title">준비물 (전부 무료)</div>
-  <div class="section-desc">시작 전에 계정 3개만 만들어 두면 돼요. 깔 프로그램은 없고, 브라우저만 있으면 충분해요.</div>
+  <div class="section-desc">시작 전에 계정 3개만 만들어 두면 돼요. 깔 프로그램은 없고, <span class="mark">브라우저만 있으면</span> 충분해요.</div>
   <ul class="checklist">
     <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Claude 계정 — <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> (Claude Code 사용. 본선팀 제공 플랜으로 로그인)</li>
     <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> GitHub 계정 가입 — <a href="https://github.com" target="_blank" rel="noopener">github.com</a> (코드 저장, Claude Code와 연결)</li>
