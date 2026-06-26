@@ -12,12 +12,13 @@
 3. **네오브루탈리즘 골격.** 두꺼운 보더 + 블러 없는 하드 섀도 + 납작한 채도. 그라디언트·소프트 섀도 금지.
 4. **의도된 비대칭.** 균일 그리드 반사 금지. 위계에 따라 라운드·간격·정렬을 의도적으로 변주.
 5. **모션은 절제.** 전 요소 fade-in 금지. 의미 있는 전환에만.
+6. **멀티 페이지 = 트랙리스트.** 단일 페이지 버리고 6개 정적 페이지로 분리, 페이지 전환을 키네틱 모먼트로(§5.0).
 
 ---
 
 ## 1. 레퍼런스 분석 (Awwwards / Godly / 데이터 비주얼 계열)
 
-검색·분석한 4개 레퍼런스와 우리가 **가져올 차별 포인트 / 버릴 점**.
+검색·분석한 5개 레퍼런스와 우리가 **가져올 차별 포인트 / 버릴 점**. (전체 리서치 원본: [`references/findings.md`](references/findings.md), 캡처 대상: [`references/urls.json`](references/urls.json))
 
 ### R1. Ed Hawkins — *Warming Stripes / #ShowYourStripes* (데이터 비주얼)
 - **무엇:** 연도별 기온 편차를 축·숫자 없이 **색 띠(stripe)만으로** 표현. 1971–2000 평균을 파랑/빨강 경계로, ±2.6σ 범위를 ColorBrewer **RdBu** 다이버징 스케일에 매핑.
@@ -36,6 +37,12 @@
 - **차별 포인트(가져올 것):** 히어로 핵심 단어의 **가변축 모핑**(wght 300↔800)과 스크롤 시 행 슬라이드. "모션이 곧 메시지."
 - **버릴 것:** 풀 WebGL/로딩 헤비 연출 → 초보 참가자 가이드 사이트라 **가볍고 빠른** 게 우선. JS 의존 최소화, `prefers-reduced-motion` 필수.
 - 출처: [Kinetic Typography — Awwwards](https://www.awwwards.com/inspiration/kinetic-typography-nssc18), [CSS Scroll-Driven Animations 정리](https://www.illustration.app/blog/interactive-typography-systems-designing-text-that-responds)
+
+### R4. NASA Climate Spiral / "State of AI 2025" (키네틱 × 데이터 모션)
+- **무엇:** 시간축 데이터를 **움직임 자체로** 보여줌(나선·증식 애니메이션). 데이터가 모션의 근거.
+- **차별 포인트(가져올 것):** 숫자(상금·일정·배점)를 **데이터 모션**으로 — 카운트업·stripe 게이지로 표현해 "데이터 다루는 해커톤"임을 메타적으로 드러냄.
+- **버릴 것:** 과한 3D → 2D stripe/게이지로 충분.
+- 출처: [NASA Climate Spiral](https://svs.gsfc.nasa.gov/5190/), [Data Visualization — Awwwards](https://www.awwwards.com/inspiration/data-visualization-state-of-ai-2025)
 
 ### R5. K-pop 컴백 마이크로사이트 — 실제 사례 분석 (NCT·aespa·ILLIT·NJZ)
 
@@ -63,12 +70,6 @@
 
 - **버릴 것:** Y2K 크로뮴·메탈릭·홀로그램 광택(Pop Futurism)은 기상·공공 데이터 톤과 충돌 → 질감은 **납작한 네오브루탈(R2)** 유지, *세계관·리듬·레터링·단일액센트*만 차용.
 - 출처(접근 가능 보도): [HYBE 웹디자인 분석(allkpop forum)](https://forum.allkpop.com/thread/141933-the-web-design-on-hybe-official-websites-for-bts-enhypen-and-le-sserafim-is-on-t/), [NJZ 크롬-메탈 레이싱 콘셉트(Koreaboo)](https://www.koreaboo.com/news/njz-newjeans-racing-concept-debut-comeback/), [ILLIT SUPER REAL ME 폰트 논의(dafont forum)](https://www.dafont.com/forum/read/547274/illit-super-real-me-fonts), [K-pop 그래픽 디자인 시스템(Wix Studio)](https://www.wix.com/studio/blog/kpop-graphic-design)
-
-### R4. NASA Climate Spiral / "State of AI 2025" (키네틱 × 데이터 모션)
-- **무엇:** 시간축 데이터를 **움직임 자체로** 보여줌(나선·증식 애니메이션). 데이터가 모션의 근거.
-- **차별 포인트(가져올 것):** 숫자(상금·일정·배점)를 **데이터 모션**으로 — 카운트업·stripe 게이지로 표현해 "데이터 다루는 해커톤"임을 메타적으로 드러냄.
-- **버릴 것:** 과한 3D → 2D stripe/게이지로 충분.
-- 출처: [NASA Climate Spiral](https://svs.gsfc.nasa.gov/5190/), [Data Visualization — Awwwards](https://www.awwwards.com/inspiration/data-visualization-state-of-ai-2025)
 
 **종합:** R1=색의 정당성, R2=물성/골격, R3=히어로 키네틱, R4=숫자의 데이터화, R5=세계관·레터링·리듬. 다섯 축을 합쳐 *"데이터에서 나온 색 + 브루탈한 물성 + 컴백처럼 연출한 움직이는 타이포"*. 콘셉트 한 줄을 갱신: **"기상·기후 해커톤 2026 = 하나의 컴백 시즌. 온도 팔레트가 시즌 컬러, 키네틱 타이포가 타이틀곡."**
 
@@ -105,6 +106,20 @@
 
 - 본문 `line-height: 1.7`, 헤드라인 `1.02`, 디스플레이 `letter-spacing: -0.03em`.
 - 한글엔 음수 자간 과하면 깨지므로 한글 헤드라인 `-0.01em`까지만.
+
+### 2.3 폰트 로딩 (전 페이지 공유)
+
+```html
+<!-- base.css 또는 각 페이지 <head>에서 1회 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Wanted Sans Variable (한글) — jsDelivr CDN -->
+<link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
+```
+- **폴백 스택:** `font-family: 'Wanted Sans Variable', 'Bricolage Grotesque', system-ui, sans-serif;` — Inter/Roboto/Pretendard는 폴백에도 **앞세우지 않음**(시스템 폴백만).
+- **FOUT 방지:** `display=swap` + 히어로 키네틱 단어는 폰트 로드 후 `font-variation-settings` 애니메이션 시작(로드 전 정적).
+- **성능:** 가변 폰트라 weight별 다중 요청 불필요. 서브셋(한글)은 Wanted Sans split CSS가 unicode-range로 자동 분할 로드.
 
 ---
 
@@ -160,14 +175,28 @@
   --line:   #14110d;   /* 보더는 ink와 동일, 두께로 위계 */
   --shadow: #14110d;   /* 하드 섀도 색 */
 
-  /* 액션 컬러 = 폭염 레드 (데이터 팔레트에서 차용, 별도 브랜드색 금지) */
-  --accent: var(--temp-scorch);
-  --accent-ink: #fff;
+  /* 액션 컬러 — 모두 데이터 팔레트에서 차용(별도 브랜드색 금지) */
+  --accent:       #D6604C;            /* 1차 CTA·강조 = 폭염 레드(밝은 쪽). 위에 --ink 텍스트 */
+  --accent-ink:   var(--ink);         /* 네오브루탈식: 액센트 면 위 검은 텍스트 + 검은 보더 */
+  --accent-deep:  #67001F;            /* 강조 보더·헤어라인·hover. 위에 흰 텍스트 */
+  --accent-cold:  #246192;            /* 보조(차가운) 강조 — '한파' 맥락 배지 등 */
 }
 ```
 
 - **그라디언트 정책:** UI 장식용 보라/파랑 그라디언트 **금지**. 그라디언트는 오직 **stripe 데이터 비주얼**(temp 토큰들을 순서대로 잇는 것)에만 허용.
-- **대비:** 본문 텍스트는 `--ink` on `--paper` (대비 14:1). accent 위 텍스트는 흰색으로 AA 확보.
+- **대비:** 본문 `--ink` on `--paper` = 14:1. `--accent(#D6604C)` 면엔 **검은 텍스트**(neobrutalism 규칙, ~4.3:1 AA), `--accent-deep(#67001F)` 면엔 흰 텍스트(AAA).
+
+### 3.4 색 적용 규율 — "데이터 색" vs "UI 색" 분리 (★ 무지개 방지)
+
+11단계 `--temp-*`를 UI 전반에 칠하면 무지개가 된다. K-pop era의 **단일 액센트 규율(R5)**을 적용:
+
+- **UI 크롬(90%)**은 `--ink` + `--paper`/`--paper-2`의 **무채색 골격**으로만. 컬러 액센트는 한 화면에 **최대 1~2개**.
+- **`--temp-*` 11단계는 "데이터를 표현하는 곳"에서만** 풀 스펙트럼 사용:
+  - 히어로/섹션 사이 **warming-stripe 디바이더**(아래 §5)
+  - **심사 기준 게이지 바**(배점 = 온도처럼)
+  - 용어집의 데이터 관련 아이콘 칩
+- **단일 단계의 의미적 사용**: 한파 맥락 배지는 `--temp-cold`, 폭염/마감임박 배지는 `--accent`/`--accent-deep`. 의미 없이 예쁘다고 중간색을 쓰지 않는다.
+- **stripe 디바이더 스펙:** 높이 `8px`, 11개 셀을 `--temp-cold`→`--temp-scorch` 순서로 100% 폭 분할(`linear-gradient`로 hard-stop, 부드러운 보간 금지 → 띠가 보이게). 섹션 경계 위계에 따라 일부 구간만 노출.
 
 ---
 
@@ -214,23 +243,47 @@
 
 ---
 
-## 5. 레이아웃 — 안티그리드 / 비대칭
+## 5. 사이트 구조 & 레이아웃 — 멀티 페이지 / 안티그리드
 
 > 제약: 피처카드 3~4칸 균일 그리드 반사 금지. 비대칭·요소 겹침 허용.
 
+### 5.0 사이트 구조 — 멀티 페이지 ("컴백 = 트랙리스트")
+
+단일 `index.html`을 버리고 **여러 정적 페이지**로 분리한다. 앨범 트랙리스트 은유가 멀티 페이지와 정확히 맞물린다 — 각 페이지가 한 "트랙". 빌드 툴 없이 **순수 HTML + 공유 CSS**(해커톤 참가자도 따라 만들 수 있는 무빌드 원칙).
+
+| # | 페이지 | 파일 | 담는 기존 섹션 | 성격 |
+|---|---|---|---|---|
+| 00 | **홈(컴백 티저)** | `index.html` | overview + how(맛보기) | 히어로 키네틱·D-day·마퀴·트랙리스트 |
+| 01 | **시작 전에** | `start.html` | glossary + ready(준비물) | 용어집 + 계정 체크리스트 |
+| 02 | **만들기** | `build.html` | step1–5(start/make/claudemd/vercel/submit) | 핵심 워크스루(지그재그 스텝) |
+| 03 | **팀 협업** | `collab.html` | pr | GitHub PR 가이드 |
+| 04 | **규정** | `rules.html` | copyright + judge | 저작권 + 심사 기준(게이지) |
+| 05 | **FAQ** | `faq.html` | faq | 자주 묻는 질문 |
+
+- **공유 셸:** 모든 페이지가 같은 **상단 트랙리스트 네비**(현재 트랙 active 강조) + 마퀴 + 푸터. CSS는 `assets/css/base.css`(토큰·타이포·컴포넌트) 1개로 공유, 페이지별 미세 스타일만 인라인.
+- **페이지 전환 = 키네틱 모먼트:** 링크 클릭 시 트랙번호(`00→02`)가 바뀌는 느낌으로, [View Transitions API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API)(`@view-transition { navigation: auto }`)로 헤드라인 모핑 전환. 미지원 브라우저는 즉시 이동(점진적 향상). `prefers-reduced-motion`이면 전환 끔.
+- **URL/파일:** 확장자 그대로(`build.html`) — Vercel 기본 정적 호스팅으로 충분. 별도 라우팅 설정 불필요.
+- **공통 컴포넌트:** 트랙리스트 네비, 마퀴 티커, stripe 디바이더, 카드(`.brut-card`), 코드블록, CTA, 노트박스 — base.css에 1벌 정의 후 전 페이지 재사용.
+
+### 5.1 레이아웃 원칙 (안티그리드)
+
 - **베이스 그리드:** 12-col, `max-width: 1200px`, gutter `--sp-4`. 하지만 **콘텐츠는 그리드를 일부러 깬다.**
-- **섹션별 다른 레이아웃 패턴 강제(반복 금지):**
-  - `How It Works`: 좌측 6col 텍스트 + 우측 6col 다이어그램, 다이어그램 노드는 **±12px 수직 오프셋**으로 어긋나게.
-  - `용어집(glossary)`: 균일 그리드 아님 → **벽돌(masonry)형** 5칸, 카드 크기/라운드 제각각.
-  - `준비물 체크리스트`: 좌 정렬 리스트 + 큰 번호가 본문 위로 **겹침(overlap, z-index)**.
-  - `Step 1–5`: **지그재그** — 홀수 스텝 좌측 정렬, 짝수 스텝 우측 정렬, 스텝 번호는 카드 밖으로 삐져나옴.
-  - `심사 기준`: 배점을 **stripe 게이지 바**(temp 토큰)로 가로 표현.
-- **컴백 모티프(R5):**
-  - 히어로 하단 또는 섹션 사이에 **마퀴 티커** 1줄: `총상금 1,000만원 · 모집 ~7.3 · 웹 인터랙티브 · 초보 OK ·` 가 무한 가로 스크롤(`prefers-reduced-motion`에선 정지).
-  - 네비/목차를 앨범 **트랙리스트**처럼: `01 — 시작하기 / 02 — 만들기 …` 좌측 트랙번호 + 우측 제목, 모노 폰트.
-  - 히어로에 **D-day 카운트다운**(모집 마감 7/3 기준) 카드를 하드섀도로.
+- **페이지마다 다른 레이아웃 패턴 강제(반복 금지):**
+  - `index` 홈: 풀블리드 히어로(아래 §5.2) + 트랙리스트 + 마퀴. 그리드 안 쓰고 큰 여백.
+  - `start` How/용어집: How는 좌 6col 텍스트 + 우 6col 다이어그램(노드 **±12px 오프셋**). 용어집은 **벽돌(masonry)형**, 카드 크기/라운드 제각각.
+  - `start` 준비물: 좌 정렬 리스트 + 큰 번호가 본문 위로 **겹침(z-index)**.
+  - `build` Step 1–5: **지그재그** — 홀수 좌·짝수 우, 스텝 번호는 카드 밖으로 삐져나옴.
+  - `rules` 심사 기준: 배점을 **stripe 게이지 바**(temp 토큰)로 가로 표현.
 - **겹침 규칙:** 큰 배경 타이포/숫자(`--fs-hero`급)를 섹션 뒤에 `opacity: 0.06`로 깔고 콘텐츠가 그 위에 겹치게.
-- **모바일(<720px):** 안티그리드 해제 → 1열 스택. 단, 지그재그 정렬과 오프셋은 유지(좌우 살짝). 겹침은 가독성 위해 완화.
+- **모바일(<720px):** 안티그리드 해제 → 1열 스택. 트랙리스트 네비는 햄버거 대신 **가로 스크롤 칩**으로. 지그재그·오프셋은 좌우 살짝만 유지, 겹침은 가독성 위해 완화.
+
+### 5.2 히어로 구체안 (index.html)
+
+- **era 프레이밍 헤드라인(혼합 레터링):** 3행 — `WEATHER × CLIMATE` / `해커톤 2026` / `SEASON 01`. 라틴=Bricolage `wght 200↔800` 키네틱, 한글=Wanted 800.
+- **서브카피(MZ 보이스):** "터미널? 설치? 노노. 브라우저 하나로 날씨 데이터를 코드로 굴린다."
+- **D-day 카드:** 하드섀도(`--shadow-lg`), 모노 숫자 카운트다운(모집 마감 2026-07-03 기준).
+- **메타 행:** 총상금 1,000만원 · 결과물 웹 인터랙티브 · 난이도 완전초보 — 모노, stripe 디바이더 위에.
+- **배경:** warming-stripe 디바이더가 히어로 하단을 가로지름. 보라/파랑 그라디언트 금지.
 
 ---
 
@@ -291,15 +344,21 @@
 - [ ] 전 요소 **동일 fade-in**인가? → ❌
 - [ ] `prefers-reduced-motion` 처리 **누락**인가? → ❌
 - [ ] 카피에 금지 표현("손쉽게/원활하게/여러분")이 있는가? → ❌
+- [ ] 페이지마다 **트랙리스트 네비/마퀴/푸터(공유 셸)**가 빠졌거나 active 표시가 틀렸는가? → ❌
+- [ ] `--temp-*` 11단계를 **데이터가 아닌 UI 크롬에 무지개로** 칠했는가?(§3.4) → ❌
+- [ ] JS 꺼도 콘텐츠가 안 읽히는 페이지가 있는가?(점진적 향상) → ❌
 
 ---
 
 ## 9. 빌드 범위 (컨펌 후)
 
-- 단일 `index.html` 유지(현 구조), 폰트는 Google Fonts(Bricolage Grotesque, Space Mono, JetBrains Mono) + Wanted Sans CDN.
-- 기존 섹션(overview/how/glossary/ready/step1–5/pr/copyright/judge/faq) 콘텐츠 보존, **비주얼·레이아웃·카피만 리디자인.**
-- JS는 인라인 최소(키네틱 타이포·카운트업·게이지). 외부 라이브러리는 가능하면 0.
-- 산출물: 리디자인된 `index.html` + (필요시) `assets/` 정리. 브랜치 `claude/weather-hackathon-redesign-t5t2vz`, 별도 PR.
+- **멀티 페이지(무빌드):** `index.html` / `start.html` / `build.html` / `collab.html` / `rules.html` / `faq.html` (§5.0). 빌드 툴·프레임워크 없음 — 순수 HTML + 공유 CSS.
+- **공유 자산:** `assets/css/base.css`(토큰·타이포·컴포넌트·트랙리스트 네비·마퀴·stripe·카드·CTA). 폰트는 Google Fonts(Bricolage/Space Mono/JetBrains Mono) + Wanted Sans CDN(§2.3). 공통 헤더/푸터는 각 페이지에 동일 마크업 복제(또는 작은 JS partial 주입).
+- **콘텐츠 보존:** 기존 `index.html`의 모든 섹션 콘텐츠를 페이지로 재배치, **비주얼·레이아웃·카피만 리디자인**(정보는 누락 없이).
+- **JS:** 인라인 최소 — 키네틱 타이포(마우스/스크롤), D-day 카운트다운, 카운트업, stripe 게이지, View Transitions. 외부 라이브러리 가능하면 0, 필요시 GSAP만.
+- **점진적 향상 & 접근성:** JS 없이도 전 페이지 읽힘. `prefers-reduced-motion` 전역 처리.
+- **배포:** Vercel 정적 호스팅(라우팅 설정 불필요). 산출물은 브랜치 `claude/weather-hackathon-redesign-t5t2vz`에 커밋, 별도 PR.
+- **순서 제안:** ① `base.css` 토큰/컴포넌트 → ② `index.html`(히어로·트랙리스트) → ③ 나머지 페이지 → ④ 키네틱/모션 → ⑤ 모바일·접근성 점검(§8 체크리스트).
 
 ---
 
