@@ -1,0 +1,340 @@
+/* =====================================================================
+   기상·기후 AI 해커톤 2026 — 공유 디자인 시스템 (base.css)
+   콘셉트: "날씨 데이터로 짠 네오브루탈리즘 — 키네틱 타이포가 온도를 따라 움직인다."
+   스펙 출처: DESIGN.md
+   ===================================================================== */
+
+/* ---------- 0. RESET ---------- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ---------- 1. TOKENS ---------- */
+:root {
+  /* 기온 다이버징 — IPCC AR6 temp_div(11) 실측값 */
+  --temp-cold:#053061; --temp-chilly:#246192; --temp-cool:#4393C3; --temp-cool-2:#7FB5D4;
+  --temp-mild:#BCD6E6; --temp-neutral:#F8F8F8; --temp-warm:#EDC5BF; --temp-warm-2:#E19286;
+  --temp-warmer:#D6604C; --temp-hot:#9E3036; --temp-scorch:#67001F;
+
+  /* 강수 시퀀셜 — IPCC AR6 prec_seq */
+  --rain-none:#FFFFE5; --rain-light:#9ACBBA; --rain-mod:#56A89D; --rain-heavy:#278077; --rain-storm:#003C30;
+
+  /* 구조/중립 */
+  --ink:#14110d; --paper:#f7f4ec; --paper-2:#efe9dc; --shadow:#14110d;
+
+  /* 액션 (데이터 팔레트에서 차용) */
+  --accent:#D6604C; --accent-ink:var(--ink); --accent-deep:#67001F; --accent-cold:#246192;
+
+  /* 타입 스케일 */
+  --fs-hero:clamp(3.5rem,12vw,11rem);
+  --fs-display:clamp(2.2rem,6vw,4.5rem);
+  --fs-h2:clamp(1.6rem,3vw,2.5rem);
+  --fs-h3:1.25rem; --fs-body:1.0625rem; --fs-sm:0.8125rem; --fs-mono:0.75rem;
+
+  /* 폰트 패밀리 */
+  --ff-display:'Bricolage Grotesque', system-ui, sans-serif;
+  --ff-kr:'Wanted Sans Variable','Wanted Sans', system-ui, sans-serif;
+  --ff-mono:'Space Mono', ui-monospace, monospace;
+  --ff-code:'JetBrains Mono', ui-monospace, monospace;
+
+  /* 스페이싱 (비선형) */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:20px; --sp-5:32px; --sp-6:52px; --sp-7:84px; --sp-8:136px;
+
+  /* 라운드 (차등) */
+  --r-sharp:0; --r-sm:4px; --r-md:14px; --r-lg:28px; --r-pill:999px;
+
+  /* 보더 & 하드 섀도 */
+  --bd-1:1.5px; --bd-2:2.5px; --bd-3:4px;
+  --shadow-sm:4px 4px 0 var(--shadow);
+  --shadow-md:7px 7px 0 var(--shadow);
+  --shadow-lg:12px 12px 0 var(--shadow);
+
+  /* 모션 */
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+  --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+  --dur-fast:120ms; --dur-mid:320ms; --dur-slow:640ms;
+
+  --maxw:1200px;
+}
+
+/* ---------- 2. BASE ELEMENTS ---------- */
+body {
+  font-family: var(--ff-kr);
+  font-weight: 420;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1,h2,h3 { line-height: 1.06; font-weight: 800; letter-spacing: -0.01em; }
+strong { font-weight: 700; }
+::selection { background: var(--accent); color: #fff; }
+
+/* mono label */
+.kicker {
+  font-family: var(--ff-mono); font-size: var(--fs-mono); font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-deep);
+}
+
+/* ---------- 3. STRIPE DIVIDER (데이터 비주얼) ---------- */
+.stripe {
+  height: 8px; width: 100%; border: none;
+  background: linear-gradient(90deg,
+    var(--temp-cold) 0 9.09%, var(--temp-chilly) 9.09% 18.18%, var(--temp-cool) 18.18% 27.27%,
+    var(--temp-cool-2) 27.27% 36.36%, var(--temp-mild) 36.36% 45.45%, var(--temp-neutral) 45.45% 54.54%,
+    var(--temp-warm) 54.54% 63.63%, var(--temp-warm-2) 63.63% 72.72%, var(--temp-warmer) 72.72% 81.81%,
+    var(--temp-hot) 81.81% 90.9%, var(--temp-scorch) 90.9% 100%);
+}
+.stripe.tall { height: 14px; }
+
+/* ---------- 4. SHARED SHELL: TOPBAR + TRACKLIST NAV ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--paper);
+  border-bottom: var(--bd-3) solid var(--ink);
+  display: flex; align-items: stretch; min-height: 60px;
+}
+.topbar-logo {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 var(--sp-4); border-right: var(--bd-2) solid var(--ink);
+  font-family: var(--ff-display); font-weight: 800; font-size: 0.95rem;
+  letter-spacing: -0.02em; white-space: nowrap;
+}
+.topbar-logo .dot { width: 12px; height: 12px; background: var(--accent); border: var(--bd-1) solid var(--ink); border-radius: 50%; }
+.tracklist {
+  display: flex; align-items: stretch; flex: 1; overflow-x: auto; scrollbar-width: none;
+}
+.tracklist::-webkit-scrollbar { display: none; }
+.tracklist a {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 var(--sp-4); text-decoration: none; white-space: nowrap;
+  border-right: var(--bd-1) solid color-mix(in srgb, var(--ink) 18%, transparent);
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+.tracklist a .tno { font-family: var(--ff-mono); font-size: 0.7rem; font-weight: 700; color: var(--accent-deep); }
+.tracklist a .tname { font-weight: 600; font-size: 0.9rem; }
+.tracklist a:hover { background: var(--paper-2); }
+.tracklist a.active { background: var(--ink); color: var(--paper); }
+.tracklist a.active .tno { color: var(--accent); }
+
+/* ---------- 5. MARQUEE TICKER ---------- */
+.marquee {
+  background: var(--ink); color: var(--paper); overflow: hidden; white-space: nowrap;
+  border-bottom: var(--bd-3) solid var(--ink);
+}
+.marquee-track {
+  display: inline-flex; gap: var(--sp-5); padding: 10px 0;
+  font-family: var(--ff-mono); font-size: var(--fs-mono); letter-spacing: 0.08em; text-transform: uppercase;
+  animation: marquee 28s linear infinite; will-change: transform;
+}
+.marquee-track span { display: inline-flex; align-items: center; gap: var(--sp-5); }
+.marquee-track .sep { color: var(--accent); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---------- 6. LAYOUT ---------- */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--sp-4); }
+.page-section { padding-block: var(--sp-7); }
+.page-section.tight { padding-block: var(--sp-6); }
+.section-head { margin-bottom: var(--sp-5); max-width: 720px; }
+.section-head h2 { font-size: var(--fs-h2); margin: var(--sp-2) 0; }
+.section-head p { color: color-mix(in srgb, var(--ink) 72%, transparent); }
+
+/* ---------- 7. NEOBRUTAL CARD ---------- */
+.brut-card {
+  background: var(--paper); border: var(--bd-2) solid var(--ink);
+  box-shadow: var(--shadow-md); padding: var(--sp-5);
+  border-radius: var(--r-sharp);
+}
+.brut-card.soft { border-radius: var(--r-md); }
+.brut-card.emph { border-width: var(--bd-3); box-shadow: var(--shadow-lg); }
+.card-hover { transition: transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast) var(--ease-spring); }
+.card-hover:hover { transform: translate(3px,3px); box-shadow: var(--shadow-sm); }
+
+/* ---------- 8. CALLOUT ---------- */
+.callout {
+  border: var(--bd-2) solid var(--ink); border-left: var(--sp-2) solid var(--accent-cold);
+  background: var(--paper); padding: var(--sp-4); border-radius: var(--r-md);
+  margin-block: var(--sp-3); box-shadow: var(--shadow-sm);
+}
+.callout.important { border-left-color: var(--accent); }
+.callout-title { font-weight: 700; margin-bottom: 4px; }
+.callout p { color: color-mix(in srgb, var(--ink) 80%, transparent); font-size: var(--fs-sm); line-height: 1.65; }
+
+/* ---------- 9. CODE BLOCK ---------- */
+.code-block {
+  position: relative; background: var(--ink); color: #ECE6D8;
+  font-family: var(--ff-code); font-size: 0.8rem; line-height: 1.7;
+  padding: var(--sp-5) var(--sp-4) var(--sp-4); border: var(--bd-3) solid var(--ink);
+  box-shadow: var(--shadow-md); overflow-x: auto; white-space: pre-wrap; word-break: break-word;
+  border-radius: var(--r-sharp); margin-block: var(--sp-3);
+}
+.code-label {
+  position: absolute; top: 0; right: 0;
+  font-family: var(--ff-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink); background: var(--accent);
+  padding: 4px 10px; border-left: var(--bd-1) solid var(--ink); border-bottom: var(--bd-1) solid var(--ink);
+}
+
+/* ---------- 10. CTA ---------- */
+.cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--ff-display); font-weight: 700; font-size: 1.05rem;
+  padding: var(--sp-3) var(--sp-5); text-decoration: none;
+  background: var(--accent); color: var(--accent-ink);
+  border: var(--bd-3) solid var(--ink); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md); text-transform: lowercase;
+  transition: transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast) var(--ease-spring);
+}
+.cta:hover { transform: translate(3px,3px); box-shadow: var(--shadow-sm); }
+.cta.ghost { background: var(--paper); }
+
+/* ---------- 11. CHECKLIST ---------- */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: var(--sp-2); }
+.checklist li { display: flex; gap: var(--sp-3); align-items: flex-start; font-size: var(--fs-sm); line-height: 1.6; }
+.check-box {
+  flex-shrink: 0; width: 22px; height: 22px; margin-top: 2px;
+  border: var(--bd-2) solid var(--ink); background: var(--paper); border-radius: var(--r-sm); cursor: pointer;
+  transition: background var(--dur-fast);
+}
+.check-box.checked { background: var(--accent-cold); }
+.check-box.checked::after { content: "✓"; color: #fff; font-weight: 900; display: grid; place-items: center; height: 100%; }
+
+/* ---------- 12. CHAT DEMO ---------- */
+.chat-demo {
+  border: var(--bd-2) solid var(--ink); background: var(--paper-2);
+  padding: var(--sp-4); border-radius: var(--r-md); margin-block: var(--sp-3);
+  display: flex; flex-direction: column; gap: var(--sp-2); box-shadow: var(--shadow-sm);
+}
+.chat-label { font-family: var(--ff-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-deep); margin-bottom: 2px; }
+.chat-bubble { font-size: var(--fs-sm); line-height: 1.55; padding: var(--sp-3); border: var(--bd-1) solid var(--ink); max-width: 85%; }
+.chat-bubble.user { align-self: flex-end; background: var(--ink); color: var(--paper); border-radius: 14px 14px 2px 14px; }
+.chat-bubble.bot { align-self: flex-start; background: var(--paper); border-radius: 14px 14px 14px 2px; }
+
+/* ---------- 13. GLOSSARY (masonry-ish) ---------- */
+.glossary-grid { columns: 2; column-gap: var(--sp-4); }
+.glossary-item {
+  break-inside: avoid; margin-bottom: var(--sp-4);
+  border: var(--bd-2) solid var(--ink); background: var(--paper); padding: var(--sp-4);
+  box-shadow: var(--shadow-sm);
+}
+.glossary-item:nth-child(odd) { border-radius: var(--r-md); }
+.glossary-item:nth-child(3n) { border-radius: var(--r-sharp); box-shadow: var(--shadow-md); }
+.glossary-term { font-weight: 800; font-size: 1.1rem; margin-bottom: 6px; }
+.glossary-aka { font-family: var(--ff-mono); font-size: 0.7rem; color: var(--accent-deep); font-weight: 700; }
+.glossary-def { font-size: var(--fs-sm); color: color-mix(in srgb, var(--ink) 82%, transparent); line-height: 1.6; }
+.glossary-analogy { font-size: var(--fs-sm); margin-top: 8px; padding-top: 8px; border-top: var(--bd-1) dashed color-mix(in srgb, var(--ink) 35%, transparent); color: var(--accent-cold); font-weight: 600; }
+
+/* ---------- 14. STEP (zigzag) ---------- */
+.step {
+  position: relative; border: var(--bd-2) solid var(--ink); background: var(--paper);
+  padding: var(--sp-5); margin-bottom: var(--sp-6); box-shadow: var(--shadow-md); border-radius: var(--r-sharp);
+  max-width: 760px;
+}
+.step.right { margin-left: auto; }
+.step-badge {
+  position: absolute; top: calc(-1 * var(--sp-4)); left: calc(-1 * var(--sp-2));
+  width: 52px; height: 52px; display: grid; place-items: center;
+  background: var(--ink); color: var(--paper); font-family: var(--ff-display); font-weight: 800; font-size: 1.4rem;
+  border: var(--bd-3) solid var(--accent); box-shadow: var(--shadow-sm);
+}
+.step.right .step-badge { left: auto; right: calc(-1 * var(--sp-2)); }
+.step h3 { font-size: var(--fs-h3); margin-bottom: var(--sp-3); padding-top: var(--sp-2); }
+.step p { font-size: var(--fs-sm); color: color-mix(in srgb,var(--ink) 82%, transparent); margin-bottom: var(--sp-3); }
+.step ol, .step ul { padding-left: 1.3em; font-size: var(--fs-sm); line-height: 1.8; margin-bottom: var(--sp-2); }
+.step-note {
+  font-size: var(--fs-sm); background: var(--paper-2); border: var(--bd-1) solid var(--ink);
+  padding: var(--sp-3); margin-top: var(--sp-3); border-radius: var(--r-sm);
+}
+
+/* ---------- 15. TABLE ---------- */
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); border: var(--bd-2) solid var(--ink); box-shadow: var(--shadow-sm); background: var(--paper); }
+.data-table th { background: var(--ink); color: var(--paper); text-align: left; padding: var(--sp-3); font-family: var(--ff-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.data-table td { padding: var(--sp-3); border-top: var(--bd-1) solid color-mix(in srgb,var(--ink) 25%, transparent); vertical-align: top; }
+.data-table .label-col { font-weight: 700; white-space: nowrap; }
+
+/* ---------- 16. SCORE GAUGE (배점 = 온도) ---------- */
+.gauge-row { display: grid; grid-template-columns: 140px 1fr 56px; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-3); }
+.gauge-row .g-label { font-weight: 700; font-size: var(--fs-sm); }
+.gauge-track { height: 22px; border: var(--bd-2) solid var(--ink); background: var(--paper); overflow: hidden; }
+.gauge-fill { height: 100%; width: 0; transition: width var(--dur-slow) var(--ease-out); }
+.gauge-row .g-val { font-family: var(--ff-mono); font-weight: 700; text-align: right; }
+.gauge-row .g-desc { grid-column: 1 / -1; font-size: var(--fs-sm); color: color-mix(in srgb,var(--ink) 65%, transparent); margin-top: -4px; }
+
+/* ---------- 17. FOOTER ---------- */
+.doc-footer {
+  border-top: var(--bd-3) solid var(--ink); background: var(--ink); color: var(--paper);
+  padding: var(--sp-6) var(--sp-4); font-size: var(--fs-sm); line-height: 1.9; text-align: center;
+}
+.doc-footer .footer-nav { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; margin-bottom: var(--sp-4); }
+.doc-footer .footer-nav a { font-family: var(--ff-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none; color: var(--paper); opacity: 0.7; }
+.doc-footer .footer-nav a:hover { opacity: 1; color: var(--accent); }
+
+/* ---------- 18. PAGE HEADER (서브 페이지 공통) ---------- */
+.page-hero { padding-block: var(--sp-7) var(--sp-5); position: relative; }
+.page-hero .track-id { font-family: var(--ff-mono); font-weight: 700; color: var(--accent-deep); font-size: var(--fs-mono); letter-spacing: 0.12em; }
+.page-hero h1 {
+  font-family: var(--ff-display); font-size: var(--fs-display); font-weight: 800;
+  letter-spacing: -0.03em; margin: var(--sp-2) 0 var(--sp-3);
+}
+.page-hero h1 .kr { font-family: var(--ff-kr); }
+.page-hero .lead { max-width: 640px; color: color-mix(in srgb,var(--ink) 78%, transparent); }
+.page-hero .ghost-num {
+  position: absolute; top: -8px; right: 0; z-index: -1;
+  font-family: var(--ff-display); font-weight: 800; font-size: clamp(8rem,22vw,18rem);
+  color: var(--ink); opacity: 0.05; line-height: 0.8; pointer-events: none; user-select: none;
+}
+
+/* ---------- 19. PREV/NEXT PAGER ---------- */
+.pager { display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; padding-block: var(--sp-6); }
+.pager a {
+  flex: 1; min-width: 200px; text-decoration: none; border: var(--bd-2) solid var(--ink); background: var(--paper);
+  padding: var(--sp-4); box-shadow: var(--shadow-sm); transition: transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast) var(--ease-spring);
+}
+.pager a:hover { transform: translate(3px,3px); box-shadow: none; }
+.pager a.next { text-align: right; background: var(--ink); color: var(--paper); }
+.pager .p-dir { font-family: var(--ff-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-deep); }
+.pager a.next .p-dir { color: var(--accent); }
+.pager .p-title { font-family: var(--ff-display); font-weight: 700; font-size: 1.1rem; margin-top: 4px; }
+
+/* ---------- 20. SCREENSHOTS ---------- */
+.screenshot-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin-block: var(--sp-3); }
+.screenshot-figure { border: var(--bd-2) solid var(--ink); box-shadow: var(--shadow-sm); background: var(--paper); }
+.screenshot-figure img { width: 100%; border-bottom: var(--bd-2) solid var(--ink); }
+.screenshot-figure figcaption { font-size: var(--fs-sm); padding: var(--sp-3); }
+
+/* =====================================================================
+   RESPONSIVE
+   ===================================================================== */
+@media (max-width: 860px) {
+  .glossary-grid { columns: 1; }
+  .screenshot-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .topbar { flex-wrap: wrap; }
+  .topbar-logo { width: 100%; border-right: none; border-bottom: var(--bd-1) solid var(--ink); height: 52px; }
+  .step, .step.right { margin-left: 0; margin-right: 0; }
+  .gauge-row { grid-template-columns: 1fr; gap: 4px; }
+  .gauge-row .g-val { text-align: left; }
+  .pager a, .pager a.next { text-align: left; }
+}
+
+/* =====================================================================
+   MOTION — 의미 있는 곳에만 (전 요소 fade-in 금지)
+   ===================================================================== */
+/* 히어로 키네틱 단어 (마우스/스크롤 반응은 JS에서 set) */
+.kinetic { font-variation-settings: "wght" 700, "opsz" 96; transition: font-variation-settings var(--dur-mid) var(--ease-out); will-change: font-variation-settings; }
+
+/* 열 아지랑이(heat-haze): 폭염 단어에만 */
+.heat { filter: url(#heat-haze); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  .marquee-track { animation: none; }
+  .kinetic { transition: none; }
+  .heat { filter: none; }
+}

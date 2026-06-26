@@ -4,807 +4,173 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>기상·기후 AI 해커톤 2026 — 개발·배포 가이드</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<meta name="description" content="설치도 터미널도 없이 웹 Claude Code로 기상·기후 인터랙티브 도구를 만들고 Vercel로 배포하는 참가자 가이드.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --black: #111; --gray-800: #333; --gray-600: #666; --gray-400: #999;
-    --gray-300: #bbb; --gray-200: #d9d9d9; --gray-100: #eee; --gray-50: #f7f7f7;
-    --white: #fff;
+  @view-transition { navigation: auto; }
+  /* 홈 전용 히어로 */
+  .hero { position: relative; padding-block: var(--sp-7) var(--sp-6); }
+  .hero-headline {
+    font-family: var(--ff-display); font-weight: 800; letter-spacing: -0.04em;
+    line-height: 0.92; font-size: var(--fs-hero); text-transform: uppercase;
   }
-  body {
-    font-family: 'Pretendard', -apple-system, sans-serif;
-    background: var(--white); color: var(--black);
-    line-height: 1.7; -webkit-font-smoothing: antialiased;
+  .hero-headline .row { display: block; }
+  .hero-headline .row.kr { font-family: var(--ff-kr); text-transform: none; letter-spacing: -0.02em; font-size: clamp(1.5rem,4.5vw,3.2rem); font-weight: 700; line-height: 1.1; }
+  .hero-headline .kr { font-family: var(--ff-kr); text-transform: none; letter-spacing: -0.02em; font-size: clamp(1.5rem,4.5vw,3.2rem); font-weight: 700; }
+  .hero-headline .cold { color: var(--temp-cold); }
+  .hero-headline .hot  { color: var(--temp-scorch); }
+  .hero-sub { max-width: 560px; margin: var(--sp-4) 0 var(--sp-5); font-size: 1.15rem; line-height: 1.6; }
+  .hero-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--sp-5); align-items: end; }
+  .dday {
+    border: var(--bd-3) solid var(--ink); background: var(--paper); box-shadow: var(--shadow-lg);
+    padding: var(--sp-4); align-self: end;
   }
+  .dday .dday-label { font-family: var(--ff-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-deep); }
+  .dday-clock { display: flex; gap: var(--sp-3); margin-top: var(--sp-2); }
+  .dday-clock .unit { text-align: center; }
+  .dday-clock .num { font-family: var(--ff-display); font-weight: 800; font-size: clamp(2rem,5vw,3.2rem); line-height: 1; }
+  .dday-clock .unit:first-child .num { color: var(--accent); }
+  .dday-clock .cap { font-family: var(--ff-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: color-mix(in srgb,var(--ink) 60%, transparent); }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: var(--sp-5); margin-top: var(--sp-5); font-family: var(--ff-mono); font-size: var(--fs-mono); text-transform: uppercase; letter-spacing: 0.06em; }
+  .hero-meta b { font-family: var(--ff-display); font-size: 1.15rem; display: block; text-transform: none; letter-spacing: -0.01em; }
+  .hero-meta .accent { color: var(--accent-deep); }
 
-  /* ===== TOP BAR ===== */
-  .topbar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--gray-100);
-    padding: 0 32px; display: flex; align-items: center; height: 56px;
+  /* 트랙리스트 (홈 본문) */
+  .tracks { list-style: none; border-top: var(--bd-3) solid var(--ink); }
+  .tracks li a {
+    display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: var(--sp-4);
+    padding: var(--sp-4) var(--sp-2); text-decoration: none; border-bottom: var(--bd-2) solid var(--ink);
+    transition: background var(--dur-fast), padding-left var(--dur-fast) var(--ease-out);
   }
-  .topbar-logo { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; margin-right: 32px; white-space: nowrap; }
-  .topbar-nav { display: flex; gap: 4px; flex: 1; overflow-x: auto; }
-  .topbar-nav a {
-    padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600;
-    text-decoration: none; color: var(--gray-400); white-space: nowrap;
-    transition: all 0.15s;
-  }
-  .topbar-nav a:hover { color: var(--black); background: var(--gray-50); }
-  .topbar-nav a.active { color: var(--white); background: var(--black); }
+  .tracks li a:hover { background: var(--ink); color: var(--paper); padding-left: var(--sp-4); }
+  .tracks .tno { font-family: var(--ff-mono); font-weight: 700; font-size: 1.1rem; color: var(--accent-deep); }
+  .tracks li a:hover .tno { color: var(--accent); }
+  .tracks .tt { font-family: var(--ff-display); font-weight: 700; font-size: clamp(1.3rem,3vw,2rem); }
+  .tracks .td { font-size: var(--fs-sm); color: color-mix(in srgb,var(--ink) 60%, transparent); }
+  .tracks li a:hover .td { color: color-mix(in srgb,var(--paper) 70%, transparent); }
+  .tracks .arrow { font-family: var(--ff-display); font-weight: 800; font-size: 1.5rem; }
 
-  /* ===== HERO ===== */
-  .hero {
-    padding: 80px 40px 60px; text-align: center;
-    border-bottom: 1px solid var(--gray-100);
-  }
-  .hero-tag {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--gray-400); margin-bottom: 16px;
-  }
-  .hero h1 {
-    font-size: clamp(32px, 5vw, 52px); font-weight: 800;
-    line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 16px;
-  }
-  .hero h1 em { font-style: normal; color: var(--gray-300); }
-  .hero-desc {
-    font-size: 15px; color: var(--gray-600); max-width: 560px;
-    margin: 0 auto 32px; line-height: 1.8;
-  }
-  .hero-meta {
-    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
-    font-size: 12px; color: var(--gray-400);
-  }
-  .hero-meta strong { color: var(--black); font-weight: 600; }
-
-  /* ===== SECTION ===== */
-  .section { max-width: 860px; margin: 0 auto; padding: 64px 40px; }
-  .section + .section { border-top: 1px solid var(--gray-100); }
-  .section-num {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-    color: var(--gray-400); text-transform: uppercase; margin-bottom: 8px;
-  }
-  .section-title {
-    font-size: clamp(22px, 3vw, 32px); font-weight: 800;
-    letter-spacing: -0.02em; margin-bottom: 8px;
-  }
-  .section-desc {
-    font-size: 14px; color: var(--gray-600); max-width: 600px;
-    line-height: 1.8; margin-bottom: 32px;
-  }
-
-  /* ===== STEP CARD ===== */
-  .step {
-    border: 1px solid var(--gray-100); border-radius: 16px;
-    padding: 28px 28px; margin-bottom: 16px;
-    background: var(--white); transition: box-shadow 0.2s;
-  }
-  .step:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.05); }
-  .step-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-  .step-badge {
-    width: 36px; height: 36px; border-radius: 10px;
-    background: var(--black); color: var(--white);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 900; flex-shrink: 0;
-  }
-  .step h3 { font-size: 17px; font-weight: 700; }
-  .step p { font-size: 13px; color: var(--gray-600); line-height: 1.8; margin-bottom: 12px; }
-  .step ol, .step ul { font-size: 13px; color: var(--gray-600); line-height: 1.9; padding-left: 20px; margin-bottom: 8px; }
-  .step-note {
-    font-size: 12px; color: var(--gray-400); line-height: 1.7;
-    padding: 12px 16px; background: var(--gray-50); border-radius: 8px; margin-top: 8px;
-  }
-  .step-note strong { color: var(--gray-600); }
-
-  /* ===== CODE BLOCK ===== */
-  .code-block {
-    background: var(--black); color: #e0e0e0;
-    border-radius: 12px; padding: 20px 24px;
-    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-    font-size: 12.5px; line-height: 1.7; overflow-x: auto;
-    margin: 12px 0 8px; position: relative; white-space: pre;
-  }
-  .code-block .comment { color: #777; }
-  .code-block .tag { color: #9fd1ff; }
-  .code-block .str { color: #b5e8a0; }
-  .code-label {
-    position: absolute; top: 10px; right: 14px;
-    font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: #555;
-  }
-
-  /* ===== DIAGRAM ===== */
-  .diagram {
-    display: flex; align-items: center; justify-content: center;
-    gap: 0; flex-wrap: wrap; margin: 24px 0;
-    padding: 32px 20px; background: var(--gray-50); border-radius: 16px;
-  }
-  .diagram-node {
-    padding: 12px 20px; border-radius: 12px;
-    font-size: 13px; font-weight: 700; text-align: center; min-width: 100px;
-  }
-  .diagram-node.person { background: var(--black); color: var(--white); }
-  .diagram-node.agent { background: var(--white); border: 2px solid var(--black); color: var(--black); }
-  .diagram-node .sub { font-size: 10px; font-weight: 500; opacity: 0.6; display: block; margin-top: 2px; }
-  .diagram-arrow { font-size: 18px; color: var(--gray-300); padding: 0 8px; font-weight: 300; }
-
-  /* ===== CHECKLIST ===== */
-  .checklist { list-style: none; margin: 16px 0; }
-  .checklist li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px; padding: 10px 0; color: var(--gray-800);
-    border-bottom: 1px solid var(--gray-50);
-  }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist li a { color: var(--black); }
-  .check-box {
-    width: 20px; height: 20px; border-radius: 6px;
-    border: 2px solid var(--gray-200); flex-shrink: 0; margin-top: 2px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s;
-  }
-  .check-box.checked { background: var(--black); border-color: var(--black); }
-  .check-box.checked::after { content: ""; display: block; width: 6px; height: 10px;
-    border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); margin-top: -2px; }
-
-  /* ===== CALLOUT ===== */
-  .callout { padding: 20px 24px; border-radius: 12px; border: 1px solid var(--gray-200); margin: 20px 0; }
-  .callout-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-  .callout p { font-size: 13px; color: var(--gray-600); line-height: 1.7; }
-  .callout.important { border-color: var(--black); border-width: 2px; }
-
-  /* ===== COMPARE TABLE ===== */
-  .compare-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
-  .compare-table th {
-    text-align: left; padding: 12px 16px; font-weight: 700;
-    border-bottom: 2px solid var(--black); font-size: 11px;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-600);
-  }
-  .compare-table td {
-    padding: 14px 16px; border-bottom: 1px solid var(--gray-100);
-    color: var(--gray-800); line-height: 1.6; vertical-align: top;
-  }
-  .compare-table tr:hover td { background: var(--gray-50); }
-  .compare-table .label-col { font-weight: 700; color: var(--black); white-space: nowrap; width: 160px; }
-
-  /* ===== GLOSSARY ===== */
-  .glossary-item { padding: 20px 0; border-bottom: 1px solid var(--gray-100); }
-  .glossary-item:last-child { border-bottom: none; }
-  .glossary-term { font-size: 15px; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.01em; }
-  .glossary-aka { font-size: 11px; font-weight: 600; color: var(--gray-400); margin-left: 8px; letter-spacing: 0.02em; }
-  .glossary-def { font-size: 13px; color: var(--gray-600); line-height: 1.8; }
-  .glossary-analogy {
-    font-size: 12px; color: var(--gray-400); margin-top: 6px;
-    padding: 8px 14px; background: var(--gray-50); border-radius: 8px; line-height: 1.7;
-  }
-
-  /* ===== SCREENSHOT FIGURE ===== */
-  .screenshot-row { display: flex; gap: 16px; margin: 16px 0; flex-wrap: wrap; }
-  .screenshot-figure { flex: 1 1 260px; min-width: 220px; }
-  .screenshot-figure img {
-    width: 100%; display: block; border: 1px solid var(--gray-200);
-    border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-  .screenshot-figure figcaption {
-    font-size: 12px; color: var(--gray-400); margin-top: 8px; line-height: 1.6;
-  }
-  .screenshot-figure figcaption strong { color: var(--gray-600); }
-
-  /* ===== CHAT BUBBLE ===== */
-  .chat-demo { background: var(--gray-50); border-radius: 16px; padding: 24px; margin: 16px 0; }
-  .chat-label { font-size: 10px; font-weight: 700; color: var(--gray-400); margin-bottom: 4px; letter-spacing: 0.04em; }
-  .chat-bubble { max-width: 88%; padding: 12px 18px; border-radius: 16px; font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
-  .chat-bubble:last-child { margin-bottom: 0; }
-  .chat-bubble.user { background: var(--black); color: var(--white); margin-left: auto; border-bottom-right-radius: 4px; }
-  .chat-bubble.bot { background: var(--white); border: 1px solid var(--gray-200); margin-right: auto; border-bottom-left-radius: 4px; }
-
-  /* ===== FOOTER ===== */
-  .doc-footer {
-    text-align: center; padding: 48px 40px;
-    border-top: 1px solid var(--gray-100);
-    font-size: 12px; color: var(--gray-400); line-height: 1.8;
-  }
-
-  @media (max-width: 700px) {
-    .section { padding: 40px 16px; }
-    .topbar { padding: 0 12px; }
-    .hero { padding: 60px 20px 40px; }
-    .step { padding: 20px 18px; }
-    .code-block { font-size: 11px; padding: 16px 18px; }
-    .diagram { gap: 4px; padding: 20px 12px; }
-    .diagram-node { min-width: 70px; padding: 8px 12px; font-size: 11px; }
-    .diagram-arrow { padding: 0 4px; font-size: 14px; }
-    .compare-table { font-size: 12px; }
-    .compare-table td, .compare-table th { padding: 10px 10px; }
-    .compare-table .label-col { width: auto; }
+  .what-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-4); margin-top: var(--sp-4); }
+  .what-node { border: var(--bd-2) solid var(--ink); background: var(--paper); padding: var(--sp-4); box-shadow: var(--shadow-sm); }
+  .what-node:nth-child(2) { transform: translateY(18px); border-color: var(--accent); }
+  .what-node .wn-k { font-family: var(--ff-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-deep); }
+  .what-node .wn-t { font-family: var(--ff-display); font-weight: 800; font-size: 1.2rem; margin: 4px 0; }
+  .what-node .wn-d { font-size: var(--fs-sm); color: color-mix(in srgb,var(--ink) 72%, transparent); }
+  @media (max-width: 720px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .what-grid { grid-template-columns: 1fr; }
+    .what-node:nth-child(2) { transform: none; }
+    .tracks li a { grid-template-columns: 44px 1fr auto; gap: var(--sp-3); }
   }
 </style>
 </head>
-<body>
+<body data-hero>
 
-<!-- ===== TOP BAR ===== -->
+<!-- heat-haze SVG filter -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="heat-haze">
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="2" result="n">
+      <animate attributeName="baseFrequency" dur="14s" values="0.012 0.04;0.016 0.05;0.012 0.04" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<!-- ===== SHARED SHELL ===== -->
 <nav class="topbar">
-  <div class="topbar-logo">기상·기후 AI 해커톤</div>
-  <div class="topbar-nav">
-    <a href="#overview" class="active">개요</a>
-    <a href="#glossary">용어</a>
-    <a href="#ready">준비물</a>
-    <a href="#start">1. 시작하기</a>
-    <a href="#make">2. 만들기</a>
-    <a href="#claudemd">3. CLAUDE.md</a>
-    <a href="#vercel">4. 배포</a>
-    <a href="#submit">5. 제출</a>
-    <a href="#pr">팀 협업 PR</a>
-    <a href="#copyright">저작권</a>
-    <a href="#judge">심사 기준</a>
-    <a href="#faq">FAQ</a>
+  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
+  <div class="tracklist">
+    <a href="index.html" class="active"><span class="tno">00</span><span class="tname">홈</span></a>
+    <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
+    <a href="build.html"><span class="tno">02</span><span class="tname">만들기</span></a>
+    <a href="collab.html"><span class="tno">03</span><span class="tname">팀 협업</span></a>
+    <a href="rules.html"><span class="tno">04</span><span class="tname">규정</span></a>
+    <a href="faq.html"><span class="tno">05</span><span class="tname">FAQ</span></a>
   </div>
 </nav>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track"><span>
+    총상금 1,000만원 <i class="sep">✺</i> 모집 ~7.3 <i class="sep">✺</i> 웹 인터랙티브 도구 <i class="sep">✺</i> 완전 초보 OK <i class="sep">✺</i> 설치 없음 <i class="sep">✺</i> 브라우저 하나면 끝 <i class="sep">✺</i>&nbsp;
+  </span></div>
+</div>
 
 <!-- ===== HERO ===== -->
-<section class="hero" id="overview">
-  <div class="hero-tag">기상·기후 AI 해커톤 2026 / 참가자 가이드</div>
-  <h1>설치도 터미널도 없이<br><em>웹 Claude Code</em>로 만든다</h1>
-  <p class="hero-desc">
-    이 대회의 결과물은 누구나 웹에서 접속해 직접 조작하는 인터랙티브 도구입니다.
-    웹브라우저에서 Claude Code(claude.ai/code)에게 한국어로 요청하면 코드를 만들고
-    GitHub에 자동 저장까지 해줍니다. 그 뒤 Vercel로 한 번 연결하면 제출용 링크가 완성됩니다.
-  </p>
+<header class="hero wrap">
+  <p class="kicker">기상·기후 AI 해커톤 2026 / SEASON 01</p>
+  <div class="hero-grid">
+    <div>
+      <h1 class="hero-headline">
+        <span class="row"><span class="kinetic cold">WEATHER</span></span>
+        <span class="row kr">설치도 터미널도 없이</span>
+        <span class="row"><span class="kinetic hot heat">CODE</span> <span class="kr">로 만든다</span></span>
+      </h1>
+      <p class="hero-sub">터미널? 설치? 노노. 브라우저 하나로 날씨 데이터를 코드로 굴린다. 웹 Claude Code에게 한국어로 시키면 코드 작성부터 GitHub 저장까지, Vercel만 한 번 연결하면 제출용 링크 완성.</p>
+      <a class="cta" href="start.html">시작하러 가기 →</a>
+    </div>
+    <div class="dday" data-countdown="2026-07-03T23:59:59+09:00">
+      <span class="dday-label">모집 마감까지</span>
+      <div class="dday-clock">
+        <div class="unit"><div class="num" data-d>—</div><div class="cap">Days</div></div>
+        <div class="unit"><div class="num" data-h>00</div><div class="cap">Hrs</div></div>
+        <div class="unit"><div class="num" data-m>00</div><div class="cap">Min</div></div>
+        <div class="unit"><div class="num" data-s>00</div><div class="cap">Sec</div></div>
+      </div>
+    </div>
+  </div>
   <div class="hero-meta">
-    <span>결과물 <strong>웹 인터랙티브 도구</strong></span>
-    <span>난이도 <strong>완전 초보 OK</strong></span>
-    <span>총상금 <strong>1,000만원</strong></span>
-    <span>모집 <strong>~7월 3일</strong></span>
+    <span>결과물<b>웹 인터랙티브 도구</b></span>
+    <span>난이도<b>완전 초보 OK</b></span>
+    <span>총상금<b class="accent">₩<span data-countup="10000000">10,000,000</span></b></span>
+    <span>모집<b>~ 2026.07.03</b></span>
+  </div>
+</header>
+<hr class="stripe tall">
+
+<!-- ===== WHAT YOU MAKE ===== -->
+<section class="page-section wrap">
+  <div class="section-head">
+    <p class="kicker">What you make</p>
+    <h2>무엇을 만드나요?</h2>
+    <p>기상·기후 데이터를 학습자가 직접 조작하며 배우는 웹 도구. 예보관 체험, 기압·바람 인터랙티브 맵처럼요. 서버도 앱도 필요 없이 웹페이지 하나로 충분합니다.</p>
+  </div>
+  <div class="what-grid">
+    <div class="what-node"><div class="wn-k">01 / Idea</div><div class="wn-t">아이디어</div><div class="wn-d">기상 데이터 + 체험 설계</div></div>
+    <div class="what-node"><div class="wn-k">02 / Build</div><div class="wn-t">웹 Claude Code</div><div class="wn-d">코드 작성 + GitHub 자동 저장</div></div>
+    <div class="what-node"><div class="wn-k">03 / Ship</div><div class="wn-t">Vercel</div><div class="wn-d">웹 링크로 배포 → 제출</div></div>
   </div>
 </section>
 
-<!-- ===== HOW IT WORKS ===== -->
-<section class="section" id="how">
-  <div class="section-num">How It Works</div>
-  <div class="section-title">무엇을 만드나요?</div>
-  <div class="section-desc">
-    기상·기후 데이터를 학습자가 직접 조작하며 배우는 웹 도구를 만듭니다.
-    예보관 체험, 기압·바람 인터랙티브 맵처럼요.
-    서버나 앱 없이 웹페이지 파일 하나(index.html)로도 충분히 제출할 수 있습니다.
+<!-- ===== TRACKLIST ===== -->
+<section class="page-section wrap tight">
+  <div class="section-head">
+    <p class="kicker">Tracklist</p>
+    <h2>가이드 트랙리스트</h2>
+    <p>처음이면 위에서부터 순서대로. 막히는 지점만 골라 들어도 됩니다.</p>
   </div>
-  <div class="diagram">
-    <div class="diagram-node person">아이디어<span class="sub">기상 데이터 + 체험</span></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node agent" style="min-width:160px;">웹 Claude Code<span class="sub">코드 작성 + GitHub 저장</span></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node person">Vercel<span class="sub">웹 링크 배포</span></div>
-  </div>
-  <div class="callout important">
-    <div class="callout-title">한 줄 요약</div>
-    <p>Claude Code에게 말로 시키면 코드 작성과 GitHub 저장까지 끝. Vercel만 한 번 연결하면 제출용 링크가 나옵니다.</p>
-  </div>
-</section>
-
-<!-- ===== GLOSSARY ===== -->
-<section class="section" id="glossary">
-  <div class="section-num">Before You Start</div>
-  <div class="section-title">처음 보는 용어가 많다면</div>
-  <div class="section-desc">아래 5개만 알면 끝까지 따라올 수 있습니다. 지금 다 외울 필요는 없어요.</div>
-
-  <div class="glossary-item">
-    <div class="glossary-term">웹 Claude Code <span class="glossary-aka">claude.ai/code</span></div>
-    <div class="glossary-def">설치 없이 웹브라우저에서 대화만으로 코딩하는 AI 도구. 한국어로 "이런 웹페이지 만들어줘"라고 요청하면 코드를 대신 작성하고, 연결된 GitHub 저장소에 자동으로 저장까지 해줍니다.</div>
-    <div class="glossary-analogy">비유: 코드를 대신 써주고 정리·저장까지 해주는 만능 비서. 말로 설명만 하면 됩니다.</div>
-  </div>
-  <div class="glossary-item">
-    <div class="glossary-term">index.html <span class="glossary-aka">/ 정적 웹페이지</span></div>
-    <div class="glossary-def">브라우저에서 바로 열리는 웹페이지 파일 한 개. 글, 그림, 버튼, 슬라이더 같은 인터랙션이 이 안에 다 들어갑니다.</div>
-    <div class="glossary-analogy">비유: 한 장짜리 완성된 전단지. 이 파일만 있으면 웹사이트가 됩니다.</div>
-  </div>
-  <div class="glossary-item">
-    <div class="glossary-term">GitHub <span class="glossary-aka">/ Repository(저장소)</span></div>
-    <div class="glossary-def">코드 파일을 인터넷에 보관하는 창고. 저장소(repository)는 그 안의 프로젝트 폴더 하나입니다. 웹 Claude Code가 만든 코드는 여기에 자동으로 저장됩니다.</div>
-    <div class="glossary-analogy">비유: 코드를 올려두는 구글 드라이브. 저장소 = 폴더 하나.</div>
-  </div>
-  <div class="glossary-item">
-    <div class="glossary-term">Vercel <span class="glossary-aka">/ 배포(deploy)</span></div>
-    <div class="glossary-def">GitHub에 올린 코드를 실제 인터넷 주소(URL)로 만들어 누구나 접속하게 해주는 서비스. 이 과정을 배포라고 합니다.</div>
-    <div class="glossary-analogy">비유: 내 전단지를 거리에 붙여서 모두가 볼 수 있게 하는 것.</div>
-  </div>
-</section>
-
-<!-- ===== READY ===== -->
-<section class="section" id="ready">
-  <div class="section-num">Checklist</div>
-  <div class="section-title">준비물 (모두 무료)</div>
-  <div class="section-desc">시작 전에 계정 3개만 만들어 두세요. 설치할 프로그램은 없고, 웹브라우저만 있으면 됩니다.</div>
-  <ul class="checklist">
-    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Claude 계정 — <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> (Claude Code 사용. 본선팀 제공 플랜으로 로그인)</li>
-    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> GitHub 계정 가입 — <a href="https://github.com" target="_blank" rel="noopener">github.com</a> (코드 저장, Claude Code와 연결)</li>
-    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Vercel 계정 가입 — <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> (GitHub 계정으로 바로 로그인 가능)</li>
-  </ul>
-  <div class="callout">
-    <div class="callout-title">설치할 게 없습니다</div>
-    <p>터미널, Node.js 같은 프로그램 설치는 필요 없습니다. 세 사이트 모두 웹브라우저에서 로그인만 하면 됩니다.</p>
-  </div>
-</section>
-
-<!-- ===== STEP 1: START ===== -->
-<section class="section" id="start">
-  <div class="section-num">Step 1</div>
-  <div class="section-title">웹 Claude Code 시작하기</div>
-  <div class="section-desc">
-    claude.ai/code에 접속해 GitHub 저장소를 연결하는 단계입니다. 한 번만 설정해두면 이후부터는 대화만으로 코딩과 저장이 자동으로 됩니다.
-  </div>
-
-  <div class="step">
-    <div class="step-header"><div class="step-badge">1</div><h3>GitHub 저장소 먼저 만들기</h3></div>
-    <ol>
-      <li>github.com 로그인 후 우측 상단 <strong>+</strong> → <strong>New repository</strong></li>
-      <li>이름 입력 (예: <strong>weather-project</strong>), <strong>Private</strong> 선택</li>
-      <li><strong>Create repository</strong> 클릭</li>
-    </ol>
-    <div class="step-note">저장소 이름은 나중에 Vercel 주소가 됩니다. 팀 프로젝트 이름으로 지어두세요.</div>
-  </div>
-
-  <div class="step">
-    <div class="step-header"><div class="step-badge">2</div><h3>claude.ai/code 접속 후 GitHub 연결</h3></div>
-    <ol>
-      <li><strong>claude.ai/code</strong> 접속 → 제공받은 계정으로 로그인</li>
-      <li>입력창 아래쪽의 <strong>"+ 레포 선택..."</strong> 버튼 클릭</li>
-      <li>목록에서 방금 만든 저장소(예: <strong>weather-project</strong>) 선택</li>
-      <li>선택이 끝나면 버튼 자리에 <strong>저장소 이름</strong>과 <strong>브랜치 이름</strong>(예: master)이 표시됩니다</li>
-    </ol>
-    <div class="screenshot-row">
-      <figure class="screenshot-figure">
-        <img src="assets/images/repo-select-before.png" alt="레포 선택 전 — 입력창 아래 '+ 레포 선택...' 버튼이 보이는 화면">
-        <figcaption><strong>레포 선택 전</strong> — 입력창 아래 "+ 레포 선택..." 버튼을 클릭하세요.</figcaption>
-      </figure>
-      <figure class="screenshot-figure">
-        <img src="assets/images/repo-select-after.png" alt="레포 선택 후 — 저장소 이름과 브랜치 이름이 버튼 자리에 표시되는 화면">
-        <figcaption><strong>레포 선택 후</strong> — 저장소 이름(weather-hackathon-guide)과 브랜치 이름(master)이 표시되면 연결 완료.</figcaption>
-      </figure>
-    </div>
-    <div class="step-note">이 연결을 한 번만 해두면 이후 Claude Code가 코드를 짤 때마다 GitHub에 자동으로 저장합니다.</div>
-  </div>
-</section>
-
-<!-- ===== STEP 2: MAKE ===== -->
-<section class="section" id="make">
-  <div class="section-num">Step 2</div>
-  <div class="section-title">Claude Code로 만들기</div>
-  <div class="section-desc">
-    핵심 단계입니다. 만들고 싶은 걸 한국어로 설명하면 Claude가 코드를 짜고 GitHub에 자동 저장합니다.
-    요청할 때 (1) 무엇을 보여줄지 (2) 어떻게 조작할지 (3) 파일 이름(index.html), 이 3가지만 넣으면 됩니다.
-  </div>
-
-  <div class="chat-demo">
-    <div class="chat-label">예시 대화</div>
-    <div class="chat-bubble user">기온과 풍속 슬라이더로 체감온도를 보여주는 웹페이지를 index.html 하나로 만들어줘. 기상청 체감온도 공식을 써줘.</div>
-    <div class="chat-bubble bot">슬라이더를 움직이면 체감온도가 실시간으로 바뀌는 index.html을 만들었습니다. GitHub에 저장했어요.</div>
-    <div class="chat-bubble user">배경색을 하늘색으로 바꾸고, 모바일에서도 잘 보이게 해줘.</div>
-    <div class="chat-bubble bot">배경색과 반응형 레이아웃을 적용했습니다. 변경 사항을 GitHub에 저장했어요.</div>
-  </div>
-
-  <div class="step">
-    <div class="step-header"><div class="step-badge">P</div><h3>바로 쓰는 프롬프트 모음</h3></div>
-    <p>대괄호 부분만 우리 팀 주제로 바꾸세요.</p>
-    <ul>
-      <li><strong>기본형</strong> — "[기온]과 [풍속] 슬라이더로 [체감온도]를 보여주는 웹페이지를 index.html 하나로 만들어줘."</li>
-      <li><strong>응용형</strong> — "[강수량] 슬라이더를 조절하면 [홍수 위험도]가 바뀌는 인터랙티브 웹페이지를 초등학생도 이해하게 만들어줘. index.html 하나로."</li>
-      <li><strong>디자인</strong> — "방금 페이지를 더 보기 좋게 꾸며줘. 파란 하늘색 계열, 모바일에서도 잘 보이게."</li>
-      <li><strong>오류 해결</strong> — "방금 페이지에서 [오류 메시지]가 나와. 원인을 알려주고 고쳐줘."</li>
-    </ul>
-    <div class="step-note"><strong>팁</strong> 한 번에 완벽하지 않아도 됩니다. "여기를 이렇게 바꿔줘"라고 계속 대화하며 다듬으세요. 수정할 때마다 GitHub에 자동 저장됩니다.</div>
-  </div>
-</section>
-
-<!-- ===== STEP 3: CLAUDE.md ===== -->
-<section class="section" id="claudemd">
-  <div class="section-num">Step 3</div>
-  <div class="section-title">CLAUDE.md 설정하기</div>
-  <div class="section-desc">
-    CLAUDE.md는 Claude Code에게 "이 프로젝트에서 지켜야 할 규칙"을 미리 알려주는 설명서 파일입니다.
-    코딩 규칙과 프로젝트 설정을 여기 써두면 매번 설명하지 않아도 됩니다.
-    아래 CLAUDE.md 내용을 복사해 저장소에 추가하세요 (운영팀 제공).
-  </div>
-
-  <div class="callout important">
-    <div class="callout-title">CLAUDE.md가 뭔가요?</div>
-    <p>Claude Code가 프로젝트를 열 때 가장 먼저 읽는 파일입니다. 여기 써둔 내용은 매 대화마다 자동으로 적용됩니다. "파일 이름은 index.html로 고정해", "한국어로 응답해" 같은 규칙을 넣어두면 됩니다.</p>
-  </div>
-
-  <div class="step">
-    <div class="step-header"><div class="step-badge">1</div><h3>CLAUDE.md 복사해서 저장소에 추가하기</h3></div>
-    <ol>
-      <li>아래 <strong>CLAUDE.md</strong> 내용을 전체 복사합니다.</li>
-      <li>GitHub 저장소에서 <strong>Add file → Create new file</strong> 클릭</li>
-      <li>파일 이름을 <strong>CLAUDE.md</strong>로 입력하고 복사한 내용을 붙여넣기 → <strong>Commit changes</strong></li>
-    </ol>
-    <div class="step-note">파일 이름은 반드시 <strong>CLAUDE.md</strong> (대문자)로, 위치는 저장소 최상단 폴더입니다.</div>
-    <div class="code-block" style="margin-top:12px;"><span class="code-label">CLAUDE.md (복사용)</span># CLAUDE.md
-
-## Git 규칙 (필수)
-- main 브랜치에 직접 푸시하지 않습니다. 작은 수정도 예외 없음.
-- 모든 변경은 새 브랜치 → PR(Pull Request)로 머지합니다.
-  - 팀원이 있으면: 팀원 1명 이상이 리뷰·승인한 뒤 머지
-  - 혼자(1인 팀)면: PR을 올려 변경 내용(diff)을 스스로 확인한 뒤 머지
-- main에는 항상 정상 동작하는 코드만 둡니다.
-
-</div>
-  </div>
-
-</section>
-
-<!-- ===== STEP 4: VERCEL ===== -->
-<section class="section" id="vercel">
-  <div class="section-num">Step 4</div>
-  <div class="section-title">Vercel로 배포하기</div>
-  <div class="section-desc">GitHub 저장소를 연결하면 인터넷 주소가 자동으로 생성됩니다.</div>
-
-  <div class="step">
-    <div class="step-header"><div class="step-badge">1</div><h3>GitHub로 로그인 후 프로젝트 가져오기</h3></div>
-    <ol>
-      <li>vercel.com 접속 → <strong>Continue with GitHub</strong></li>
-      <li><strong>Add New</strong> → <strong>Project</strong> 클릭</li>
-      <li>방금 만든 저장소(weather-windchill) 선택 → <strong>Import</strong></li>
-    </ol>
-  </div>
-  <div class="step">
-    <div class="step-header"><div class="step-badge">2</div><h3>Application Preset 설정</h3></div>
-    <p style="margin-bottom:12px;">Import 직후 설정 화면이 열립니다. <strong>Framework Preset</strong> 항목에서 프로젝트에 맞는 항목을 선택합니다.</p>
-    <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:12px;">
-      <thead>
-        <tr style="border-bottom:2px solid #eee;">
-          <th style="text-align:left;padding:8px 12px;">내 프로젝트 유형</th>
-          <th style="text-align:left;padding:8px 12px;">선택할 Preset</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 12px;">HTML/CSS/JS 파일만 있는 경우 (index.html 중심)</td>
-          <td style="padding:8px 12px;"><strong>Other</strong></td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 12px;">Astro로 만든 경우</td>
-          <td style="padding:8px 12px;"><strong>Astro</strong></td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 12px;">Next.js로 만든 경우</td>
-          <td style="padding:8px 12px;"><strong>Next.js</strong></td>
-        </tr>
-        <tr>
-          <td style="padding:8px 12px;">Vite로 만든 경우</td>
-          <td style="padding:8px 12px;"><strong>Vite</strong></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="step-note"><strong>모르겠으면 Other</strong> — index.html을 직접 만들었다면 Other를 선택하세요. Preset이 틀리면 빌드가 실패합니다.</div>
-  </div>
-  <div class="step">
-    <div class="step-header"><div class="step-badge">3</div><h3>배포 후 링크 받기</h3></div>
-    <ol>
-      <li>설정 확인 후 <strong>Deploy</strong> 클릭</li>
-      <li>1~2분 뒤 <strong>weather-windchill.vercel.app</strong> 같은 주소 생성</li>
-      <li>이 주소가 <strong>제출용 링크</strong>입니다</li>
-    </ol>
-    <div class="step-note"><strong>편한 점</strong> GitHub에서 index.html을 수정하면 Vercel이 자동으로 다시 배포합니다. 따로 재배포할 필요가 없어요.</div>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title">배포 후 확인</div>
-    <p>휴대폰이나 다른 컴퓨터에서도 링크가 열리는지, 슬라이더 등 인터랙티브 기능이 잘 작동하는지 꼭 확인하세요.</p>
-  </div>
-</section>
-
-<!-- ===== STEP 5: SUBMIT ===== -->
-<section class="section" id="submit">
-  <div class="section-num">Step 5</div>
-  <div class="section-title">제출하기</div>
-  <div class="section-desc">
-    완성된 결과물을 제출할 때는 아래 3가지를 모두 준비합니다. Vercel 링크 하나만 있으면 안 되니 주의하세요.
-  </div>
-
-  <div class="step">
-    <div class="step-header"><div class="step-badge">1</div><h3>제출 항목 3가지</h3></div>
-    <ul>
-      <li><strong>Vercel 배포 URL</strong> — 누구나 접속할 수 있는 웹 주소 (예: weather-project.vercel.app)</li>
-      <li><strong>GitHub 저장소 URL</strong> — 코드가 저장된 저장소 주소 (예: github.com/팀명/weather-project). 커밋 히스토리가 남아 있어야 합니다.</li>
-      <li><strong>Claude 대화 내역</strong> — AI 활용 내역 확인용. 운영팀 안내에 따라 세션 링크 또는 스크린샷을 첨부합니다.</li>
-    </ul>
-    <div class="step-note">GitHub 커밋 히스토리는 표절·저작권 검증에 사용됩니다. 개발 과정 전체가 남도록 중간중간 저장하세요.</div>
-  </div>
-
-  <div class="step">
-    <div class="step-header"><div class="step-badge">2</div><h3>제출 전 체크리스트</h3></div>
-    <ul class="checklist" style="margin:0;">
-      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> Vercel URL이 다른 기기에서도 열리는가</li>
-      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> GitHub 저장소가 Private으로 설정되어 있는가</li>
-      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> 커밋 히스토리가 개발 과정 전체를 포함하는가</li>
-      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div> 사용한 외부 리소스(이미지, 폰트, 오픈소스)의 출처와 라이선스를 README에 명시했는가</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ===== PR COLLABORATION ===== -->
-<section class="section" id="pr">
-  <div class="section-num">Team Collaboration</div>
-  <div class="section-title">팀 협업: GitHub PR 사용법</div>
-  <div class="section-desc">
-    팀원이 각자 다른 기능을 개발할 때는 브랜치를 나눠서 작업하고 PR(Pull Request)로 합칩니다.
-    Claude Code에게 말로 시키면 브랜치 생성부터 PR 올리기까지 전부 대신 해줍니다.
-    각 단계마다 아래 프롬프트를 그대로 복사해서 쓰세요.
-  </div>
-
-  <div class="callout">
-    <div class="callout-title">PR이 뭔가요?</div>
-    <p>Pull Request — 내가 만든 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것입니다. 팀원이 코드를 검토하고 OK하면 합쳐집니다. 충돌 없이 협업하는 표준 방식입니다.</p>
-  </div>
-
-  <!-- STEP 1 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">1</div><h3>브랜치 만들기</h3></div>
-    <p>기능 개발을 시작할 때 main과 분리된 브랜치를 먼저 만듭니다. 팀원끼리 각자 다른 브랜치에서 작업하면 서로 방해받지 않습니다.</p>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">새 브랜치를 만들어줘. 브랜치 이름은 feature/wind-chart 로 해줘.</div>
-      <div class="chat-bubble bot">feature/wind-chart 브랜치를 만들고 이동했습니다. 이제 이 브랜치에서 작업하면 됩니다.</div>
-      <div class="chat-bubble user">지금 어느 브랜치에서 작업 중인지 알려줘.</div>
-      <div class="chat-bubble bot">현재 feature/wind-chart 브랜치에서 작업 중입니다.</div>
-    </div>
-    <div class="step-note"><strong>브랜치 이름 규칙</strong> feature/기능명 형태로 짓는 게 일반적입니다. 예: feature/typhoon-map, feature/rainfall-slider, fix/api-error</div>
-  </div>
-
-  <!-- STEP 2 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">2</div><h3>기능 개발하기</h3></div>
-    <p>브랜치를 만든 뒤 이 브랜치 위에서 기능을 개발합니다. 평소처럼 Claude Code에게 말로 요청하면 됩니다.</p>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">바람 방향을 0~360도 슬라이더로 조절하면 화살표가 회전하는 인터랙티브 컴포넌트를 만들어줘. index.html에 추가해줘.</div>
-      <div class="chat-bubble bot">바람 방향 슬라이더와 회전 화살표를 index.html에 추가했습니다.</div>
-      <div class="chat-bubble user">화살표 색깔을 풍속에 따라 파랑(약)→주황(보통)→빨강(강)으로 바꿔줘.</div>
-      <div class="chat-bubble bot">풍속에 따라 색상이 바뀌도록 수정했습니다. 5m/s 이하 파랑, 10m/s 이하 주황, 그 이상 빨강으로 적용했어요.</div>
-    </div>
-  </div>
-
-  <!-- STEP 3 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">3</div><h3>커밋하기</h3></div>
-    <p>작업한 내용을 중간중간 저장(커밋)합니다. 커밋은 "이 시점까지 작업한 스냅샷"을 남기는 것입니다. 나중에 문제가 생겼을 때 이 시점으로 되돌아올 수 있습니다.</p>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">지금까지 변경한 내용을 커밋해줘. 메시지는 "바람 방향 화살표 컴포넌트 추가"로 해줘.</div>
-      <div class="chat-bubble bot">변경 사항을 커밋했습니다. 메시지: "바람 방향 화살표 컴포넌트 추가"</div>
-      <div class="chat-bubble user">지금까지 커밋 기록을 보여줘.</div>
-      <div class="chat-bubble bot">총 3개의 커밋이 있습니다: (1) 초기 세팅 (2) 체감온도 슬라이더 추가 (3) 바람 방향 화살표 컴포넌트 추가</div>
-    </div>
-    <div class="step-note"><strong>팁</strong> 큰 작업이 끝날 때마다 커밋하세요. 커밋 메시지는 "무엇을 했는지" 한 줄로 씁니다. 커밋 히스토리는 심사 및 표절 검증에 활용됩니다.</div>
-  </div>
-
-  <!-- STEP 4 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">4</div><h3>PR 올리기</h3></div>
-    <p>기능 개발이 끝나면 팀원에게 검토를 요청하는 PR을 올립니다. Claude Code가 제목과 설명까지 자동으로 작성해줍니다.</p>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">feature/wind-chart 브랜치를 main에 합치는 PR을 올려줘. 제목은 "바람 방향 시각화 기능 추가"로 해줘.</div>
-      <div class="chat-bubble bot">PR을 생성했습니다. 제목: "바람 방향 시각화 기능 추가". GitHub에서 확인하실 수 있습니다.</div>
-      <div class="chat-bubble user">PR 설명에 "기온/풍속 슬라이더에 더해 바람 방향 화살표를 추가했고, 풍속에 따라 색이 바뀝니다"라고 써줘.</div>
-      <div class="chat-bubble bot">PR 설명을 업데이트했습니다.</div>
-    </div>
-  </div>
-
-  <!-- STEP 5 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">5</div><h3>리뷰 요청하기</h3></div>
-    <p>PR을 올린 뒤에는 팀원에게 리뷰를 요청해야 합니다. Claude Code에게 팀원 GitHub 아이디를 알려주면 리뷰어로 지정해줍니다.</p>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">이 PR에 영욱님 리뷰를 요청해줘.</div>
-      <div class="chat-bubble bot">PR에 ywkim님을 리뷰어로 추가했습니다.</div>
-    </div>
-    <p style="margin-top:16px;"><strong>또는 GitHub 웹에서 직접 요청하기</strong></p>
-    <ol class="step-list">
-      <li>GitHub에서 PR 페이지를 엽니다</li>
-      <li>오른쪽 사이드바 <strong>Reviewers</strong> 옆의 톱니바퀴(⚙️) 아이콘 클릭</li>
-      <li>드롭다운에서 리뷰를 요청할 팀원 선택</li>
-      <li>선택하는 즉시 그 팀원에게 리뷰 요청 알림이 전송됩니다</li>
-    </ol>
-    <div class="step-note"><strong>팁</strong> PR을 올리는 김에 바로 리뷰 요청까지 같이 시키면 한 번에 끝낼 수 있습니다. 예: "feature/wind-chart 브랜치를 main에 합치는 PR 올리고, 영욱님 리뷰도 요청해줘."</div>
-  </div>
-
-  <!-- STEP 6 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">6</div><h3>리뷰 반영하기</h3></div>
-    <p>팀원이 코드를 검토하고 수정 요청(리뷰)을 남기면, 그 내용을 Claude Code에게 전달해 반영합니다.</p>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">PR 리뷰에서 "슬라이더 범위를 0~360도로 바꾸고, 현재 방향을 숫자로도 표시해달라"는 요청이 왔어. 반영해줘.</div>
-      <div class="chat-bubble bot">슬라이더 범위를 0~360도로 수정하고, 현재 각도를 숫자로 표시하는 텍스트를 추가했습니다. 커밋했어요.</div>
-      <div class="chat-bubble user">리뷰어가 남긴 코멘트에 "반영했습니다"라고 답글 달아줘.</div>
-      <div class="chat-bubble bot">PR 코멘트에 답글을 달았습니다.</div>
-    </div>
-    <div class="step-note">리뷰 내용은 GitHub PR 페이지에서 확인한 뒤, 그대로 복사해서 Claude Code에게 전달하면 됩니다.</div>
-  </div>
-
-  <!-- STEP 7 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">7</div><h3>머지(Merge)하기</h3></div>
-    <p>리뷰가 완료되고 팀원의 승인을 받으면 main 브랜치에 합칩니다. 머지 후 Vercel이 자동으로 최신 버전을 다시 배포합니다.</p>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">리뷰 다 반영했어. PR을 main에 머지해줘.</div>
-      <div class="chat-bubble bot">PR을 main에 머지했습니다. Vercel이 자동으로 최신 버전을 배포합니다.</div>
-      <div class="chat-bubble user">머지된 feature/wind-chart 브랜치는 삭제해줘.</div>
-      <div class="chat-bubble bot">feature/wind-chart 브랜치를 삭제했습니다.</div>
-    </div>
-    <div class="step-note">머지 후 Vercel 배포 주소를 다시 열어서 기능이 정상 동작하는지 꼭 확인하세요.</div>
-  </div>
-
-  <!-- 충돌 해결 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">!</div><h3>충돌(Conflict)이 생겼을 때</h3></div>
-    <p>두 팀원이 같은 파일의 같은 부분을 동시에 수정하면 충돌이 생깁니다. 겁먹지 말고 Claude Code에게 그대로 알려주면 됩니다.</p>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">머지하려는데 충돌이 생겼어. 어떻게 해결해?</div>
-      <div class="chat-bubble bot">충돌 파일을 확인했습니다. index.html의 45~52번 줄에서 충돌이 발생했어요. 두 버전을 보여드릴게요. 어느 쪽을 유지할까요, 아니면 두 내용을 합칠까요?</div>
-      <div class="chat-bubble user">두 내용 다 살려서 합쳐줘.</div>
-      <div class="chat-bubble bot">두 변경 사항을 합쳐서 충돌을 해결했습니다. 커밋했어요.</div>
-    </div>
-  </div>
-
-  <!-- SSH 키 에러 해결 -->
-  <div class="step">
-    <div class="step-header"><div class="step-badge">!</div><h3>Push할 때 SSH 키 에러가 날 때</h3></div>
-    <p>새 브랜치를 GitHub에 올리려고 할 때 <strong>"Permission denied (publickey)"</strong> 같은 에러가 날 수 있습니다. 웹 Claude Code는 개인 SSH 키를 전혀 쓰지 않고 <strong>GitHub App 연결(설치)</strong>로 인증하기 때문에, 이 에러는 거의 항상 <strong>App 설치·권한 문제</strong>입니다.</p>
-    <ol>
-      <li><strong>GitHub App이 이 저장소에 설치되어 있지 않은 경우</strong> — Step 1에서 다른 저장소만 연결했거나, 저장소를 새로 만든 뒤 App 연결을 갱신하지 않은 경우입니다.</li>
-      <li><strong>App 권한이 읽기 전용인 경우</strong> — 연결 당시 쓰기(write) 권한을 허용하지 않으면 push 단계에서 거부됩니다.</li>
-    </ol>
-    <div class="step">
-      <div class="step-header"><div class="step-badge">A</div><h3>GitHub App 설치·권한 다시 연결하기</h3></div>
-      <ol>
-        <li>GitHub 우측 상단 프로필 → <strong>Settings</strong> → 좌측 메뉴 <strong>Applications</strong> → <strong>Installed GitHub Apps</strong></li>
-        <li>Claude(또는 연결된 GitHub App) 옆 <strong>Configure</strong> 클릭</li>
-        <li><strong>Repository access</strong>에서 작업 중인 저장소가 포함되어 있는지 확인 (없으면 <strong>Select repositories</strong>로 추가)</li>
-        <li>권한 목록에서 <strong>Contents: Read and write</strong>, <strong>Pull requests: Read and write</strong>가 허용되어 있는지 확인</li>
-        <li>변경 후 claude.ai/code로 돌아와 <strong>"+ 레포 선택..."</strong> 버튼으로 저장소를 다시 선택</li>
-      </ol>
-      <div class="step-note">권한을 바꾼 직후에는 바로 반영되지 않을 수 있습니다. claude.ai/code 페이지를 새로고침한 뒤 저장소를 다시 선택해보세요.</div>
-    </div>
-    <div class="chat-demo">
-      <div class="chat-label">Claude Code 프롬프트 예시</div>
-      <div class="chat-bubble user">브랜치를 push하려는데 "Permission denied (publickey)" 에러가 나. 원인이 뭔지 확인해줘.</div>
-      <div class="chat-bubble bot">현재 origin 주소를 확인했습니다. GitHub App 연결에 이 저장소가 포함되어 있지 않은 것으로 보입니다. GitHub Settings → Applications에서 저장소 접근 권한을 추가한 뒤, "+ 레포 선택..."으로 다시 연결해주세요.</div>
-    </div>
-    <div class="step-note">
-      <strong>핵심</strong> 웹 환경에서는 SSH 키를 직접 만들거나 암호를 바꿀 필요가 없습니다. 에러 메시지에 "SSH"나 "publickey"가 보여도, 해결은 항상 <strong>GitHub App 설치 화면에서 저장소·권한을 다시 확인</strong>하는 것입니다.
-    </div>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title">팀 작업 권장 흐름</div>
-    <p>기능별로 브랜치를 나눈다 → 각자 개발 후 PR → 팀원 1명 이상 리뷰 → 머지 → Vercel 자동 배포. main 브랜치에는 항상 동작하는 코드만 유지하는 것이 원칙입니다.</p>
-  </div>
-</section>
-
-<!-- ===== COPYRIGHT ===== -->
-<section class="section" id="copyright">
-  <div class="section-num">Copyright</div>
-  <div class="section-title">저작권 가이드라인</div>
-  <div class="section-desc">
-    이 대회의 결과물은 기상청에서 활용할 수 있습니다. 라이선스 문제가 있는 리소스를 쓰면 수상이 취소될 수 있으니 아래 기준을 꼭 확인하세요.
-  </div>
-
-  <div class="callout important">
-    <div class="callout-title">표절 및 저작권 검증을 실시합니다</div>
-    <p>제출된 코드는 팀 간·외부 출처 표절 검증, GitHub 커밋 히스토리 확인, Claude 대화 세션 확인을 통해 검증됩니다. AI를 사용한 것 자체는 문제없지만, 다른 팀이나 외부 출처의 코드를 그대로 쓰는 것은 허용되지 않습니다.</p>
-  </div>
-
-  <table class="compare-table">
-    <thead><tr><th>항목</th><th>허용</th><th>주의 필요</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="label-col">AI 생성 코드</td>
-        <td>Claude Code로 생성한 코드 사용 OK</td>
-        <td>다른 팀과 동일한 코드 그대로 제출 금지</td>
-      </tr>
-      <tr>
-        <td class="label-col">오픈소스 라이브러리</td>
-        <td>MIT, Apache 2.0 등 상업적 허용 라이선스</td>
-        <td>GPL 계열은 기상청 활용 시 제약 있음. README에 명시 필요</td>
-      </tr>
-      <tr>
-        <td class="label-col">이미지·아이콘</td>
-        <td>CC0, Unsplash, 직접 제작</td>
-        <td>출처 불명 이미지, 유료 스톡 이미지 무단 사용 금지</td>
-      </tr>
-      <tr>
-        <td class="label-col">폰트</td>
-        <td>Google Fonts, Pretendard, Noto Sans 등 무료 폰트</td>
-        <td>상업용 폰트 무단 사용 금지. 폰트 라이선스 README에 명시</td>
-      </tr>
-      <tr>
-        <td class="label-col">기상청 데이터</td>
-        <td>공공데이터포털(data.go.kr) 공개 API</td>
-        <td>원출처 표기 필수</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="callout">
-    <div class="callout-title">README에 꼭 써야 할 것</div>
-    <p>사용한 외부 리소스 목록 (라이브러리명, 버전, 라이선스) / 이미지·폰트 출처 / 기상청 데이터 출처 표기</p>
-  </div>
-</section>
-
-<!-- ===== JUDGE ===== -->
-<section class="section" id="judge">
-  <div class="section-num">Scoring</div>
-  <div class="section-title">심사 기준</div>
-  <div class="section-desc">만들 때 아래 배점을 떠올리면 방향을 잡기 쉽습니다. 실현 가능성과 체험형 설계 비중이 가장 큽니다.</div>
-  <table class="compare-table">
-    <thead><tr><th>기준</th><th>배점</th><th>무엇을 보나</th></tr></thead>
-    <tbody>
-      <tr><td class="label-col">실현 가능성</td><td>30점</td><td>실제로 동작하고 완성도 있는가</td></tr>
-      <tr><td class="label-col">체험·참여형 설계</td><td>25점</td><td>사용자가 직접 조작하며 배우는가</td></tr>
-      <tr><td class="label-col">주제 적합성</td><td>20점</td><td>기상·기후 데이터를 교육에 잘 녹였는가</td></tr>
-      <tr><td class="label-col">아이디어 독창성</td><td>15점</td><td>새롭고 흥미로운 접근인가</td></tr>
-      <tr><td class="label-col">학습 효과</td><td>10점</td><td>실제로 배움이 일어나는가</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- ===== FAQ ===== -->
-<section class="section" id="faq">
-  <div class="section-num">FAQ</div>
-  <div class="section-title">자주 묻는 질문</div>
-
-  <div class="callout">
-    <div class="callout-title">코딩을 전혀 못하는데 가능한가요?</div>
-    <p>가능합니다. 웹 Claude Code에 한국어로 요청하면 코드를 대신 짜줍니다. 이 가이드의 순서대로만 따라 하면 됩니다.</p>
-  </div>
-  <div class="callout">
-    <div class="callout-title">백엔드 서버가 꼭 필요한가요?</div>
-    <p>아닙니다. 브라우저에서 동작하는 웹페이지(index.html) 하나로 충분합니다.</p>
-  </div>
-  <div class="callout">
-    <div class="callout-title">팀원과 함께 작업하려면?</div>
-    <p>GitHub 저장소 Settings → Collaborators에서 팀원을 추가하면 됩니다. 각자 Claude Code에서 같은 저장소에 연결해 작업할 수 있습니다.</p>
-  </div>
-  <div class="callout">
-    <div class="callout-title">기술·도구 문의는 어디에 하나요?</div>
-    <p>Slack의 <strong>#질문-공통</strong> 채널에 올려주세요. 운영팀이 직접 응대합니다. 정규 응대일은 매주 공지를 확인해주세요.</p>
-  </div>
-  <div class="callout">
-    <div class="callout-title">Claude Code 계정은 어떻게 받나요?</div>
-    <p>본선 진출 15팀에게 운영팀이 이메일로 계정을 발급합니다. 계정 접속 문제는 Slack #질문-공통 채널 또는 긴급 시 운영팀에 직접 연락하세요.</p>
-  </div>
-  <div class="callout">
-    <div class="callout-title">AI가 만든 코드를 그대로 제출해도 되나요?</div>
-    <p>됩니다. 이 대회는 AI 활용을 권장합니다. 단, 다른 팀이나 외부 출처의 코드를 그대로 복사하는 것은 표절로 처리됩니다. AI로 생성했더라도 우리 팀의 아이디어와 구성이 담겨 있어야 합니다.</p>
-  </div>
+  <ol class="tracks">
+    <li><a href="start.html"><span class="tno">01</span><span><span class="tt">시작 전에</span><br><span class="td">처음 보는 용어 + 계정 3개 준비물</span></span><span class="arrow">→</span></a></li>
+    <li><a href="build.html"><span class="tno">02</span><span><span class="tt">만들기</span><br><span class="td">Claude Code 시작 · 제작 · CLAUDE.md · 배포 · 제출</span></span><span class="arrow">→</span></a></li>
+    <li><a href="collab.html"><span class="tno">03</span><span><span class="tt">팀 협업</span><br><span class="td">브랜치 · 커밋 · PR · 리뷰 · 머지</span></span><span class="arrow">→</span></a></li>
+    <li><a href="rules.html"><span class="tno">04</span><span><span class="tt">규정</span><br><span class="td">저작권 가이드라인 + 심사 기준</span></span><span class="arrow">→</span></a></li>
+    <li><a href="faq.html"><span class="tno">05</span><span><span class="tt">FAQ</span><br><span class="td">자주 묻는 질문</span></span><span class="arrow">→</span></a></li>
+  </ol>
 </section>
 
 <!-- ===== FOOTER ===== -->
 <footer class="doc-footer">
+  <div class="footer-nav">
+    <a href="index.html">00 홈</a><a href="start.html">01 시작 전에</a><a href="build.html">02 만들기</a>
+    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="faq.html">05 FAQ</a>
+  </div>
   기상·기후 AI 해커톤 2026 · 참가자 개발·배포 가이드<br>
   주최 기상청 · 후원 기후에너지환경부 · 주관 기상기후인재개발원<br>
   문의 kpc_weather26@kpc.or.kr · 02-398-4397
 </footer>
 
-<script>
-  // 스크롤에 따라 상단 네비 active 갱신
-  (function () {
-    var links = Array.prototype.slice.call(document.querySelectorAll('.topbar-nav a'));
-    var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
-    window.addEventListener('scroll', function () {
-      var pos = window.scrollY + 80;
-      var idx = 0;
-      for (var i = 0; i < sections.length; i++) {
-        if (sections[i] && sections[i].offsetTop <= pos) idx = i;
-      }
-      links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
-    });
-  })();
-</script>
+<script src="assets/js/site.js" defer></script>
 </body>
 </html>

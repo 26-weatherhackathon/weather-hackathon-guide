@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>팀 협업 — GitHub PR 사용법 · 기상·기후 AI 해커톤 2026</title>
+<meta name="description" content="브랜치·커밋·PR·리뷰·머지까지, Claude Code로 팀 협업하는 법.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+  @view-transition { navigation: auto; }
+  .step .lead { font-size: var(--fs-sm); }
+  .step-list { padding-left: 1.3em; font-size: var(--fs-sm); line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
+  <div class="tracklist">
+    <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
+    <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
+    <a href="build.html"><span class="tno">02</span><span class="tname">만들기</span></a>
+    <a href="collab.html" class="active"><span class="tno">03</span><span class="tname">팀 협업</span></a>
+    <a href="rules.html"><span class="tno">04</span><span class="tname">규정</span></a>
+    <a href="faq.html"><span class="tno">05</span><span class="tname">FAQ</span></a>
+  </div>
+</nav>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track"><span>
+    브랜치 나눠서 작업 <i class="sep">✺</i> PR로 합치기 <i class="sep">✺</i> 충돌? 겁먹지 마 <i class="sep">✺</i> main엔 동작하는 코드만 <i class="sep">✺</i> 말로 시키면 PR까지 자동 <i class="sep">✺</i>&nbsp;
+  </span></div>
+</div>
+
+<header class="page-hero wrap">
+  <span class="ghost-num">03</span>
+  <span class="track-id">TRACK 03 / TEAM COLLAB</span>
+  <h1><span class="kr">팀 협업</span> · GitHub PR</h1>
+  <p class="lead">팀원이 각자 다른 기능을 개발할 땐 브랜치를 나눠 작업하고 PR로 합칩니다. Claude Code에게 말로 시키면 브랜치 생성부터 PR까지 전부 대신 해줘요. 각 단계 프롬프트를 그대로 복사해서 쓰세요.</p>
+</header>
+<hr class="stripe">
+
+<section class="page-section wrap">
+  <div class="callout"><div class="callout-title">PR이 뭔가요?</div><p>Pull Request — 내가 만든 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것. 팀원이 검토하고 OK하면 합쳐집니다. 충돌 없이 협업하는 표준 방식이에요.</p></div>
+
+  <div class="step">
+    <div class="step-badge">1</div>
+    <h3>브랜치 만들기</h3>
+    <p>기능 개발을 시작할 때 main과 분리된 브랜치를 먼저 만듭니다. 각자 다른 브랜치에서 작업하면 서로 방해받지 않아요.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">새 브랜치를 만들어줘. 브랜치 이름은 feature/wind-chart 로 해줘.</div>
+      <div class="chat-bubble bot">feature/wind-chart 브랜치를 만들고 이동했습니다. 이제 이 브랜치에서 작업하면 됩니다.</div>
+      <div class="chat-bubble user">지금 어느 브랜치에서 작업 중인지 알려줘.</div>
+      <div class="chat-bubble bot">현재 feature/wind-chart 브랜치에서 작업 중입니다.</div>
+    </div>
+    <div class="step-note"><strong>브랜치 이름 규칙</strong> feature/기능명 형태가 일반적입니다. 예: feature/typhoon-map, feature/rainfall-slider, fix/api-error</div>
+  </div>
+
+  <div class="step right">
+    <div class="step-badge">2</div>
+    <h3>기능 개발하기</h3>
+    <p>브랜치 위에서 기능을 개발합니다. 평소처럼 Claude Code에게 말로 요청하면 돼요.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">바람 방향을 0~360도 슬라이더로 조절하면 화살표가 회전하는 인터랙티브 컴포넌트를 만들어줘. index.html에 추가해줘.</div>
+      <div class="chat-bubble bot">바람 방향 슬라이더와 회전 화살표를 index.html에 추가했습니다.</div>
+      <div class="chat-bubble user">화살표 색깔을 풍속에 따라 파랑(약)→주황(보통)→빨강(강)으로 바꿔줘.</div>
+      <div class="chat-bubble bot">풍속에 따라 색상이 바뀌도록 수정했습니다. 5m/s 이하 파랑, 10m/s 이하 주황, 그 이상 빨강으로 적용했어요.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-badge">3</div>
+    <h3>커밋하기</h3>
+    <p>작업한 내용을 중간중간 저장(커밋)합니다. 커밋은 "이 시점까지의 스냅샷". 문제가 생기면 이 시점으로 되돌아올 수 있어요.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">지금까지 변경한 내용을 커밋해줘. 메시지는 "바람 방향 화살표 컴포넌트 추가"로 해줘.</div>
+      <div class="chat-bubble bot">변경 사항을 커밋했습니다. 메시지: "바람 방향 화살표 컴포넌트 추가"</div>
+      <div class="chat-bubble user">지금까지 커밋 기록을 보여줘.</div>
+      <div class="chat-bubble bot">총 3개의 커밋이 있습니다: (1) 초기 세팅 (2) 체감온도 슬라이더 추가 (3) 바람 방향 화살표 컴포넌트 추가</div>
+    </div>
+    <div class="step-note"><strong>팁</strong> 큰 작업이 끝날 때마다 커밋하세요. 메시지는 "무엇을 했는지" 한 줄로. 커밋 히스토리는 심사·표절 검증에 활용됩니다.</div>
+  </div>
+
+  <div class="step right">
+    <div class="step-badge">4</div>
+    <h3>PR 올리기</h3>
+    <p>기능 개발이 끝나면 검토를 요청하는 PR을 올립니다. Claude Code가 제목과 설명까지 자동 작성해줘요.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">feature/wind-chart 브랜치를 main에 합치는 PR을 올려줘. 제목은 "바람 방향 시각화 기능 추가"로 해줘.</div>
+      <div class="chat-bubble bot">PR을 생성했습니다. 제목: "바람 방향 시각화 기능 추가". GitHub에서 확인하실 수 있습니다.</div>
+      <div class="chat-bubble user">PR 설명에 "기온/풍속 슬라이더에 더해 바람 방향 화살표를 추가했고, 풍속에 따라 색이 바뀝니다"라고 써줘.</div>
+      <div class="chat-bubble bot">PR 설명을 업데이트했습니다.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-badge">5</div>
+    <h3>리뷰 요청하기</h3>
+    <p>PR을 올린 뒤 팀원에게 리뷰를 요청합니다. Claude Code에게 팀원 GitHub 아이디를 알려주면 리뷰어로 지정해줘요.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">이 PR에 영욱님 리뷰를 요청해줘.</div>
+      <div class="chat-bubble bot">PR에 ywkim님을 리뷰어로 추가했습니다.</div>
+    </div>
+    <p style="margin-top:var(--sp-3)"><strong>또는 GitHub 웹에서 직접 요청하기</strong></p>
+    <ol class="step-list">
+      <li>GitHub에서 PR 페이지를 엽니다</li>
+      <li>오른쪽 사이드바 <strong>Reviewers</strong> 옆 톱니바퀴(⚙️) 클릭</li>
+      <li>드롭다운에서 리뷰를 요청할 팀원 선택</li>
+      <li>선택 즉시 그 팀원에게 리뷰 요청 알림이 전송됩니다</li>
+    </ol>
+    <div class="step-note"><strong>팁</strong> PR 올리면서 리뷰 요청까지 한 번에: "feature/wind-chart 브랜치를 main에 합치는 PR 올리고, 영욱님 리뷰도 요청해줘."</div>
+  </div>
+
+  <div class="step right">
+    <div class="step-badge">6</div>
+    <h3>리뷰 반영하기</h3>
+    <p>팀원이 수정 요청(리뷰)을 남기면, 그 내용을 Claude Code에게 전달해 반영합니다.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">PR 리뷰에서 "슬라이더 범위를 0~360도로 바꾸고, 현재 방향을 숫자로도 표시해달라"는 요청이 왔어. 반영해줘.</div>
+      <div class="chat-bubble bot">슬라이더 범위를 0~360도로 수정하고, 현재 각도를 숫자로 표시하는 텍스트를 추가했습니다. 커밋했어요.</div>
+      <div class="chat-bubble user">리뷰어가 남긴 코멘트에 "반영했습니다"라고 답글 달아줘.</div>
+      <div class="chat-bubble bot">PR 코멘트에 답글을 달았습니다.</div>
+    </div>
+    <div class="step-note">리뷰 내용은 GitHub PR 페이지에서 확인한 뒤, 그대로 복사해서 Claude Code에게 전달하면 됩니다.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-badge">7</div>
+    <h3>머지(Merge)하기</h3>
+    <p>리뷰가 완료되고 승인을 받으면 main 브랜치에 합칩니다. 머지 후 Vercel이 자동으로 최신 버전을 다시 배포해요.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">리뷰 다 반영했어. PR을 main에 머지해줘.</div>
+      <div class="chat-bubble bot">PR을 main에 머지했습니다. Vercel이 자동으로 최신 버전을 배포합니다.</div>
+      <div class="chat-bubble user">머지된 feature/wind-chart 브랜치는 삭제해줘.</div>
+      <div class="chat-bubble bot">feature/wind-chart 브랜치를 삭제했습니다.</div>
+    </div>
+    <div class="step-note">머지 후 Vercel 배포 주소를 다시 열어 기능이 정상 동작하는지 꼭 확인하세요.</div>
+  </div>
+
+  <span class="kicker" style="display:block;margin:var(--sp-6) 0 var(--sp-4)">Trouble Shooting</span>
+  <div class="step" style="border-color:var(--accent)">
+    <div class="step-badge" style="background:var(--accent);color:var(--ink)">!</div>
+    <h3>충돌(Conflict)이 생겼을 때</h3>
+    <p>두 팀원이 같은 파일의 같은 부분을 동시에 수정하면 충돌이 생깁니다. 겁먹지 말고 Claude Code에게 그대로 알려주면 돼요.</p>
+    <div class="chat-demo">
+      <div class="chat-label">Claude Code 프롬프트 예시</div>
+      <div class="chat-bubble user">머지하려는데 충돌이 생겼어. 어떻게 해결해?</div>
+      <div class="chat-bubble bot">충돌 파일을 확인했습니다. index.html의 45~52번 줄에서 충돌이 발생했어요. 두 버전을 보여드릴게요. 어느 쪽을 유지할까요, 아니면 두 내용을 합칠까요?</div>
+      <div class="chat-bubble user">두 내용 다 살려서 합쳐줘.</div>
+      <div class="chat-bubble bot">두 변경 사항을 합쳐서 충돌을 해결했습니다. 커밋했어요.</div>
+    </div>
+  </div>
+
+  <div class="step right" style="border-color:var(--accent)">
+    <div class="step-badge" style="background:var(--accent);color:var(--ink)">!</div>
+    <h3>Push할 때 SSH 키 에러가 날 때</h3>
+    <p>새 브랜치를 올릴 때 <strong>"Permission denied (publickey)"</strong> 에러가 날 수 있습니다. 웹 Claude Code는 개인 SSH 키를 전혀 쓰지 않고 <strong>GitHub App 연결</strong>로 인증하기 때문에, 이 에러는 거의 항상 <strong>App 설치·권한 문제</strong>입니다.</p>
+    <ol>
+      <li><strong>App이 이 저장소에 설치되지 않은 경우</strong> — 다른 저장소만 연결했거나, 새 저장소 후 App 연결을 갱신하지 않은 경우.</li>
+      <li><strong>App 권한이 읽기 전용인 경우</strong> — 쓰기(write) 권한을 허용하지 않으면 push에서 거부됩니다.</li>
+    </ol>
+    <p style="margin-top:var(--sp-3)"><strong>GitHub App 설치·권한 다시 연결하기</strong></p>
+    <ol class="step-list">
+      <li>GitHub 프로필 → <strong>Settings</strong> → <strong>Applications</strong> → <strong>Installed GitHub Apps</strong></li>
+      <li>Claude(연결된 App) 옆 <strong>Configure</strong> 클릭</li>
+      <li><strong>Repository access</strong>에 작업 중인 저장소가 포함됐는지 확인 (없으면 <strong>Select repositories</strong>로 추가)</li>
+      <li>권한에서 <strong>Contents: Read and write</strong>, <strong>Pull requests: Read and write</strong> 허용 확인</li>
+      <li>claude.ai/code로 돌아와 <strong>"+ 레포 선택..."</strong>으로 저장소를 다시 선택</li>
+    </ol>
+    <div class="step-note"><strong>핵심</strong> 웹 환경에서는 SSH 키를 직접 만들거나 바꿀 필요가 없습니다. "SSH"·"publickey"가 보여도, 해결은 항상 <strong>GitHub App 설치 화면에서 저장소·권한 다시 확인</strong>입니다.</div>
+  </div>
+
+  <div class="callout important"><div class="callout-title">팀 작업 권장 흐름</div><p>기능별로 브랜치를 나눈다 → 각자 개발 후 PR → 팀원 1명 이상 리뷰 → 머지 → Vercel 자동 배포. main 브랜치에는 항상 동작하는 코드만 유지하는 게 원칙입니다.</p></div>
+</section>
+
+<div class="wrap">
+  <nav class="pager">
+    <a href="build.html"><div class="p-dir">← Prev / 02</div><div class="p-title">만들기</div></a>
+    <a class="next" href="rules.html"><div class="p-dir">Next / 04 →</div><div class="p-title">규정</div></a>
+  </nav>
+</div>
+
+<footer class="doc-footer">
+  <div class="footer-nav">
+    <a href="index.html">00 홈</a><a href="start.html">01 시작 전에</a><a href="build.html">02 만들기</a>
+    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="faq.html">05 FAQ</a>
+  </div>
+  기상·기후 AI 해커톤 2026 · 참가자 개발·배포 가이드<br>
+  주최 기상청 · 후원 기후에너지환경부 · 주관 기상기후인재개발원<br>
+  문의 kpc_weather26@kpc.or.kr · 02-398-4397
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

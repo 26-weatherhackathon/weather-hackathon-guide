@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시작 전에 — 용어 & 준비물 · 기상·기후 AI 해커톤 2026</title>
+<meta name="description" content="끝까지 따라오는 데 필요한 핵심 용어 5개와 무료 계정 3개 준비물.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+  @view-transition { navigation: auto; }
+  .ready-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--sp-5); align-items: start; }
+  .big-num-list { list-style: none; counter-reset: r; }
+  .big-num-list li { position: relative; padding: var(--sp-4) 0 var(--sp-4) 76px; border-bottom: var(--bd-2) solid var(--ink); }
+  .big-num-list li::before {
+    counter-increment: r; content: counter(r,decimal-leading-zero);
+    position: absolute; left: 0; top: 8px; font-family: var(--ff-display); font-weight: 800;
+    font-size: 3.2rem; line-height: 1; color: var(--ink); opacity: 0.12; z-index: 0;
+  }
+  .big-num-list .ri-title { font-family: var(--ff-display); font-weight: 700; font-size: 1.2rem; position: relative; }
+  .big-num-list .ri-desc { font-size: var(--fs-sm); color: color-mix(in srgb,var(--ink) 72%, transparent); margin-top: 4px; }
+  .big-num-list a { color: var(--accent-deep); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 720px) { .ready-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
+  <div class="tracklist">
+    <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
+    <a href="start.html" class="active"><span class="tno">01</span><span class="tname">시작 전에</span></a>
+    <a href="build.html"><span class="tno">02</span><span class="tname">만들기</span></a>
+    <a href="collab.html"><span class="tno">03</span><span class="tname">팀 협업</span></a>
+    <a href="rules.html"><span class="tno">04</span><span class="tname">규정</span></a>
+    <a href="faq.html"><span class="tno">05</span><span class="tname">FAQ</span></a>
+  </div>
+</nav>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track"><span>
+    용어 5개만 알면 끝 <i class="sep">✺</i> 설치할 프로그램 없음 <i class="sep">✺</i> 계정 3개 · 5분이면 준비 끝 <i class="sep">✺</i> 전부 무료 <i class="sep">✺</i>&nbsp;
+  </span></div>
+</div>
+
+<header class="page-hero wrap">
+  <span class="ghost-num">01</span>
+  <span class="track-id">TRACK 01 / BEFORE YOU START</span>
+  <h1>처음 보는 용어가 <span class="kr">많다면</span></h1>
+  <p class="lead">아래 5개만 알면 끝까지 따라올 수 있어요. 지금 다 외울 필요 없습니다 — 막히면 돌아오면 돼요.</p>
+</header>
+<hr class="stripe">
+
+<!-- ===== GLOSSARY ===== -->
+<section class="page-section wrap">
+  <div class="section-head"><p class="kicker">Glossary</p><h2>용어 사전</h2></div>
+  <div class="glossary-grid">
+    <div class="glossary-item">
+      <div class="glossary-term">웹 Claude Code <span class="glossary-aka">claude.ai/code</span></div>
+      <div class="glossary-def">설치 없이 웹브라우저에서 대화만으로 코딩하는 AI 도구. 한국어로 "이런 웹페이지 만들어줘"라고 요청하면 코드를 대신 작성하고, 연결된 GitHub 저장소에 자동으로 저장까지 해줍니다.</div>
+      <div class="glossary-analogy">비유: 코드를 대신 써주고 정리·저장까지 해주는 만능 비서. 말로 설명만 하면 됩니다.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">index.html <span class="glossary-aka">/ 정적 웹페이지</span></div>
+      <div class="glossary-def">브라우저에서 바로 열리는 웹페이지 파일 한 개. 글, 그림, 버튼, 슬라이더 같은 인터랙션이 이 안에 다 들어갑니다.</div>
+      <div class="glossary-analogy">비유: 한 장짜리 완성된 전단지. 이 파일만 있으면 웹사이트가 됩니다.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">GitHub <span class="glossary-aka">/ Repository(저장소)</span></div>
+      <div class="glossary-def">코드 파일을 인터넷에 보관하는 창고. 저장소(repository)는 그 안의 프로젝트 폴더 하나입니다. 웹 Claude Code가 만든 코드는 여기에 자동으로 저장됩니다.</div>
+      <div class="glossary-analogy">비유: 코드를 올려두는 구글 드라이브. 저장소 = 폴더 하나.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Vercel <span class="glossary-aka">/ 배포(deploy)</span></div>
+      <div class="glossary-def">GitHub에 올린 코드를 실제 인터넷 주소(URL)로 만들어 누구나 접속하게 해주는 서비스. 이 과정을 배포라고 합니다.</div>
+      <div class="glossary-analogy">비유: 내 전단지를 거리에 붙여서 모두가 볼 수 있게 하는 것.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">PR <span class="glossary-aka">/ Pull Request</span></div>
+      <div class="glossary-def">내 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것. 팀원이 검토(리뷰)하고 OK하면 합쳐집니다. 자세한 건 트랙 03에서.</div>
+      <div class="glossary-analogy">비유: "이 부분 이렇게 바꿨는데, 본책에 넣어도 될까요?" 하고 올리는 검토 요청서.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== READY ===== -->
+<section class="page-section wrap tight">
+  <div class="section-head"><p class="kicker">Checklist</p><h2>준비물 (모두 무료)</h2><p>계정 3개만 만들어 두세요. 설치할 프로그램은 없고, 웹브라우저만 있으면 됩니다.</p></div>
+  <div class="ready-grid">
+    <ul class="big-num-list">
+      <li>
+        <div class="ri-title">Claude 계정</div>
+        <div class="ri-desc">Claude Code 사용. <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> — 본선팀 제공 플랜으로 로그인.</div>
+      </li>
+      <li>
+        <div class="ri-title">GitHub 계정</div>
+        <div class="ri-desc">코드 저장소. <a href="https://github.com" target="_blank" rel="noopener">github.com</a>에서 가입 — Claude Code와 연결합니다.</div>
+      </li>
+      <li>
+        <div class="ri-title">Vercel 계정</div>
+        <div class="ri-desc">배포 서비스. <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> — GitHub 계정으로 바로 로그인 가능.</div>
+      </li>
+    </ul>
+    <div>
+      <div class="callout important">
+        <div class="callout-title">설치할 게 없습니다</div>
+        <p>터미널, Node.js 같은 프로그램 설치는 필요 없어요. 세 사이트 모두 웹브라우저에서 로그인만 하면 끝.</p>
+      </div>
+      <div class="checklist brut-card soft" style="margin-top:var(--sp-4)">
+        <div class="kicker" style="margin-bottom:var(--sp-2)">내 준비 상태</div>
+        <ul class="checklist">
+          <li><div class="check-box"></div> Claude 계정 로그인 됨</li>
+          <li><div class="check-box"></div> GitHub 가입 완료</li>
+          <li><div class="check-box"></div> Vercel 가입 완료</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAGER ===== -->
+<div class="wrap">
+  <nav class="pager">
+    <a href="index.html"><div class="p-dir">← Prev / 00</div><div class="p-title">홈</div></a>
+    <a class="next" href="build.html"><div class="p-dir">Next / 02 →</div><div class="p-title">만들기</div></a>
+  </nav>
+</div>
+
+<footer class="doc-footer">
+  <div class="footer-nav">
+    <a href="index.html">00 홈</a><a href="start.html">01 시작 전에</a><a href="build.html">02 만들기</a>
+    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="faq.html">05 FAQ</a>
+  </div>
+  기상·기후 AI 해커톤 2026 · 참가자 개발·배포 가이드<br>
+  주최 기상청 · 후원 기후에너지환경부 · 주관 기상기후인재개발원<br>
+  문의 kpc_weather26@kpc.or.kr · 02-398-4397
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
