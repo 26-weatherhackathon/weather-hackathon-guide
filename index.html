@@ -12,73 +12,34 @@
 <link rel="stylesheet" href="assets/css/base.css">
 <style>
   @view-transition { navigation: auto; }
-  /* 홈 전용 히어로 */
-  .hero { position: relative; padding-block: var(--sp-7) var(--sp-6); }
-  .hero-headline {
-    font-family: var(--ff-display); font-weight: 800; letter-spacing: -0.04em;
-    line-height: 0.92; font-size: var(--fs-hero); text-transform: uppercase;
-  }
-  .hero-headline .row { display: block; }
-  .hero-headline .row.kr { font-family: var(--ff-kr); text-transform: none; letter-spacing: -0.02em; font-size: clamp(1.5rem,4.5vw,3.2rem); font-weight: 700; line-height: 1.1; }
-  .hero-headline .kr { font-family: var(--ff-kr); text-transform: none; letter-spacing: -0.02em; font-size: clamp(1.5rem,4.5vw,3.2rem); font-weight: 700; }
-  .hero-headline .cold { color: var(--temp-cold); }
-  .hero-headline .hot  { color: var(--temp-scorch); }
-  .hero-sub { max-width: 560px; margin: var(--sp-4) 0 var(--sp-5); font-size: 1.15rem; line-height: 1.6; }
-  .hero-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--sp-5); align-items: end; }
-  .dday {
-    border: var(--bd-3) solid var(--ink); background: var(--paper); box-shadow: var(--shadow-lg);
-    padding: var(--sp-4); align-self: end;
-  }
-  .dday .dday-label { font-family: var(--ff-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-deep); }
-  .dday-clock { display: flex; gap: var(--sp-3); margin-top: var(--sp-2); }
-  .dday-clock .unit { text-align: center; }
-  .dday-clock .num { font-family: var(--ff-display); font-weight: 800; font-size: clamp(2rem,5vw,3.2rem); line-height: 1; }
-  .dday-clock .unit:first-child .num { color: var(--accent); }
-  .dday-clock .cap { font-family: var(--ff-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: color-mix(in srgb,var(--ink) 60%, transparent); }
-  .hero-meta { display: flex; flex-wrap: wrap; gap: var(--sp-5); margin-top: var(--sp-5); font-family: var(--ff-mono); font-size: var(--fs-mono); text-transform: uppercase; letter-spacing: 0.06em; }
-  .hero-meta b { font-family: var(--ff-display); font-size: 1.15rem; display: block; text-transform: none; letter-spacing: -0.01em; }
-  .hero-meta .accent { color: var(--accent-deep); }
 
   /* 트랙리스트 (홈 본문) */
-  .tracks { list-style: none; border-top: var(--bd-3) solid var(--ink); }
+  .tracks { list-style: none; border-top: var(--bd-1) solid var(--line-strong); }
   .tracks li a {
     display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: var(--sp-4);
-    padding: var(--sp-4) var(--sp-2); text-decoration: none; border-bottom: var(--bd-2) solid var(--ink);
+    padding: var(--sp-4) var(--sp-2); text-decoration: none; border-bottom: var(--bd-1) solid var(--line);
     transition: background var(--dur-fast), padding-left var(--dur-fast) var(--ease-out);
   }
-  .tracks li a:hover { background: var(--ink); color: var(--paper); padding-left: var(--sp-4); }
-  .tracks .tno { font-family: var(--ff-mono); font-weight: 700; font-size: 1.1rem; color: var(--accent-deep); }
-  .tracks li a:hover .tno { color: var(--accent); }
-  .tracks .tt { font-family: var(--ff-display); font-weight: 700; font-size: clamp(1.3rem,3vw,2rem); }
-  .tracks .td { font-size: var(--fs-sm); color: color-mix(in srgb,var(--ink) 60%, transparent); }
-  .tracks li a:hover .td { color: color-mix(in srgb,var(--paper) 70%, transparent); }
-  .tracks .arrow { font-family: var(--ff-display); font-weight: 800; font-size: 1.5rem; }
+  .tracks li a:hover { background: var(--paper-2); padding-left: var(--sp-4); }
+  .tracks .tno { font-family: var(--ff-mono); font-weight: 700; font-size: 1.1rem; color: var(--accent); }
+  .tracks .tt { font-family: var(--ff-display); font-weight: 700; font-size: clamp(1.2rem,2.6vw,1.7rem); }
+  .tracks .td { font-size: var(--fs-sm); color: var(--ink-soft); }
+  .tracks .arrow { font-family: var(--ff-display); font-weight: 800; font-size: 1.3rem; color: var(--ink-faint); }
+  .tracks li a:hover .arrow { color: var(--accent); }
 
   .what-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-4); margin-top: var(--sp-4); }
-  .what-node { border: var(--bd-2) solid var(--ink); background: var(--paper); padding: var(--sp-4); box-shadow: var(--shadow-sm); }
-  .what-node:nth-child(2) { transform: translateY(18px); border-color: var(--accent); }
-  .what-node .wn-k { font-family: var(--ff-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-deep); }
+  .what-node { border: var(--bd-1) solid var(--line-strong); background: var(--surface); padding: var(--sp-4); border-radius: var(--r-md); box-shadow: var(--shadow-sm); }
+  .what-node .wn-k { font-family: var(--ff-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
   .what-node .wn-t { font-family: var(--ff-display); font-weight: 800; font-size: 1.2rem; margin: 4px 0; }
-  .what-node .wn-d { font-size: var(--fs-sm); color: color-mix(in srgb,var(--ink) 72%, transparent); }
+  .what-node .wn-d { font-size: var(--fs-sm); color: var(--ink-soft); }
   @media (max-width: 720px) {
-    .hero-grid { grid-template-columns: 1fr; }
     .what-grid { grid-template-columns: 1fr; }
     .what-node:nth-child(2) { transform: none; }
     .tracks li a { grid-template-columns: 44px 1fr auto; gap: var(--sp-3); }
   }
 </style>
 </head>
-<body data-hero>
-
-<!-- heat-haze SVG filter -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <filter id="heat-haze">
-    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="2" result="n">
-      <animate attributeName="baseFrequency" dur="14s" values="0.012 0.04;0.016 0.05;0.012 0.04" repeatCount="indefinite"/>
-    </feTurbulence>
-    <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-</svg>
+<body>
 
 <!-- ===== SHARED SHELL ===== -->
 <nav class="topbar">
@@ -94,41 +55,18 @@
 </nav>
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track"><span>
-    총상금 1,000만원 <i class="sep">✺</i> 모집 ~7.3 <i class="sep">✺</i> 웹 인터랙티브 도구 <i class="sep">✺</i> 완전 초보 OK <i class="sep">✺</i> 설치 없음 <i class="sep">✺</i> 브라우저 하나면 끝 <i class="sep">✺</i>&nbsp;
+    설치 없이 시작 <i class="sep">✺</i> 브라우저 하나면 끝 <i class="sep">✺</i> 한국어로 시키면 코드 완성 <i class="sep">✺</i> GitHub 자동 저장 <i class="sep">✺</i> Vercel로 배포 <i class="sep">✺</i> 웹 인터랙티브 교육 콘텐츠 <i class="sep">✺</i>&nbsp;
   </span></div>
 </div>
 
-<!-- ===== HERO ===== -->
-<header class="hero wrap">
-  <p class="kicker">기상·기후 AI 해커톤 2026 / SEASON 01</p>
-  <div class="hero-grid">
-    <div>
-      <h1 class="hero-headline">
-        <span class="row"><span class="kinetic cold">WEATHER</span></span>
-        <span class="row kr">설치도 터미널도 없이</span>
-        <span class="row"><span class="kinetic hot heat">CODE</span> <span class="kr">로 만든다</span></span>
-      </h1>
-      <p class="hero-sub">터미널? 설치? 노노. 브라우저 하나로 날씨 데이터를 코드로 굴린다. 웹 Claude Code에게 한국어로 시키면 코드 작성부터 GitHub 저장까지, Vercel만 한 번 연결하면 제출용 링크 완성.</p>
-      <a class="cta" href="start.html">시작하러 가기 →</a>
-    </div>
-    <div class="dday" data-countdown="2026-07-03T23:59:59+09:00">
-      <span class="dday-label">모집 마감까지</span>
-      <div class="dday-clock">
-        <div class="unit"><div class="num" data-d>—</div><div class="cap">Days</div></div>
-        <div class="unit"><div class="num" data-h>00</div><div class="cap">Hrs</div></div>
-        <div class="unit"><div class="num" data-m>00</div><div class="cap">Min</div></div>
-        <div class="unit"><div class="num" data-s>00</div><div class="cap">Sec</div></div>
-      </div>
-    </div>
-  </div>
-  <div class="hero-meta">
-    <span>결과물<b>웹 인터랙티브 도구</b></span>
-    <span>난이도<b>완전 초보 OK</b></span>
-    <span>총상금<b class="accent">₩<span data-countup="10000000">10,000,000</span></b></span>
-    <span>모집<b>~ 2026.07.03</b></span>
-  </div>
+<!-- ===== INTRO ===== -->
+<header class="page-hero wrap">
+  <p class="kicker">기상·기후 AI 해커톤 2026 · 참가자 가이드</p>
+  <h1>웹 인터랙티브 교육 콘텐츠,<br><span class="kr">Claude로 더 잘 만들기</span></h1>
+  <p class="lead">설치도 터미널도 없이 — 웹 Claude Code에게 한국어로 시키면 코드 작성부터 GitHub 저장, Vercel 배포까지 이어집니다. 이 가이드는 그 전 과정을 단계별로 안내합니다.</p>
+  <div style="margin-top:var(--sp-4)"><a class="cta" href="start.html">가이드 시작하기 →</a></div>
 </header>
-<hr class="stripe tall">
+<hr class="stripe">
 
 <!-- ===== WHAT YOU MAKE ===== -->
 <section class="page-section wrap">
