@@ -114,34 +114,39 @@
 
 ### 3.1 기온 스케일 (한파 → 폭염)
 
-기상청 특보 기준에 실제 매핑: **한파주의보 -12°C 이하 / 폭염주의보 33°C 이상**. 색은 Warming Stripes의 RdBu 다이버징 스케일을 차용하고, 16°C(쾌적)를 중립점으로 둠.
+기상청 특보 기준에 실제 매핑: **한파주의보 -12°C 이하 / 폭염주의보 33°C 이상**. 색은 추측이 아니라 **IPCC AR6 공식 기온 다이버징 colormap(`temp_div`, 11단계)**의 실측 hex를 그대로 채택([IPCC-WG1/colormaps](https://github.com/IPCC-WG1/colormaps), ColorBrewer/Crameri 기반). 중앙값 `#F8F8F8`을 16°C(쾌적) 중립점에 둠.
 
 ```css
 :root {
-  /* 기온 다이버징 스케일 (-12°C 한파 → 16°C 중립 → 33°C 폭염) */
-  --temp-cold:    #08306b;  /* ≤ -12°C  한파 (deep blue) */
-  --temp-chilly:  #2166ac;  /*   -5°C   추위 */
-  --temp-cool:    #4393c3;  /*    5°C   서늘 */
-  --temp-mild:    #d1e5f0;  /*   12°C   선선 */
-  --temp-neutral: #f7f4ec;  /*   16°C   중립(페이퍼 화이트, 순백 아님) */
-  --temp-warm:    #fddbc7;  /*   22°C   따뜻 */
-  --temp-warmer:  #f4a582;  /*   27°C   더움 */
-  --temp-hot:     #d6604d;  /*   31°C   무더위 */
-  --temp-scorch:  #b2182b;  /* ≥ 33°C   폭염 (deep red) */
+  /* 기온 다이버징 — IPCC AR6 temp_div(11단계) 실측값. -12°C 한파 → 16°C 중립 → 33°C 폭염 */
+  --temp-cold:    #053061;  /* ≤ -12°C  한파 (deep blue) */
+  --temp-chilly:  #246192;  /*   -7°C   추위 */
+  --temp-cool:    #4393C3;  /*    0°C   서늘 */
+  --temp-cool-2:  #7FB5D4;  /*    6°C */
+  --temp-mild:    #BCD6E6;  /*   11°C   선선 */
+  --temp-neutral: #F8F8F8;  /*   16°C   중립 (IPCC 중앙값) */
+  --temp-warm:    #EDC5BF;  /*   21°C   따뜻 */
+  --temp-warm-2:  #E19286;  /*   25°C */
+  --temp-warmer:  #D6604C;  /*   29°C   더움 */
+  --temp-hot:     #9E3036;  /*   31°C   무더위 */
+  --temp-scorch:  #67001F;  /* ≥ 33°C   폭염 (deep red) */
 }
 ```
 
+> 페이퍼 배경(§3.3 `--paper #f7f4ec`)은 따뜻한 톤 유지를 위해 중립색과 별개로 둔다. 데이터 stripe·게이지엔 위 `--temp-*` 11단계를 순서대로 사용.
+
 ### 3.2 강수 스케일 (보조 — 시퀀셜 청록)
 
-기온(다이버징)과 충돌 안 나게 강수는 **별도 청록 시퀀셜**(맑음→호우). 데이터 게이지·진행 표시에 사용.
+기온(다이버징)과 충돌 안 나게 강수는 **별도 청록 시퀀셜**(맑음→호우). **IPCC AR6 `prec_seq`(11단계)** 실측값에서 축약 채택. 데이터 게이지·진행 표시에 사용.
 
 ```css
 :root {
-  --rain-none:  #f7f4ec;  /* 0mm   맑음 */
-  --rain-light: #c7e9e4;  /* ~3mm  약한 비 */
-  --rain-mod:   #5bc0be;  /* ~15mm 비 */
-  --rain-heavy: #1b9aaa;  /* ~30mm 강한 비 */
-  --rain-storm: #0b6e75;  /* ≥50mm 호우특보 */
+  /* 강수 시퀀셜 — IPCC AR6 prec_seq 실측값 (크림 → 딥틸) */
+  --rain-none:  #FFFFE5;  /* 0mm   맑음 */
+  --rain-light: #9ACBBA;  /* ~3mm  약한 비 */
+  --rain-mod:   #56A89D;  /* ~15mm 비 */
+  --rain-heavy: #278077;  /* ~30mm 강한 비 */
+  --rain-storm: #003C30;  /* ≥50mm 호우특보 */
 }
 ```
 
