@@ -1,0 +1,175 @@
+{
+  "_meta": {
+    "purpose": "기후 해커톤 사이트 리디자인용 레퍼런스 캡처 대상 URL 리스트",
+    "generated": "2026-06-26",
+    "liveness_check": {
+      "attempted": true,
+      "methods": [
+        "curl -I -L (HEAD, follow redirects) via $HTTPS_PROXY",
+        "WebFetch (Anthropic fetcher) GET probe"
+      ],
+      "result": "샌드박스에서 생사 확인 불가. curl HEAD는 전 항목 http_code=000 (egress 정책이 비허용 외부 호스트 CONNECT를 거부), WebFetch는 전 항목 403 (사이트 anti-bot이 페처도 차단). 따라서 alive를 true/false로 단정하지 않고 'unverified'로 둔다. 비차단 환경(로컬 등)에서 재검증 필요.",
+      "verified_from_sandbox": false
+    },
+    "alive_legend": {
+      "unverified": "샌드박스 네트워크 제약으로 확인 불가. known_live=true는 작성 시점 일반 지식 기준 운영 중으로 추정되나 미검증."
+    }
+  },
+  "kpop_microsites": [
+    {
+      "name": "aespa (SM Entertainment)",
+      "url": "https://www.smentertainment.com/en/artist/aespa/",
+      "why": "KWANGYA 세계관 다크 캔버스 + 단일 네온 액센트, 글리치/데이터모시 타이포 전환 — '열 아지랑이' 모션의 직접 영감",
+      "source": "https://www.smentertainment.com/en/artist/aespa/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "403 (anti-bot)" }
+    },
+    {
+      "name": "NCT 127 (SM Entertainment)",
+      "url": "https://nct127.smtown.com/",
+      "why": "숫자·코드(127, 2026)를 디자인 요소로, 산업 그리드 + 모노 라벨 — 트랙리스트형 인덱스/Step 코드의 근거",
+      "source": "https://kprofiles.com/nct-127-members-profile/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    },
+    {
+      "name": "ILLIT (BELIFT LAB / HYBE)",
+      "url": "https://beliftlab.com/ILLIT",
+      "why": "Y2K 소프트 — 둥근 버블 로고타입, 파스텔+크롬, 로어케이스 친근함 — '딱 한 군데 부드러운 반전(CTA)'의 모델",
+      "source": "https://beliftlab.com/artist/profile/ILLIT",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "403 (anti-bot)" }
+    },
+    {
+      "name": "NewJeans / NJZ (ADOR)",
+      "url": "https://newjeans.kr/",
+      "why": "2025 크롬-메탈 레이싱 리데뷔지만 Newtro 에디토리얼 여백 DNA 유지 — '브루탈리즘에 화이트스페이스 규율' 근거",
+      "source": "https://www.koreaboo.com/news/njz-newjeans-racing-concept-debut-comeback/",
+      "alive": "unverified",
+      "known_live": "unknown",
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    },
+    {
+      "name": "SMTOWN (메인 허브)",
+      "url": "https://www.smtown.com/",
+      "why": "다중 아티스트 인덱스 그리드 + 컴백 스케줄러 — 트랙리스트/시즌 캘린더 레이아웃 참고",
+      "source": "https://www.smtown.com/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    },
+    {
+      "name": "HYBE (멀티 레이블 허브)",
+      "url": "https://hybecorp.com/eng/artist/list",
+      "why": "멀티 아티스트 릴리즈 허브 + 다국어, 정제된 그리드 전환 — 정보 위계/네비 패턴 참고",
+      "source": "https://forum.allkpop.com/thread/141933-the-web-design-on-hybe-official-websites-for-bts-enhypen-and-le-sserafim-is-on-t/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    }
+  ],
+  "kinetic_webgl_award_sites": [
+    {
+      "name": "Igloo Inc",
+      "url": "https://igloo.inc/",
+      "why": "Awwwards Site of the Year급 WebGL — 스크롤 연동 3D + 대형 타이포 결합. 데이터 비주얼을 3D 없이도 모방할 리듬",
+      "source": "https://www.awwwards.com/websites/sites_of_the_day/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "403 (anti-bot)" }
+    },
+    {
+      "name": "Obys Agency",
+      "url": "https://obys.agency/",
+      "why": "키네틱 타이포 SOTD 다수 — 커서 반응 가변 weight, 그리드 깨는 에디토리얼. 히어로 마우스 인터랙션 레퍼런스",
+      "source": "https://www.awwwards.com/inspiration/kinetic-typography-nssc18",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "403 (anti-bot)" }
+    },
+    {
+      "name": "Active Theory",
+      "url": "https://activetheory.net/",
+      "why": "WebGL 이머시브 히어로 + 키네틱 전환의 기준점. 절제해서 '의미 있는 곳만 모션' 원칙 검증용",
+      "source": "https://www.awwwards.com/awwwards/collections/webgl/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    },
+    {
+      "name": "Lusion",
+      "url": "https://lusion.co/",
+      "why": "WebGL 파티클/3D SOTD — 데이터를 입자/흐름으로 표현. 강수·바람 데이터 모션 영감",
+      "source": "https://www.awwwards.com/websites/webgl/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    },
+    {
+      "name": "Exo Ape",
+      "url": "https://exoape.com/",
+      "why": "시네마틱 스무스 스크롤 + 절제된 대형 타이포. 패럴랙스 행 슬라이드(히어로) 레퍼런스",
+      "source": "https://www.awwwards.com/websites/sites_of_the_day/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "403 (anti-bot)" }
+    },
+    {
+      "name": "Cuberto",
+      "url": "https://cuberto.com/",
+      "why": "장난기 있는 커서 + 키네틱 타이포 — MZ 브랜드 보이스에 맞는 인터랙션 톤",
+      "source": "https://www.awwwards.com/websites/typography/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "403 (anti-bot)" }
+    },
+    {
+      "name": "14islands",
+      "url": "https://14islands.com/",
+      "why": "스크롤 구동 키네틱 타이포 + CSS scroll-driven 활용. JS 최소화 모션 구현 참고",
+      "source": "https://www.awwwards.com/websites/typography/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "403 (anti-bot)" }
+    },
+    {
+      "name": "Unseen Studio",
+      "url": "https://unseen.co/",
+      "why": "에디토리얼 키네틱 타이포 전문 — 한글×라틴 혼합 워드마크 위계 레퍼런스",
+      "source": "https://www.awwwards.com/websites/winner_category_typography/",
+      "alive": "unverified",
+      "known_live": "unknown",
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    },
+    {
+      "name": "Basement Studio",
+      "url": "https://basement.studio/",
+      "why": "볼드 타입 + 개발자 브루탈리즘 — 네오브루탈 골격 + 코드블록 미학 직접 참고",
+      "source": "https://www.awwwards.com/websites/sites_of_the_day/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "403 (anti-bot)" }
+    },
+    {
+      "name": "Hello Monday",
+      "url": "https://www.hellomonday.com/",
+      "why": "스크롤 스토리텔링 + 키네틱 — 단계형(Step) 콘텐츠를 서사로 푸는 리듬 참고",
+      "source": "https://www.awwwards.com/websites/sites_of_the_day/",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    },
+    {
+      "name": "Exat Typeface (Awwwards SOTD)",
+      "url": "https://www.awwwards.com/sites/exat-typeface",
+      "why": "모더니즘 가변 폰트의 키네틱 저니 — 가변축 모핑 데모로 직접 분석 가치",
+      "source": "https://www.awwwards.com/sites/exat-typeface",
+      "alive": "unverified",
+      "known_live": true,
+      "check": { "curl_head": "000 (egress-blocked)", "webfetch": "not-probed" }
+    }
+  ]
+}
