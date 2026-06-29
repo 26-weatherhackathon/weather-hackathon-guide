@@ -1,8 +1,15 @@
 /* =====================================================================
    기상·기후 AI 해커톤 2026 — 공유 디자인 시스템 (base.css)
-   콘셉트: "날씨 데이터로 짠 네오브루탈리즘 — 키네틱 타이포가 온도를 따라 움직인다."
+   콘셉트: "기상청 마스코트 기상이 — 둥글둥글한 날씨 친구가 안내하는 가이드."
    스펙 출처: DESIGN.md
    ===================================================================== */
+
+/* ---------- 0. WEBFONT (한글 라운드 제목) ---------- */
+@font-face {
+  font-family: 'Cafe24Ssurround';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/Cafe24Ssurround.woff') format('woff');
+  font-weight: 700; font-display: swap;
+}
 
 /* ---------- 0. RESET ---------- */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,9 +51,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   --fs-h2:clamp(1.6rem,3vw,2.5rem);
   --fs-h3:1.25rem; --fs-body:1.0625rem; --fs-sm:0.8125rem; --fs-mono:0.75rem;
 
-  /* 폰트 패밀리 — 제목은 동글동글(영문 Fredoka + 한글 Gowun Dodum), 본문은 가독성 Wanted Sans */
-  --ff-display:'Fredoka','Gowun Dodum', system-ui, sans-serif;
-  --ff-round-kr:'Gowun Dodum', system-ui, sans-serif;
+  /* 폰트 패밀리 — 제목은 동글동글(영문 Fredoka + 한글 Cafe24 Ssurround), 본문은 가독성 Wanted Sans */
+  --ff-display:'Fredoka','Cafe24Ssurround', system-ui, sans-serif;
+  --ff-round-kr:'Cafe24Ssurround', system-ui, sans-serif;
   --ff-kr:'Wanted Sans Variable','Wanted Sans', system-ui, sans-serif;
   --ff-mono:'Space Mono', ui-monospace, monospace;
   --ff-code:'JetBrains Mono', ui-monospace, monospace;
