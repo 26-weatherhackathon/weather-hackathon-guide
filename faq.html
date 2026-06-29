@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — 자주 묻는 질문 · 기상·기후 AI 해커톤 2026</title>
+<meta name="description" content="코딩 못해도 되는지, 서버가 필요한지, 계정은 어떻게 받는지 등 자주 묻는 질문.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+  @view-transition { navigation: auto; }
+  .faq-item { border: var(--bd-2) solid var(--ink); background: var(--paper); margin-bottom: var(--sp-3); box-shadow: var(--shadow-sm); }
+  .faq-item[open] { box-shadow: var(--shadow-md); }
+  .faq-item summary {
+    list-style: none; cursor: pointer; padding: var(--sp-4);
+    font-family: var(--ff-display); font-weight: 700; font-size: 1.1rem;
+    display: flex; justify-content: space-between; align-items: center; gap: var(--sp-3);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary .q { font-family: var(--ff-mono); font-size: 0.8rem; color: var(--accent-deep); }
+  .faq-item summary .plus { font-family: var(--ff-mono); font-weight: 700; transition: transform var(--dur-fast); }
+  .faq-item[open] summary .plus { transform: rotate(45deg); color: var(--accent); }
+  .faq-item .a { padding: 0 var(--sp-4) var(--sp-4); font-size: var(--fs-sm); line-height: 1.7; color: color-mix(in srgb,var(--ink) 82%, transparent); }
+  .faq-item[open] summary { border-bottom: var(--bd-1) solid var(--ink); }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
+  <div class="tracklist">
+    <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
+    <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
+    <a href="build.html"><span class="tno">02</span><span class="tname">만들기</span></a>
+    <a href="collab.html"><span class="tno">03</span><span class="tname">팀 협업</span></a>
+    <a href="rules.html"><span class="tno">04</span><span class="tname">규정</span></a>
+    <a href="faq.html" class="active"><span class="tno">05</span><span class="tname">FAQ</span></a>
+  </div>
+</nav>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track"><span>
+    코딩 못해도 OK <i class="sep">✺</i> 서버 필요 없음 <i class="sep">✺</i> 질문은 Slack #질문-공통 <i class="sep">✺</i> 막히면 돌아와 <i class="sep">✺</i>&nbsp;
+  </span></div>
+</div>
+
+<header class="page-hero wrap">
+  <span class="ghost-num">05</span>
+  <span class="track-id">TRACK 05 / FAQ</span>
+  <h1><span class="kr">자주 묻는</span> 질문</h1>
+  <p class="lead">막히는 지점 대부분은 여기 있어요. 그래도 안 풀리면 Slack <strong>#질문-공통</strong>으로.</p>
+  <img class="hero-mascot" src="assets/img/gisangi-wink.png" alt="윙크하는 기상이" width="168" height="168">
+</header>
+<hr class="stripe">
+
+<section class="page-section wrap">
+  <details class="faq-item" open>
+    <summary><span><span class="q">Q.</span> 코딩을 전혀 못하는데 가능한가요?</span><span class="plus">＋</span></summary>
+    <div class="a">가능합니다. 웹 Claude Code에 한국어로 요청하면 코드를 대신 짜줘요. 이 가이드 순서대로만 따라 하면 됩니다.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 백엔드 서버가 꼭 필요한가요?</span><span class="plus">＋</span></summary>
+    <div class="a">아닙니다. 브라우저에서 동작하는 웹페이지(index.html) 하나로 충분합니다.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 팀원과 함께 작업하려면?</span><span class="plus">＋</span></summary>
+    <div class="a">GitHub 저장소 Settings → Collaborators에서 팀원을 추가하면 됩니다. 각자 Claude Code에서 같은 저장소에 연결해 작업할 수 있어요. 자세한 협업 흐름은 <a href="collab.html" style="color:var(--accent-deep);font-weight:700">트랙 03 팀 협업</a>을 보세요.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 기술·도구 문의는 어디에 하나요?</span><span class="plus">＋</span></summary>
+    <div class="a">Slack의 <strong>#질문-공통</strong> 채널에 올려주세요. 운영팀이 직접 응대합니다. 정규 응대일은 매주 공지를 확인해주세요.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> Claude Code 계정은 어떻게 받나요?</span><span class="plus">＋</span></summary>
+    <div class="a">본선 진출 15팀에게 운영팀이 이메일로 계정을 발급합니다. 계정 접속 문제는 Slack #질문-공통 채널 또는 긴급 시 운영팀에 직접 연락하세요.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> AI가 만든 코드를 그대로 제출해도 되나요?</span><span class="plus">＋</span></summary>
+    <div class="a">됩니다. 이 대회는 AI 활용을 권장해요. 단, 다른 팀이나 외부 출처 코드를 그대로 복사하는 건 표절로 처리됩니다. AI로 생성했더라도 우리 팀의 아이디어와 구성이 담겨 있어야 합니다.</div>
+  </details>
+
+  <div class="callout important" style="margin-top:var(--sp-5)">
+    <div class="callout-title">아직 안 풀렸다면</div>
+    <p>Slack <strong>#질문-공통</strong>에 질문을 남겨주세요. 운영팀 문의: kpc_weather26@kpc.or.kr · 02-398-4397</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <nav class="pager">
+    <a href="rules.html"><div class="p-dir">← Prev / 04</div><div class="p-title">규정</div></a>
+    <a class="next" href="index.html"><div class="p-dir">Back / 00 →</div><div class="p-title">홈으로</div></a>
+  </nav>
+</div>
+
+<footer class="doc-footer">
+  <div class="footer-nav">
+    <a href="index.html">00 홈</a><a href="start.html">01 시작 전에</a><a href="build.html">02 만들기</a>
+    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="faq.html">05 FAQ</a>
+  </div>
+  기상·기후 AI 해커톤 2026 · 참가자 개발·배포 가이드<br>
+  주최 기상청 · 후원 기후에너지환경부 · 주관 기상기후인재개발원<br>
+  문의 kpc_weather26@kpc.or.kr · 02-398-4397
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

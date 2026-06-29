@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>규정 — 저작권 & 심사 기준 · 기상·기후 AI 해커톤 2026</title>
+<meta name="description" content="저작권 가이드라인과 심사 배점. 무엇이 허용되고 무엇을 조심해야 하는지.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>@view-transition { navigation: auto; }</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
+  <div class="tracklist">
+    <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
+    <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
+    <a href="build.html"><span class="tno">02</span><span class="tname">만들기</span></a>
+    <a href="collab.html"><span class="tno">03</span><span class="tname">팀 협업</span></a>
+    <a href="rules.html" class="active"><span class="tno">04</span><span class="tname">규정</span></a>
+    <a href="faq.html"><span class="tno">05</span><span class="tname">FAQ</span></a>
+  </div>
+</nav>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track"><span>
+    AI 활용은 권장 <i class="sep">✺</i> 표절은 탈락 <i class="sep">✺</i> 출처는 README에 <i class="sep">✺</i> 실현 가능성 30점 <i class="sep">✺</i> 체험형 설계 25점 <i class="sep">✺</i>&nbsp;
+  </span></div>
+</div>
+
+<header class="page-hero wrap">
+  <span class="ghost-num">04</span>
+  <span class="track-id">TRACK 04 / RULES</span>
+  <h1><span class="kr">규정</span> · 저작권 &amp; 심사</h1>
+  <p class="lead">결과물은 기상청에서 활용될 수 있어요. 라이선스 문제가 있으면 수상이 취소될 수 있으니 기준을 꼭 확인하세요. 그리고 만들 때 배점을 떠올리면 방향 잡기가 쉽습니다.</p>
+  <img class="hero-mascot" src="assets/img/gisangi-thermometer.png" alt="온도계를 든 기상이" width="168" height="168">
+</header>
+<hr class="stripe">
+
+<!-- ===== COPYRIGHT ===== -->
+<section class="page-section wrap">
+  <div class="section-head"><p class="kicker">Copyright</p><h2>저작권 가이드라인</h2></div>
+  <div class="callout important"><div class="callout-title">표절 및 저작권 검증을 실시합니다</div><p>제출 코드는 팀 간·외부 출처 표절 검증, GitHub 커밋 히스토리 확인, Claude 대화 세션 확인으로 검증됩니다. AI 사용 자체는 문제없지만, 다른 팀이나 외부 출처 코드를 그대로 쓰는 건 허용되지 않습니다.</p></div>
+
+  <table class="data-table" style="margin-top:var(--sp-4)">
+    <thead><tr><th>항목</th><th>허용 ✓</th><th>주의 필요 ⚠</th></tr></thead>
+    <tbody>
+      <tr><td class="label-col">AI 생성 코드</td><td>Claude Code로 생성한 코드 사용 OK</td><td>다른 팀과 동일한 코드 그대로 제출 금지</td></tr>
+      <tr><td class="label-col">오픈소스 라이브러리</td><td>MIT, Apache 2.0 등 상업적 허용 라이선스</td><td>GPL 계열은 기상청 활용 시 제약. README 명시 필요</td></tr>
+      <tr><td class="label-col">이미지·아이콘</td><td>CC0, Unsplash, 직접 제작</td><td>출처 불명 이미지, 유료 스톡 무단 사용 금지</td></tr>
+      <tr><td class="label-col">폰트</td><td>Google Fonts, Pretendard, Noto Sans 등 무료 폰트</td><td>상업용 폰트 무단 사용 금지. 라이선스 README 명시</td></tr>
+      <tr><td class="label-col">기상청 데이터</td><td>공공데이터포털(data.go.kr) 공개 API</td><td>원출처 표기 필수</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:var(--sp-4)"><div class="callout-title">README에 꼭 써야 할 것</div><p>사용한 외부 리소스 목록(라이브러리명·버전·라이선스) / 이미지·폰트 출처 / 기상청 데이터 출처 표기.</p></div>
+</section>
+
+<!-- ===== SECURITY ===== -->
+<section class="page-section wrap tight">
+  <div class="section-head"><p class="kicker">Security</p><h2>API 키 보안 (필수)</h2></div>
+  <div class="callout important" style="border-left-color:var(--temp-scorch)">
+    <div class="callout-title" style="color:var(--temp-scorch)">API 키가 노출되면 실격입니다</div>
+    <p>API 키·토큰·비밀번호 같은 비밀값은 <strong>어떤 경우에도 코드에 그대로 노출되지 않도록 설계해야 합니다.</strong> GitHub에 올라간 코드와 배포된 웹페이지는 누구나 열어볼 수 있어, 노출된 키는 도용·과금 사고로 이어집니다. 키 노출이 확인되면 <strong>실격 처리</strong>됩니다.</p>
+  </div>
+
+  <table class="data-table" style="margin-top:var(--sp-4)">
+    <thead><tr><th>하지 말 것 ✗</th><th>이렇게 설계하세요 ✓</th></tr></thead>
+    <tbody>
+      <tr><td class="label-col">키를 HTML·JS 코드에 직접 써넣기</td><td>키가 필요 없는 공개 데이터·API를 우선 사용</td></tr>
+      <tr><td class="label-col">키를 GitHub에 커밋</td><td>키가 꼭 필요하면 코드가 아닌 환경변수에 두고, 서버(서버리스 함수)를 거쳐 호출</td></tr>
+      <tr><td class="label-col">키를 Slack·PR·스크린샷에 노출</td><td>키에 사용량·도메인 제한을 걸어 피해 범위를 최소화</td></tr>
+      <tr><td class="label-col">노출된 키를 그대로 두기</td><td>실수로 올렸다면 즉시 키를 폐기(revoke)하고 새로 발급</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:var(--sp-4)"><div class="callout-title">막혔을 때</div><p>"이 API 키가 코드에 노출되지 않게 안전하게 쓰는 방법 알려줘"라고 Claude Code에게 물어보면 환경변수 설정과 호출 방식까지 안내해 줍니다.</p></div>
+</section>
+
+<!-- ===== JUDGE ===== -->
+<section class="page-section wrap tight">
+  <div class="section-head"><p class="kicker">Scoring</p><h2>심사 기준</h2><p>배점이 클수록 게이지가 "뜨겁게" 찹니다. 실현 가능성과 체험형 설계 비중이 가장 커요.</p></div>
+
+  <div class="gauge-row">
+    <span class="g-label">실현 가능성</span>
+    <div class="gauge-track"><div class="gauge-fill" data-pct="100" style="background:var(--temp-scorch)"></div></div>
+    <span class="g-val">30점</span>
+    <span class="g-desc">실제로 동작하고 완성도 있는가</span>
+  </div>
+  <div class="gauge-row">
+    <span class="g-label">체험·참여형 설계</span>
+    <div class="gauge-track"><div class="gauge-fill" data-pct="83" style="background:var(--temp-warmer)"></div></div>
+    <span class="g-val">25점</span>
+    <span class="g-desc">사용자가 직접 조작하며 배우는가</span>
+  </div>
+  <div class="gauge-row">
+    <span class="g-label">주제 적합성</span>
+    <div class="gauge-track"><div class="gauge-fill" data-pct="67" style="background:var(--temp-warm-2)"></div></div>
+    <span class="g-val">20점</span>
+    <span class="g-desc">기상·기후 데이터를 교육에 잘 녹였는가</span>
+  </div>
+  <div class="gauge-row">
+    <span class="g-label">아이디어 독창성</span>
+    <div class="gauge-track"><div class="gauge-fill" data-pct="50" style="background:var(--temp-cool)"></div></div>
+    <span class="g-val">15점</span>
+    <span class="g-desc">새롭고 흥미로운 접근인가</span>
+  </div>
+  <div class="gauge-row">
+    <span class="g-label">학습 효과</span>
+    <div class="gauge-track"><div class="gauge-fill" data-pct="33" style="background:var(--temp-cold)"></div></div>
+    <span class="g-val">10점</span>
+    <span class="g-desc">실제로 배움이 일어나는가</span>
+  </div>
+</section>
+
+<div class="wrap">
+  <nav class="pager">
+    <a href="collab.html"><div class="p-dir">← Prev / 03</div><div class="p-title">팀 협업</div></a>
+    <a class="next" href="faq.html"><div class="p-dir">Next / 05 →</div><div class="p-title">FAQ</div></a>
+  </nav>
+</div>
+
+<footer class="doc-footer">
+  <div class="footer-nav">
+    <a href="index.html">00 홈</a><a href="start.html">01 시작 전에</a><a href="build.html">02 만들기</a>
+    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="faq.html">05 FAQ</a>
+  </div>
+  기상·기후 AI 해커톤 2026 · 참가자 개발·배포 가이드<br>
+  주최 기상청 · 후원 기후에너지환경부 · 주관 기상기후인재개발원<br>
+  문의 kpc_weather26@kpc.or.kr · 02-398-4397
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
