@@ -44,8 +44,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   --fs-h2:clamp(1.6rem,3vw,2.5rem);
   --fs-h3:1.25rem; --fs-body:1.0625rem; --fs-sm:0.8125rem; --fs-mono:0.75rem;
 
-  /* 폰트 패밀리 — 동글동글 라운드 */
-  --ff-display:'Fredoka','Wanted Sans Variable','Wanted Sans', system-ui, sans-serif;
+  /* 폰트 패밀리 — 제목은 동글동글(영문 Fredoka + 한글 Jua), 본문은 가독성 Wanted Sans */
+  --ff-display:'Fredoka','Jua', system-ui, sans-serif;
+  --ff-round-kr:'Jua', system-ui, sans-serif;
   --ff-kr:'Wanted Sans Variable','Wanted Sans', system-ui, sans-serif;
   --ff-mono:'Space Mono', ui-monospace, monospace;
   --ff-code:'JetBrains Mono', ui-monospace, monospace;
@@ -293,7 +294,7 @@ strong { font-weight: 700; }
   font-family: var(--ff-display); font-size: var(--fs-display); font-weight: 800;
   letter-spacing: -0.03em; margin: var(--sp-2) 0 var(--sp-3);
 }
-.page-hero h1 .kr { font-family: var(--ff-kr); }
+.page-hero h1 .kr { font-family: var(--ff-round-kr); }
 .page-hero .lead { max-width: 640px; color: color-mix(in srgb,var(--ink) 78%, transparent); }
 .page-hero .ghost-num {
   position: absolute; top: -8px; right: 0; z-index: -1;

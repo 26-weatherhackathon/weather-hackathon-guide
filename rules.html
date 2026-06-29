@@ -7,7 +7,7 @@
 <meta name="description" content="저작권 가이드라인과 심사 배점. 무엇이 허용되고 무엇을 조심해야 하는지.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Jua&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/base.css">
 <style>@view-transition { navigation: auto; }</style>
@@ -57,6 +57,27 @@
   </table>
 
   <div class="callout" style="margin-top:var(--sp-4)"><div class="callout-title">README에 꼭 써야 할 것</div><p>사용한 외부 리소스 목록(라이브러리명·버전·라이선스) / 이미지·폰트 출처 / 기상청 데이터 출처 표기.</p></div>
+</section>
+
+<!-- ===== SECURITY ===== -->
+<section class="page-section wrap tight">
+  <div class="section-head"><p class="kicker">Security</p><h2>API 키 보안 (필수)</h2></div>
+  <div class="callout important" style="border-left-color:var(--temp-scorch)">
+    <div class="callout-title" style="color:var(--temp-scorch)">API 키가 노출되면 실격입니다</div>
+    <p>API 키·토큰·비밀번호 같은 비밀값은 <strong>어떤 경우에도 코드에 그대로 노출되지 않도록 설계해야 합니다.</strong> GitHub에 올라간 코드와 배포된 웹페이지는 누구나 열어볼 수 있어, 노출된 키는 도용·과금 사고로 이어집니다. 키 노출이 확인되면 <strong>실격 처리</strong>됩니다.</p>
+  </div>
+
+  <table class="data-table" style="margin-top:var(--sp-4)">
+    <thead><tr><th>하지 말 것 ✗</th><th>이렇게 설계하세요 ✓</th></tr></thead>
+    <tbody>
+      <tr><td class="label-col">키를 HTML·JS 코드에 직접 써넣기</td><td>키가 필요 없는 공개 데이터·API를 우선 사용</td></tr>
+      <tr><td class="label-col">키를 GitHub에 커밋</td><td>키가 꼭 필요하면 코드가 아닌 환경변수에 두고, 서버(서버리스 함수)를 거쳐 호출</td></tr>
+      <tr><td class="label-col">키를 Slack·PR·스크린샷에 노출</td><td>키에 사용량·도메인 제한을 걸어 피해 범위를 최소화</td></tr>
+      <tr><td class="label-col">노출된 키를 그대로 두기</td><td>실수로 올렸다면 즉시 키를 폐기(revoke)하고 새로 발급</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:var(--sp-4)"><div class="callout-title">막혔을 때</div><p>"이 API 키가 코드에 노출되지 않게 안전하게 쓰는 방법 알려줘"라고 Claude Code에게 물어보면 환경변수 설정과 호출 방식까지 안내해 줍니다.</p></div>
 </section>
 
 <!-- ===== JUDGE ===== -->
