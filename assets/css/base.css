@@ -13,30 +13,30 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ---------- 1. TOKENS ---------- */
 :root {
-  /* 중립 베이스 — 차분한 웜 그레이 */
-  --ink:#23211c;          /* 제목/본문 */
-  --ink-soft:#605d54;     /* 보조 텍스트 */
-  --ink-faint:#8c887d;    /* 캡션 */
-  --paper:#fbfaf7;        /* 페이지 배경 */
-  --paper-2:#f4f2ec;      /* 교차 섹션 */
+  /* 중립 베이스 — 기상이 마스코트에서 픽셀 추출(네이비/페일블루) */
+  --ink:#0a3a63;          /* 제목/본문 — 마스코트 눈·삼태극 네이비(#053863) */
+  --ink-soft:#42648a;     /* 보조 텍스트 */
+  --ink-faint:#8aa0bd;    /* 캡션 */
+  --paper:#f5f9ff;        /* 페이지 배경 — 페일블루 화이트 */
+  --paper-2:#e6f0fe;      /* 교차 섹션 — 카드 배경 톤(#bedaff 연하게) */
   --surface:#ffffff;      /* 카드 표면 */
-  --line:#e7e3d8;         /* 얇은 구분선 */
-  --line-strong:#d2cdbf;  /* 보더 */
-  --shadow:#23211c;
+  --line:#d7e6fb;         /* 얇은 구분선 */
+  --line-strong:#bedaff;  /* 보더 — 카드 페일블루 */
+  --shadow:#0a3a63;
 
-  /* 단일 포인트 액센트 — 웜 엠버(해/온기), 절제 사용 */
-  --accent:#c2602f;
-  --accent-strong:#a44a20;
-  --accent-tint:#f6e9e0;
+  /* 단일 포인트 액센트 — 마스코트 몸통 스카이블루(#80b7f7 계열) */
+  --accent:#5b9be8;
+  --accent-strong:#3a82d6;
+  --accent-tint:#dceefc;
   --accent-ink:#ffffff;
-  --accent-deep:#a44a20;  /* 별칭(기존 참조 호환) */
-  --accent-cold:#5d7c86;  /* 미세 쿨 포인트(데이터 한정) */
+  --accent-deep:#3a82d6;  /* 별칭(기존 참조 호환) */
+  --accent-cold:#f2999f;  /* 따뜻한 포인트 — 마스코트 볼/입(코랄핑크) */
 
-  /* 데이터 도식 전용 — 톤다운(쿨→웜). 큰 면적 금지, 작은 게이지/도식에만 */
-  --temp-cold:#6f8a90; --temp-chilly:#849089; --temp-cool:#9a967f; --temp-cool-2:#b3a079;
-  --temp-mild:#c7ad7d; --temp-neutral:#cdb98c; --temp-warm:#cca169; --temp-warm-2:#c78a4f;
-  --temp-warmer:#c1713a; --temp-hot:#b15a2c; --temp-scorch:#a44a20;
-  --rain-none:#eef1ea; --rain-light:#cbd8d1; --rain-mod:#94aca7; --rain-heavy:#5f7f7c; --rain-storm:#3b524f;
+  /* 데이터 도식 전용 — 온도계 메타포(몸통블루→얼굴크림→코랄→온도계레드) */
+  --temp-cold:#80b7f7; --temp-chilly:#a3cbf9; --temp-cool:#c4ddfb; --temp-cool-2:#e0eefd;
+  --temp-mild:#ffe8d8; --temp-neutral:#fdd9c2; --temp-warm:#f8bda3; --temp-warm-2:#f39c86;
+  --temp-warmer:#ec6f5e; --temp-hot:#e44a3e; --temp-scorch:#d4302a;
+  --rain-none:#eef5ff; --rain-light:#cfe2fc; --rain-mod:#93bbf2; --rain-heavy:#5b9be8; --rain-storm:#2f5e96;
 
   /* 타입 스케일 */
   --fs-hero:clamp(3.5rem,12vw,11rem);
@@ -44,8 +44,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   --fs-h2:clamp(1.6rem,3vw,2.5rem);
   --fs-h3:1.25rem; --fs-body:1.0625rem; --fs-sm:0.8125rem; --fs-mono:0.75rem;
 
-  /* 폰트 패밀리 */
-  --ff-display:'Bricolage Grotesque', system-ui, sans-serif;
+  /* 폰트 패밀리 — 동글동글 라운드 */
+  --ff-display:'Fredoka','Wanted Sans Variable','Wanted Sans', system-ui, sans-serif;
   --ff-kr:'Wanted Sans Variable','Wanted Sans', system-ui, sans-serif;
   --ff-mono:'Space Mono', ui-monospace, monospace;
   --ff-code:'JetBrains Mono', ui-monospace, monospace;
@@ -53,14 +53,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
   /* 스페이싱 (비선형) */
   --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:20px; --sp-5:32px; --sp-6:52px; --sp-7:84px; --sp-8:136px;
 
-  /* 라운드 (차등) */
-  --r-sharp:0; --r-sm:4px; --r-md:14px; --r-lg:28px; --r-pill:999px;
+  /* 라운드 (차등) — 동글동글 강화 */
+  --r-sharp:0; --r-sm:8px; --r-md:18px; --r-lg:32px; --r-pill:999px;
 
-  /* 보더 (얇게) & 소프트 섀도 (진짜 사이트 톤) */
+  /* 보더 (얇게) & 소프트 섀도 (네이비 톤) */
   --bd-1:1px; --bd-2:1px; --bd-3:1.5px;
-  --shadow-sm:0 1px 2px rgba(35,33,28,.06), 0 1px 1px rgba(35,33,28,.04);
-  --shadow-md:0 6px 18px rgba(35,33,28,.07), 0 2px 5px rgba(35,33,28,.05);
-  --shadow-lg:0 18px 44px rgba(35,33,28,.10), 0 4px 12px rgba(35,33,28,.06);
+  --shadow-sm:0 1px 2px rgba(22,49,90,.07), 0 1px 1px rgba(22,49,90,.05);
+  --shadow-md:0 6px 18px rgba(22,49,90,.09), 0 2px 5px rgba(22,49,90,.06);
+  --shadow-lg:0 18px 44px rgba(22,49,90,.12), 0 4px 12px rgba(22,49,90,.07);
 
   /* 모션 */
   --ease-out:cubic-bezier(0.22,1,0.36,1);
@@ -300,6 +300,21 @@ strong { font-weight: 700; }
   font-family: var(--ff-display); font-weight: 800; font-size: clamp(8rem,22vw,18rem);
   color: var(--ink); opacity: 0.05; line-height: 0.8; pointer-events: none; user-select: none;
 }
+
+/* 기상이 마스코트 — 히어로 옆에서 둥실 */
+.hero-mascot {
+  position: absolute; right: var(--sp-4); bottom: var(--sp-4);
+  width: clamp(96px, 14vw, 168px); height: auto; z-index: 1;
+  pointer-events: none; user-select: none;
+  filter: drop-shadow(0 10px 18px rgba(10,58,99,.16));
+  animation: gisangi-bob 4s var(--ease-out) infinite;
+}
+@keyframes gisangi-bob { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
+@media (max-width: 720px) { .hero-mascot { width: 84px; right: var(--sp-2); bottom: auto; top: var(--sp-4); opacity: .9; } }
+@media (prefers-reduced-motion: reduce) { .hero-mascot { animation: none; } }
+
+/* 본문 인라인 마스코트 — 콜아웃/스텝 곁에 작게 */
+.inline-mascot { width: 56px; height: auto; vertical-align: middle; flex: none; }
 
 /* ---------- 19. PREV/NEXT PAGER ---------- */
 .pager { display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; padding-block: var(--sp-6); }
