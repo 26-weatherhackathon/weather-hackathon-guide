@@ -19,7 +19,6 @@
 <body>
 
 <nav class="topbar">
-  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
   <div class="tracklist">
     <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
     <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
@@ -31,7 +30,7 @@
 </nav>
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track"><span>
-    브랜치 나눠서 작업 <i class="sep">✺</i> PR로 합치기 <i class="sep">✺</i> 충돌? 겁먹지 마 <i class="sep">✺</i> main엔 동작하는 코드만 <i class="sep">✺</i> 말로 시키면 PR까지 자동 <i class="sep">✺</i>&nbsp;
+    브랜치 나눠서 작업 <i class="sep">✺</i> PR로 합치기 <i class="sep">✺</i> 충돌도 침착하게 <i class="sep">✺</i> main엔 동작하는 코드만 <i class="sep">✺</i> 요청하면 PR까지 대신 <i class="sep">✺</i>&nbsp;
   </span></div>
 </div>
 
@@ -39,15 +38,15 @@
   <span class="ghost-num">03</span>
   <span class="track-id">TRACK 03 / TEAM COLLAB</span>
   <h1><span class="kr">팀 협업</span> · GitHub PR</h1>
-  <p class="lead">팀원이 각자 다른 기능을 개발할 땐 브랜치를 나눠 작업하고 PR로 합칩니다. Claude Code에게 말로 시키면 브랜치 생성부터 PR까지 전부 대신 해줘요. 각 단계 프롬프트를 그대로 복사해서 쓰세요.</p>
+  <p class="lead">팀원이 각자 다른 기능을 개발할 때는 브랜치를 나눠 작업하고 PR로 합칩니다. Claude Code에 요청하면 브랜치 생성부터 PR까지 대신 처리합니다. 각 단계 프롬프트를 그대로 복사해서 쓰세요.</p>
   <img class="hero-mascot" src="assets/img/gisangi-cheer.png" alt="만세하는 기상이" width="168" height="168">
 </header>
 <hr class="stripe">
 
 <section class="page-section wrap">
-  <div class="callout important"><div class="callout-title">먼저 확인하세요 — 최종 제출은 Google Drive</div><p><strong>최종 소스 코드는 Google Drive에 업로드해 제출합니다.</strong> 아래 GitHub PR 협업 방법은 <strong>팀(2인 이상)</strong>이 서로 방해 없이 함께 개발할 때를 위한 안내예요.</p><p style="margin-top:var(--sp-2)"><strong>1인 참가자</strong>라면 이 페이지는 <strong>참고만</strong> 하면 됩니다. 혼자 작업할 땐 브랜치·PR 없이 그냥 개발하고, 완성된 소스 코드를 Google Drive에 올리면 돼요.</p></div>
+  <div class="callout important"><div class="callout-title">먼저 확인하세요 — 최종 제출은 제출 폼 업로드</div><p><strong>최종 소스 코드는 운영팀이 안내하는 제출 폼에 업로드해 제출합니다.</strong> 아래 GitHub PR 협업 방법은 <strong>팀(2인 이상)</strong>이 서로 방해 없이 함께 개발할 때를 위한 안내입니다.</p><p style="margin-top:var(--sp-2)"><strong>1인 참가자</strong>라면 이 페이지는 <strong>참고만</strong> 하면 됩니다. 혼자 작업할 때는 브랜치·PR 없이 개발한 뒤 완성된 소스 코드를 제출 폼에 올리면 됩니다.</p><p style="margin-top:var(--sp-2)">GitHub를 활용한 팀 협업 방법은 별도 영상·문서로도 제공될 예정이니 이 장과 함께 참고하세요.</p></div>
 
-  <div class="callout"><div class="callout-title">PR이 뭔가요?</div><p>Pull Request — 내가 만든 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것. 팀원이 검토하고 OK하면 합쳐집니다. 충돌 없이 협업하는 표준 방식이에요.</p></div>
+  <div class="callout"><div class="callout-title">PR이 뭔가요?</div><p>Pull Request — 내가 만든 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것입니다. 팀원이 검토한 뒤 승인하면 합쳐집니다. 충돌 없이 협업하는 표준 방식입니다.</p></div>
 
   <div class="step">
     <div class="step-badge">1</div>
@@ -87,7 +86,7 @@
       <div class="chat-bubble user">지금까지 커밋 기록을 보여줘.</div>
       <div class="chat-bubble bot">총 3개의 커밋이 있습니다: (1) 초기 세팅 (2) 체감온도 슬라이더 추가 (3) 바람 방향 화살표 컴포넌트 추가</div>
     </div>
-    <div class="step-note"><strong>팁</strong> 큰 작업이 끝날 때마다 커밋하세요. 메시지는 "무엇을 했는지" 한 줄로. 커밋 히스토리는 심사·표절 검증에 활용됩니다.</div>
+    <div class="step-note"><strong>팁</strong> 큰 작업이 끝날 때마다 커밋하세요. 메시지는 무엇을 했는지 한 줄로 적습니다. 커밋은 되돌리기·기록용이며, 최종 소스 제출은 제출 폼 업로드이므로 커밋 히스토리 자체는 심사 대상이 아닙니다.</div>
   </div>
 
   <div class="step right">
@@ -154,7 +153,7 @@
   <div class="step" style="border-color:var(--accent)">
     <div class="step-badge" style="background:var(--accent);color:var(--ink)">!</div>
     <h3>충돌(Conflict)이 생겼을 때</h3>
-    <p>두 팀원이 같은 파일의 같은 부분을 동시에 수정하면 충돌이 생깁니다. 겁먹지 말고 Claude Code에게 그대로 알려주면 돼요.</p>
+    <p>두 팀원이 같은 파일의 같은 부분을 동시에 수정하면 충돌이 생깁니다. 당황하지 말고 Claude Code에 상황을 그대로 전달하면 됩니다. 어느 쪽을 유지할지, 두 내용을 합칠지 물어보면 처리합니다.</p>
     <div class="chat-demo">
       <div class="chat-label">Claude Code 프롬프트 예시</div>
       <div class="chat-bubble user">머지하려는데 충돌이 생겼어. 어떻게 해결해?</div>
@@ -167,7 +166,7 @@
   <div class="step right" style="border-color:var(--accent)">
     <div class="step-badge" style="background:var(--accent);color:var(--ink)">!</div>
     <h3>Push할 때 SSH 키 에러가 날 때</h3>
-    <p>새 브랜치를 올릴 때 <strong>"Permission denied (publickey)"</strong> 에러가 날 수 있습니다. 웹 Claude Code는 개인 SSH 키를 전혀 쓰지 않고 <strong>GitHub App 연결</strong>로 인증하기 때문에, 이 에러는 거의 항상 <strong>App 설치·권한 문제</strong>입니다.</p>
+    <p>새 브랜치를 올릴 때 <strong>"Permission denied (publickey)"</strong> 에러가 날 수 있습니다. 웹 Claude Code는 개인 SSH 키를 쓰지 않고 <strong>GitHub App 연결</strong>로 인증하므로, 이 에러는 대부분 <strong>App 설치·권한 문제</strong>입니다.</p>
     <ol>
       <li><strong>App이 이 저장소에 설치되지 않은 경우</strong> — 다른 저장소만 연결했거나, 새 저장소 후 App 연결을 갱신하지 않은 경우.</li>
       <li><strong>App 권한이 읽기 전용인 경우</strong> — 쓰기(write) 권한을 허용하지 않으면 push에서 거부됩니다.</li>

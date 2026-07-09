@@ -29,7 +29,6 @@
 <body>
 
 <nav class="topbar">
-  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
   <div class="tracklist">
     <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
     <a href="start.html" class="active"><span class="tno">01</span><span class="tname">시작 전에</span></a>
@@ -41,7 +40,7 @@
 </nav>
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track"><span>
-    용어 5개만 알면 끝 <i class="sep">✺</i> 설치할 프로그램 없음 <i class="sep">✺</i> 계정 3개 · 5분이면 준비 끝 <i class="sep">✺</i> 전부 무료 <i class="sep">✺</i>&nbsp;
+    핵심 용어 5개 정리 <i class="sep">✺</i> 웹 인터페이스는 설치 불필요 <i class="sep">✺</i> 무료 계정 3개 준비 <i class="sep">✺</i> 브라우저로 시작 <i class="sep">✺</i>&nbsp;
   </span></div>
 </div>
 
@@ -49,7 +48,7 @@
   <span class="ghost-num">01</span>
   <span class="track-id">TRACK 01 / BEFORE YOU START</span>
   <h1>처음 보는 용어가 <span class="kr">많다면</span></h1>
-  <p class="lead">아래 5개만 알면 끝까지 따라올 수 있어요. 지금 다 외울 필요 없습니다 — 막히면 돌아오면 돼요.</p>
+  <p class="lead">가이드에 자주 나오는 핵심 용어 5개를 먼저 정리했습니다. 지금 모두 외울 필요는 없으며, 막히면 다시 돌아와 확인하면 됩니다.</p>
   <img class="hero-mascot" src="assets/img/gisangi-backpack.png" alt="배낭을 멘 기상이" width="168" height="168">
 </header>
 <hr class="stripe">
@@ -60,54 +59,54 @@
   <div class="glossary-grid">
     <div class="glossary-item">
       <div class="glossary-term">웹 Claude Code <span class="glossary-aka">claude.ai/code</span></div>
-      <div class="glossary-def">설치 없이 웹브라우저에서 대화만으로 코딩하는 AI 도구. 한국어로 "이런 웹페이지 만들어줘"라고 요청하면 코드를 대신 작성하고, 연결된 GitHub 저장소에 자동으로 저장까지 해줍니다.</div>
-      <div class="glossary-analogy">비유: 코드를 대신 써주고 정리·저장까지 해주는 만능 비서. 말로 설명만 하면 됩니다.</div>
+      <div class="glossary-def">설치 없이 웹브라우저에서 대화만으로 코딩하는 AI 도구입니다. 한국어로 "이런 웹페이지를 만들어 달라"고 요청하면 코드를 대신 작성합니다. 처음에 GitHub 저장소를 한 번 연결해 두면(트랙 02 Step 1), 이후 작성한 코드가 그 저장소에 자동으로 저장됩니다.</div>
+      <div class="glossary-analogy">비유하자면, 요청한 내용을 코드로 작성하고 저장까지 대신 처리해 주는 도구입니다.</div>
     </div>
     <div class="glossary-item">
       <div class="glossary-term">index.html <span class="glossary-aka">/ 정적 웹페이지</span></div>
-      <div class="glossary-def">브라우저에서 바로 열리는 웹페이지 파일 한 개. 글, 그림, 버튼, 슬라이더 같은 인터랙션이 이 안에 다 들어갑니다.</div>
-      <div class="glossary-analogy">비유: 한 장짜리 완성된 전단지. 이 파일만 있으면 웹사이트가 됩니다.</div>
+      <div class="glossary-def">브라우저에서 바로 열리는 웹페이지 파일 한 개입니다. 글, 그림, 버튼, 슬라이더 같은 인터랙션이 모두 이 안에 들어갑니다.</div>
+      <div class="glossary-analogy">비유하자면, 한 장으로 완성된 전단지입니다. 이 파일만 있으면 웹사이트가 됩니다.</div>
     </div>
     <div class="glossary-item">
       <div class="glossary-term">GitHub <span class="glossary-aka">/ Repository(저장소)</span></div>
-      <div class="glossary-def">코드 파일을 인터넷에 보관하는 창고. 저장소(repository)는 그 안의 프로젝트 폴더 하나입니다. 웹 Claude Code가 만든 코드는 여기에 자동으로 저장됩니다.</div>
-      <div class="glossary-analogy">비유: 코드를 올려두는 구글 드라이브. 저장소 = 폴더 하나.</div>
+      <div class="glossary-def">코드 파일을 인터넷에 보관하는 창고입니다. 저장소(repository)는 그 안의 프로젝트 폴더 하나에 해당합니다. 트랙 02 Step 1에서 저장소를 만들어 웹 Claude Code에 연결하면, 이후 작성한 코드가 이 저장소에 저장됩니다. 이 저장소는 개발용 작업 공간이며, 최종 소스 제출은 저장소 링크가 아니라 별도 제출 폼에 업로드합니다(트랙 02 Step 5).</div>
+      <div class="glossary-analogy">비유하자면, 코드를 올려 두는 온라인 저장 공간이며, 저장소는 그 안의 폴더 하나입니다.</div>
     </div>
     <div class="glossary-item">
       <div class="glossary-term">Vercel <span class="glossary-aka">/ 배포(deploy)</span></div>
-      <div class="glossary-def">GitHub에 올린 코드를 실제 인터넷 주소(URL)로 만들어 누구나 접속하게 해주는 서비스. 이 과정을 배포라고 합니다.</div>
-      <div class="glossary-analogy">비유: 내 전단지를 거리에 붙여서 모두가 볼 수 있게 하는 것.</div>
+      <div class="glossary-def">GitHub에 올린 코드를 실제 인터넷 주소(URL)로 만들어 누구나 접속할 수 있게 하는 서비스입니다. 이 과정을 배포라고 합니다.</div>
+      <div class="glossary-analogy">비유하자면, 완성한 전단지를 거리에 붙여 누구나 볼 수 있게 하는 것과 같습니다.</div>
     </div>
     <div class="glossary-item">
       <div class="glossary-term">PR <span class="glossary-aka">/ Pull Request</span></div>
-      <div class="glossary-def">내 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것. 팀원이 검토(리뷰)하고 OK하면 합쳐집니다. 자세한 건 트랙 03에서.</div>
-      <div class="glossary-analogy">비유: "이 부분 이렇게 바꿨는데, 본책에 넣어도 될까요?" 하고 올리는 검토 요청서.</div>
+      <div class="glossary-def">내 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것입니다. 팀원이 검토(리뷰)한 뒤 승인하면 합쳐집니다. 자세한 내용은 트랙 03을 참고하세요.</div>
+      <div class="glossary-analogy">비유하자면, "이 부분을 이렇게 바꿨는데 반영해도 될지" 확인을 요청하는 검토 요청서입니다.</div>
     </div>
   </div>
 </section>
 
 <!-- ===== READY ===== -->
 <section class="page-section wrap tight">
-  <div class="section-head"><p class="kicker">Checklist</p><h2>준비물 (모두 무료)</h2><p>계정 3개만 만들어 두세요. 설치할 프로그램은 없고, 웹브라우저만 있으면 됩니다.</p></div>
+  <div class="section-head"><p class="kicker">Checklist</p><h2>준비물 (모두 무료)</h2><p>계정 3개를 미리 만들어 두세요. 웹 인터페이스에서는 설치할 프로그램이 없으며, 웹브라우저만 있으면 됩니다.</p></div>
   <div class="ready-grid">
     <ul class="big-num-list">
       <li>
         <div class="ri-title">Claude 계정</div>
-        <div class="ri-desc">Claude Code 사용. <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> — 본선팀 제공 플랜으로 로그인.</div>
+        <div class="ri-desc">Claude Code 사용. <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> — 본선 진출 팀에 운영팀이 발급하는 팀 계정으로 로그인합니다.</div>
       </li>
       <li>
         <div class="ri-title">GitHub 계정</div>
-        <div class="ri-desc">코드 저장소. <a href="https://github.com" target="_blank" rel="noopener">github.com</a>에서 가입 — Claude Code와 연결합니다.</div>
+        <div class="ri-desc">코드 저장소. <a href="https://github.com" target="_blank" rel="noopener">github.com</a>에서 가입한 뒤 Claude Code와 연결합니다.</div>
       </li>
       <li>
         <div class="ri-title">Vercel 계정</div>
-        <div class="ri-desc">배포 서비스. <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> — GitHub 계정으로 바로 로그인 가능.</div>
+        <div class="ri-desc">배포 서비스. <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> — GitHub 계정으로 바로 로그인할 수 있습니다.</div>
       </li>
     </ul>
     <div>
       <div class="callout important">
-        <div class="callout-title">설치할 게 없습니다</div>
-        <p>터미널, Node.js 같은 프로그램 설치는 필요 없어요. 세 사이트 모두 웹브라우저에서 로그인만 하면 끝.</p>
+        <div class="callout-title">웹 인터페이스는 설치가 없습니다</div>
+        <p>초보자용 웹 인터페이스에서는 터미널이나 Node.js 설치가 필요하지 않으며, 세 사이트 모두 브라우저 로그인만으로 시작합니다. 터미널·IDE 환경에 익숙하다면 그 환경으로 작업해도 됩니다.</p>
       </div>
       <div class="checklist brut-card soft" style="margin-top:var(--sp-4)">
         <div class="kicker" style="margin-bottom:var(--sp-2)">내 준비 상태</div>

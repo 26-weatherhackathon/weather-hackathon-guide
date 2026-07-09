@@ -30,7 +30,6 @@
 <body>
 
 <nav class="topbar">
-  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
   <div class="tracklist">
     <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
     <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
@@ -42,7 +41,7 @@
 </nav>
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track"><span>
-    코딩 못해도 OK <i class="sep">✺</i> 서버 필요 없음 <i class="sep">✺</i> 질문은 Slack #질문-공통 <i class="sep">✺</i> 막히면 돌아와 <i class="sep">✺</i>&nbsp;
+    코딩 경험이 없어도 시작 <i class="sep">✺</i> 서버 없이 웹페이지로 <i class="sep">✺</i> 질문은 Slack #질문-공통 <i class="sep">✺</i> 막히면 다시 확인 <i class="sep">✺</i>&nbsp;
   </span></div>
 </div>
 
@@ -58,27 +57,35 @@
 <section class="page-section wrap">
   <details class="faq-item" open>
     <summary><span><span class="q">Q.</span> 코딩을 전혀 못하는데 가능한가요?</span><span class="plus">＋</span></summary>
-    <div class="a">가능합니다. 웹 Claude Code에 한국어로 요청하면 코드를 대신 짜줘요. 이 가이드 순서대로만 따라 하면 됩니다.</div>
+    <div class="a">가능합니다. 웹 Claude Code에 한국어로 요청하면 코드를 대신 작성합니다. 이 가이드의 순서대로 따라 하면 됩니다.</div>
   </details>
   <details class="faq-item">
     <summary><span><span class="q">Q.</span> 백엔드 서버가 꼭 필요한가요?</span><span class="plus">＋</span></summary>
-    <div class="a">아닙니다. 브라우저에서 동작하는 웹페이지(index.html) 하나로 충분합니다.</div>
+    <div class="a">아닙니다. 브라우저에서 동작하는 웹페이지(index.html) 하나로도 만들 수 있습니다.</div>
   </details>
   <details class="faq-item">
     <summary><span><span class="q">Q.</span> 팀원과 함께 작업하려면?</span><span class="plus">＋</span></summary>
-    <div class="a">GitHub 저장소 Settings → Collaborators에서 팀원을 추가하면 됩니다. 각자 Claude Code에서 같은 저장소에 연결해 작업할 수 있어요. 자세한 협업 흐름은 <a href="collab.html" style="color:var(--accent-deep);font-weight:700">트랙 03 팀 협업</a>을 보세요.</div>
+    <div class="a">GitHub 저장소 Settings → Collaborators에서 팀원을 추가하면 됩니다. 각자 Claude Code에서 같은 저장소에 연결해 작업할 수 있습니다. 최종 소스는 운영팀이 안내하는 제출 폼에 업로드해 제출합니다(GitHub 링크 제출이 아닙니다). GitHub를 활용한 협업 방법은 별도 영상·문서로도 제공될 예정이며, 자세한 흐름은 <a href="collab.html" style="color:var(--accent-deep);font-weight:700">트랙 03 팀 협업</a>을 참고하세요.</div>
   </details>
   <details class="faq-item">
     <summary><span><span class="q">Q.</span> 기술·도구 문의는 어디에 하나요?</span><span class="plus">＋</span></summary>
-    <div class="a">Slack의 <strong>#질문-공통</strong> 채널에 올려주세요. 운영팀이 직접 응대합니다. 정규 응대일은 매주 공지를 확인해주세요.</div>
+    <div class="a">Slack의 <strong>#질문-공통</strong> 채널에 올려주세요. 운영팀이 직접 응대합니다. 정규 응대일은 매주 공지를 확인해 주세요.</div>
   </details>
   <details class="faq-item">
     <summary><span><span class="q">Q.</span> Claude Code 계정은 어떻게 받나요?</span><span class="plus">＋</span></summary>
-    <div class="a">본선 진출 15팀에게 운영팀이 이메일로 계정을 발급합니다. 계정 접속 문제는 Slack #질문-공통 채널 또는 긴급 시 운영팀에 직접 연락하세요.</div>
+    <div class="a">본선 진출 15팀에 운영팀이 이메일로 계정을 발급합니다. 계정 접속에 문제가 있으면 Slack #질문-공통 채널 또는 긴급 시 운영팀에 직접 연락하세요.</div>
   </details>
   <details class="faq-item">
     <summary><span><span class="q">Q.</span> AI가 만든 코드를 그대로 제출해도 되나요?</span><span class="plus">＋</span></summary>
-    <div class="a">됩니다. 이 대회는 AI 활용을 권장해요. 단, 다른 팀이나 외부 출처 코드를 그대로 복사하는 건 표절로 처리됩니다. AI로 생성했더라도 우리 팀의 아이디어와 구성이 담겨 있어야 합니다.</div>
+    <div class="a">됩니다. 이 대회는 AI 활용을 권장합니다. 다만 다른 팀이나 외부 출처의 코드를 그대로 복사하는 것은 표절로 처리됩니다. AI로 생성했더라도 우리 팀의 아이디어와 구성이 담겨 있어야 합니다.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 소스 코드는 어떻게 제출하나요?</span><span class="plus">＋</span></summary>
+    <div class="a">완성된 소스를 압축(zip)해 운영팀이 안내하는 제출 폼에 업로드합니다. GitHub 저장소 링크 제출이 아니며, node_modules·빌드 산출물은 제외하고 소스만 담으면 됩니다.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 터미널로 개발해도 되나요?</span><span class="plus">＋</span></summary>
+    <div class="a">됩니다. 이 가이드는 초보자용 웹 인터페이스를 기준으로 하지만, 터미널·IDE로 작업해도 무방합니다. 제출물 4가지 요건만 충족하면 됩니다.</div>
   </details>
 
   <div class="callout important" style="margin-top:var(--sp-5)">

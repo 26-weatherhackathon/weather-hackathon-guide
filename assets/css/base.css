@@ -240,7 +240,7 @@ strong { font-weight: 700; }
 .glossary-term { font-weight: 800; font-size: 1.1rem; margin-bottom: 6px; }
 .glossary-aka { font-family: var(--ff-mono); font-size: 0.7rem; color: var(--accent-deep); font-weight: 700; }
 .glossary-def { font-size: var(--fs-sm); color: color-mix(in srgb, var(--ink) 82%, transparent); line-height: 1.6; }
-.glossary-analogy { font-size: var(--fs-sm); margin-top: 8px; padding-top: 8px; border-top: var(--bd-1) dashed color-mix(in srgb, var(--ink) 35%, transparent); color: var(--accent-cold); font-weight: 600; }
+.glossary-analogy { font-size: var(--fs-sm); margin-top: 8px; padding-top: 8px; border-top: var(--bd-1) dashed color-mix(in srgb, var(--ink) 35%, transparent); color: var(--accent-deep); font-weight: 600; }
 
 /* ---------- 14. STEP (zigzag) ---------- */
 .step {

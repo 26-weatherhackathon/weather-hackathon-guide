@@ -27,7 +27,7 @@
   .tracks .arrow { font-family: var(--ff-display); font-weight: 800; font-size: 1.3rem; color: var(--ink-faint); }
   .tracks li a:hover .arrow { color: var(--accent); }
 
-  .what-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-4); margin-top: var(--sp-4); }
+  .what-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-4); margin-top: var(--sp-4); }
   .what-node { border: var(--bd-1) solid var(--line-strong); background: var(--surface); padding: var(--sp-4); border-radius: var(--r-md); box-shadow: var(--shadow-sm); }
   .what-node .wn-k { font-family: var(--ff-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
   .what-node .wn-t { font-family: var(--ff-display); font-weight: 800; font-size: 1.2rem; margin: 4px 0; }
@@ -43,7 +43,6 @@
 
 <!-- ===== SHARED SHELL ===== -->
 <nav class="topbar">
-  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
   <div class="tracklist">
     <a href="index.html" class="active"><span class="tno">00</span><span class="tname">홈</span></a>
     <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
@@ -55,7 +54,7 @@
 </nav>
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track"><span>
-    설치 없이 시작 <i class="sep">✺</i> 브라우저 하나면 끝 <i class="sep">✺</i> 한국어로 시키면 코드 완성 <i class="sep">✺</i> GitHub 자동 저장 <i class="sep">✺</i> Vercel로 배포 <i class="sep">✺</i> 웹 인터랙티브 교육 콘텐츠 <i class="sep">✺</i>&nbsp;
+    웹 브라우저에서 시작 <i class="sep">✺</i> 한국어로 요청해 코드 작성 <i class="sep">✺</i> GitHub 자동 저장 <i class="sep">✺</i> Vercel로 배포 <i class="sep">✺</i> 웹 인터랙티브 교육 콘텐츠 <i class="sep">✺</i>&nbsp;
   </span></div>
 </div>
 
@@ -63,24 +62,26 @@
 <header class="page-hero wrap">
   <p class="kicker">기상·기후 AI 해커톤 2026 · 참가자 가이드</p>
   <h1>웹 인터랙티브 교육 콘텐츠,<br><span class="kr">Claude로 더 잘 만들기</span></h1>
-  <p class="lead">설치도 터미널도 없이 — 웹 Claude Code에게 한국어로 시키면 코드 작성부터 GitHub 저장, Vercel 배포까지 이어집니다. 이 가이드는 그 전 과정을 단계별로 안내합니다.</p>
+  <p class="lead">이 가이드는 초보자용 웹 인터페이스를 기준으로 합니다. 웹 Claude Code에 한국어로 요청하면 코드 작성부터 배포까지 브라우저에서 진행할 수 있으며, 터미널·IDE 환경으로 작업해도 무방합니다. 어느 경로로 만들든 제출물 요건만 충족하면 됩니다.</p>
   <div style="margin-top:var(--sp-4)"><a class="cta" href="start.html">가이드 시작하기 →</a></div>
   <img class="hero-mascot" src="assets/img/gisangi-hello.png" alt="기상청 마스코트 기상이가 인사하는 모습" width="168" height="168">
 </header>
 <hr class="stripe">
 
-<!-- ===== WHAT YOU MAKE ===== -->
+<!-- ===== SUBMISSION & ABOUT THIS GUIDE ===== -->
 <section class="page-section wrap">
   <div class="section-head">
-    <p class="kicker">What you make</p>
-    <h2>무엇을 만드나요?</h2>
-    <p>기상·기후 데이터를 학습자가 직접 조작하며 배우는 웹 도구. 예보관 체험, 기압·바람 인터랙티브 맵처럼요. 서버도 앱도 필요 없이 웹페이지 하나로 충분합니다.</p>
+    <p class="kicker">About this guide</p>
+    <h2>제출 요건만 충족하면 됩니다</h2>
+    <p>이 가이드는 코딩이 처음인 참가자를 위해 <strong>웹 Claude Code를 쓰는 초보자용 경로</strong>를 안내합니다. 다만 이 방법을 반드시 따라야 하는 것은 아닙니다. 터미널·IDE 등 익숙한 도구로 만들어도 되며, 어떤 방식으로 만들든 아래 <strong>4가지 제출 요건</strong>만 충족하면 됩니다.</p>
   </div>
   <div class="what-grid">
-    <div class="what-node"><div class="wn-k">01 / Idea</div><div class="wn-t">아이디어</div><div class="wn-d">기상 데이터 + 체험 설계</div></div>
-    <div class="what-node"><div class="wn-k">02 / Build</div><div class="wn-t">웹 Claude Code</div><div class="wn-d">코드 작성 + GitHub 자동 저장</div></div>
-    <div class="what-node"><div class="wn-k">03 / Ship</div><div class="wn-t">Vercel</div><div class="wn-d">웹 링크로 배포 → 제출</div></div>
+    <div class="what-node"><div class="wn-k">제출 ①</div><div class="wn-t">구동 URL</div><div class="wn-d">누구나 접속해 바로 조작할 수 있는 웹 주소</div></div>
+    <div class="what-node"><div class="wn-k">제출 ②</div><div class="wn-t">소스 코드</div><div class="wn-d">zip으로 압축해 제출 폼에 업로드</div></div>
+    <div class="what-node"><div class="wn-k">제출 ③</div><div class="wn-t">프롬프트 세션</div><div class="wn-d">개발에 사용한 대화의 공유 링크</div></div>
+    <div class="what-node"><div class="wn-k">제출 ④</div><div class="wn-t">구동·배포 문서</div><div class="wn-d">README에 실행·배포 방법과 출처·라이선스</div></div>
   </div>
+  <p style="margin-top:var(--sp-4);font-size:var(--fs-sm);color:var(--ink-soft)">자세한 제출 방법은 <a href="build.html" style="color:var(--accent-deep);font-weight:700">트랙 02 만들기</a>의 Step 5에서 확인하세요.</p>
 </section>
 
 <!-- ===== TRACKLIST ===== -->
