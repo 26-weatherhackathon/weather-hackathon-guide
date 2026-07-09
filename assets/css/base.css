@@ -30,7 +30,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   --accent-tint:#dceefc;
   --accent-ink:#ffffff;
   --accent-deep:#3a82d6;  /* 별칭(기존 참조 호환) */
-  --accent-cold:#f2999f;  /* 따뜻한 포인트 — 마스코트 볼/입(코랄핑크) */
+  --accent-cold:#3a82d6;  /* 포인트 — 진한 파랑(분홍 제거) */
 
   /* 데이터 도식 전용 — 온도계 메타포(몸통블루→얼굴크림→코랄→온도계레드) */
   --temp-cold:#80b7f7; --temp-chilly:#a3cbf9; --temp-cool:#c4ddfb; --temp-cool-2:#e0eefd;
