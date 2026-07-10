@@ -45,10 +45,15 @@
 
   <div class="callout"><div class="callout-title">PR이 뭔가요?</div><p>Pull Request — 내가 만든 브랜치의 변경 내용을 팀의 메인 코드에 합치자고 요청하는 것입니다. 팀원이 검토한 뒤 승인하면 합쳐집니다. 충돌 없이 협업하는 표준 방식입니다.</p></div>
 
-  <div class="callout important"><div class="callout-title">먼저: 팀원을 저장소에 초대하세요</div><p>팀으로 참가한다면 가장 먼저 저장소에 팀원을 초대합니다. GitHub 저장소 → <strong>Settings → Collaborators</strong>에서 팀원의 GitHub 계정을 추가하면, 각자 같은 저장소에 연결해 함께 작업할 수 있습니다.</p></div>
-
   <div class="step">
     <div class="step-badge">1</div>
+    <h3>팀원 초대하기</h3>
+    <p>팀으로 참가한다면 가장 먼저 저장소에 팀원을 초대합니다. GitHub 저장소 → <strong>Settings → Collaborators</strong>에서 팀원의 GitHub 계정을 추가하면, 각자 같은 저장소에 연결해 함께 작업할 수 있습니다.</p>
+    <div class="step-note"><strong>왜 먼저?</strong> 팀원이 저장소에 접근할 수 있어야 이후 브랜치·PR로 함께 작업할 수 있습니다.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-badge">2</div>
     <h3>브랜치 만들기</h3>
     <p>기능 개발을 시작할 때 main과 분리된 브랜치를 먼저 만듭니다. 각자 다른 브랜치에서 작업하면 서로 방해받지 않아요.</p>
     <div class="chat-demo">
@@ -62,7 +67,7 @@
   </div>
 
   <div class="step right">
-    <div class="step-badge">2</div>
+    <div class="step-badge">3</div>
     <h3>기능 개발하기</h3>
     <p>브랜치 위에서 기능을 개발합니다. 평소처럼 Claude Code에게 말로 요청하면 돼요.</p>
     <div class="chat-demo">
@@ -75,7 +80,7 @@
   </div>
 
   <div class="step">
-    <div class="step-badge">3</div>
+    <div class="step-badge">4</div>
     <h3>커밋하기</h3>
     <p>작업한 내용을 중간중간 저장(커밋)합니다. 커밋은 "이 시점까지의 스냅샷". 문제가 생기면 이 시점으로 되돌아올 수 있어요.</p>
     <div class="chat-demo">
@@ -89,7 +94,7 @@
   </div>
 
   <div class="step right">
-    <div class="step-badge">4</div>
+    <div class="step-badge">5</div>
     <h3>PR 올리기</h3>
     <p>기능 개발이 끝나면 검토를 요청하는 PR을 올립니다. Claude Code가 제목과 설명까지 자동 작성해줘요.</p>
     <div class="chat-demo">
@@ -102,7 +107,7 @@
   </div>
 
   <div class="step">
-    <div class="step-badge">5</div>
+    <div class="step-badge">6</div>
     <h3>리뷰 요청하기</h3>
     <p>PR을 올린 뒤 팀원에게 리뷰를 요청합니다. Claude Code에게 팀원 GitHub 아이디를 알려주면 리뷰어로 지정해줘요.</p>
     <div class="chat-demo">
@@ -121,7 +126,7 @@
   </div>
 
   <div class="step right">
-    <div class="step-badge">6</div>
+    <div class="step-badge">7</div>
     <h3>리뷰 반영하기</h3>
     <p>팀원이 수정 요청(리뷰)을 남기면, 그 내용을 Claude Code에게 전달해 반영합니다.</p>
     <div class="chat-demo">
@@ -135,7 +140,7 @@
   </div>
 
   <div class="step">
-    <div class="step-badge">7</div>
+    <div class="step-badge">8</div>
     <h3>머지(Merge)하기</h3>
     <p>리뷰가 완료되고 승인을 받으면 main 브랜치에 합칩니다. 머지 후 Vercel이 자동으로 최신 버전을 다시 배포해요.</p>
     <div class="chat-demo">
