@@ -51,7 +51,7 @@
 
   <!-- STEP 1 -->
   <span class="stage-label">Step 1 — 웹 Claude Code 시작하기</span>
-  <div class="callout"><div class="callout-title">저장소는 개발용 작업 공간입니다</div><p>웹 Claude Code는 GitHub 저장소에 연결되어 동작합니다. 따라서 저장소를 먼저 만들지만, 이 저장소는 개발용 작업 공간이며 최종 소스는 GitHub이 아니라 제출 폼에 업로드합니다(Step 5).</p></div>
+  <div class="callout"><div class="callout-title">저장소는 개발용 작업 공간입니다</div><p>웹 Claude Code는 GitHub 저장소에 연결되어 동작합니다. 따라서 저장소를 먼저 만들지만, 이 저장소는 개발용 작업 공간이며 최종 소스는 GitHub이 아니라 구글 폼에 업로드합니다(Step 5).</p></div>
   <div class="step">
     <div class="step-badge">1</div>
     <h3>GitHub 저장소 먼저 만들기</h3>
@@ -82,6 +82,7 @@
       </figure>
     </div>
     <div class="step-note">이 연결을 한 번 해 두면 이후 Claude Code가 코드를 작성할 때마다 GitHub에 자동으로 저장합니다.</div>
+    <div class="step-note"><strong>참고</strong> 저장소 목록이 보이지 않거나 이후 저장(푸시)이 거부되면, <strong>Claude GitHub App</strong>(github.com/apps/claude)을 설치하고 해당 저장소에 접근·쓰기 권한을 부여해야 합니다. 확인 방법은 팀 협업 페이지의 'Push할 때 SSH 키 에러' 항목을 참고하세요.</div>
   </div>
 
   <!-- STEP 2 -->
@@ -119,8 +120,8 @@
     <p class="lead">CLAUDE.md는 Claude Code가 프로젝트를 열 때 가장 먼저 읽는 파일입니다. 여기에 적어 둔 규칙은 매 대화마다 자동으로 적용됩니다. "파일 이름은 index.html로 고정", "한국어로 응답" 같은 규칙을 넣어 두면 매번 설명할 필요가 없습니다.</p>
     <ol>
       <li>아래 <strong>CLAUDE.md</strong> 내용을 전체 복사합니다.</li>
-      <li>GitHub 저장소에서 <strong>Add file → Create new file</strong> 클릭</li>
-      <li>파일 이름을 <strong>CLAUDE.md</strong>로 입력하고 붙여넣기 → <strong>Commit changes</strong></li>
+      <li>Claude Code에 붙여넣으며 <strong>"이 내용으로 저장소 최상단에 CLAUDE.md 파일을 만들어 줘"</strong>라고 요청합니다.</li>
+      <li>Claude가 파일을 생성해 <strong>GitHub에 저장</strong>합니다.</li>
     </ol>
     <div class="step-note">파일 이름은 반드시 <strong>CLAUDE.md</strong>(대문자)이며, 위치는 저장소 최상단 폴더입니다.</div>
     <div class="code-block"><span class="code-label">CLAUDE.md (복사용)</span># CLAUDE.md
@@ -154,17 +155,8 @@
   <div class="step">
     <div class="step-badge">6</div>
     <h3>Framework Preset 설정</h3>
-    <p>Import 직후 설정 화면에서 <strong>Framework Preset</strong>을 프로젝트에 맞게 선택합니다.</p>
-    <table class="data-table">
-      <thead><tr><th>내 프로젝트 유형</th><th>선택할 Preset</th></tr></thead>
-      <tbody>
-        <tr><td>HTML/CSS/JS 파일만 (index.html 중심)</td><td class="label-col">Other</td></tr>
-        <tr><td>Astro로 만든 경우</td><td class="label-col">Astro</td></tr>
-        <tr><td>Next.js로 만든 경우</td><td class="label-col">Next.js</td></tr>
-        <tr><td>Vite로 만든 경우</td><td class="label-col">Vite</td></tr>
-      </tbody>
-    </table>
-    <div class="step-note"><strong>모르겠으면 Other</strong> — Other를 선택하세요. index.html을 직접 만들었다면 Other입니다. Preset이 맞지 않으면 빌드가 실패할 수 있습니다.</div>
+    <p>Import 직후 설정 화면에서 <strong>Framework Preset</strong>을 선택합니다. 이 가이드처럼 <strong>index.html을 직접 만든 경우에는 Other</strong>를 선택하면 됩니다. 별도 빌드 과정이 없기 때문입니다.</p>
+    <div class="step-note"><strong>주의</strong> Preset이 맞지 않으면 빌드가 실패할 수 있습니다. index.html을 직접 만들었다면 반드시 <strong>Other</strong>입니다.</div>
   </div>
   <div class="step right">
     <div class="step-badge">7</div>
@@ -175,7 +167,7 @@
       <li>이 주소가 <strong>구동 URL(제출 항목 ①)</strong>입니다</li>
     </ol>
     <div class="step-note"><strong>참고</strong> GitHub에서 index.html을 수정하면 Vercel이 자동으로 다시 배포하므로, 별도로 재배포할 필요가 없습니다.</div>
-    <div class="callout"><div class="callout-title">배포 후 확인</div><p>휴대폰이나 다른 컴퓨터에서도 링크가 열리는지, 슬라이더 등 인터랙티브 기능이 정상 작동하는지 확인하세요.</p></div>
+    <div class="callout"><div class="callout-title">배포 후 확인</div><p>다른 컴퓨터에서도 링크가 열리는지, 슬라이더 등 인터랙티브 기능이 정상 작동하는지 확인하세요. 구동 환경은 크롬 브라우저 기준이며, 1366×768·1920×1080·2560×1440 해상도에서 정상 표시되어야 합니다.</p></div>
   </div>
 
   <!-- STEP 5 -->
@@ -185,18 +177,18 @@
     <h3>제출 항목 4가지</h3>
     <p class="lead">제출은 아래 4가지입니다. 웹으로 만들었든 터미널로 만들었든 동일하게 적용됩니다.</p>
     <ul>
-      <li><strong>① 구동 가능한 URL</strong> — 누구나 접속해 바로 조작할 수 있는 웹 주소입니다. Vercel 배포를 권장하며 GitHub Pages·Netlify 등 다른 배포도 인정됩니다. 다른 기기(휴대폰 등)에서도 로그인·결제 없이 열리는지 확인하세요.</li>
-      <li><strong>② 소스 코드 (제출 폼 업로드)</strong> — 완성된 소스를 압축(zip)해 운영팀이 안내하는 제출 폼에 업로드합니다. GitHub 링크 제출이 아니라 파일 업로드입니다. node_modules·빌드 산출물은 제외하고 소스만 담아 zip 1개로 만드세요. (제출 폼 주소: 운영팀 별도 안내)</li>
+      <li><strong>① 구동 가능한 URL</strong> — 누구나 접속해 바로 조작할 수 있는 웹 주소입니다. Vercel 배포를 권장하며 GitHub Pages·Netlify 등 다른 배포도 인정됩니다. 로그인·결제 없이 열려야 하며, 구동 환경은 크롬 브라우저(해상도 1366×768·1920×1080·2560×1440 지원) 기준입니다.</li>
+      <li><strong>② 소스 코드 (구글 폼 업로드)</strong> — 완성된 소스를 압축(zip)해 운영팀이 안내하는 구글 폼에 업로드합니다. GitHub 저장소 화면의 <strong>Code → Download ZIP</strong>으로 zip을 받으면 편리합니다. GitHub 링크 제출이 아니라 파일 업로드이며, node_modules·빌드 산출물은 제외하고 소스만 담으세요. (구글 폼 주소: 운영팀 별도 안내)</li>
       <li><strong>③ 주요 프롬프트 세션</strong> — 제공받은 팀 계정에서 개발에 사용한 대화 세션의 공유 링크를 제출합니다. AI 활용의 진정성을 확인하기 위한 자료입니다. 개발을 팀 대표 계정에 모아 진행하면 세션 정리·제출이 간편합니다. (세션 공유 방법: 운영팀 별도 안내)</li>
-      <li><strong>④ 구동 환경 / 배포 방법 문서 (README 등)</strong> — 다른 사람이 그대로 실행·배포할 수 있도록 정리합니다. 정적 페이지(index.html)는 "브라우저에서 열면 됨" 수준이면 충분하고, 프레임워크(React/Next/Vite/Astro 등)를 사용했다면 설치·실행·빌드·배포 명령을 단계로 적습니다. 사용한 외부 리소스(라이브러리·이미지·폰트·데이터)의 출처·라이선스도 함께 명시합니다.</li>
+      <li><strong>④ 구동 환경 / 배포 방법 문서 (README 등)</strong> — 다른 사람이 그대로 실행·배포할 수 있도록 정리합니다. 정적 페이지(index.html)는 "브라우저에서 열면 됨" 수준이면 충분하고, 프레임워크(React/Next/Astro 등)나 빌드 도구(Vite 등)를 사용했다면 설치·실행·빌드·배포 명령을 단계로 적습니다. 사용한 외부 리소스(라이브러리·이미지·폰트·데이터)의 출처·라이선스도 함께 명시합니다.</li>
     </ul>
   </div>
   <div class="step right">
     <div class="step-badge">✓</div>
     <h3>제출 전 체크리스트</h3>
     <ul class="checklist">
-      <li><div class="check-box"></div> URL이 다른 기기에서도 열리고 인터랙션이 정상 동작하는가</li>
-      <li><div class="check-box"></div> 소스 zip을 제출 폼에 올렸는가 (node_modules·빌드 산출물 제외)</li>
+      <li><div class="check-box"></div> URL이 크롬 브라우저에서 열리고 인터랙션이 정상 동작하는가</li>
+      <li><div class="check-box"></div> 소스 zip을 구글 폼에 올렸는가 (node_modules·빌드 산출물 제외)</li>
       <li><div class="check-box"></div> 개발에 사용한 세션의 공유 링크를 준비했는가</li>
       <li><div class="check-box"></div> README에 실행/배포 방법과 외부 리소스 출처·라이선스가 적혀 있는가</li>
     </ul>

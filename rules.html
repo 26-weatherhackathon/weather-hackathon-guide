@@ -42,7 +42,7 @@
 <!-- ===== COPYRIGHT ===== -->
 <section class="page-section wrap">
   <div class="section-head"><p class="kicker">Copyright</p><h2>저작권 가이드라인</h2></div>
-  <div class="callout important"><div class="callout-title">표절 및 저작권 검증을 실시합니다</div><p>제출물은 팀 간·외부 출처 대비 표절 검증과 제공 계정의 개발 세션 확인을 거칩니다. AI 사용 자체는 문제되지 않으나, 다른 팀이나 외부 출처의 코드를 그대로 사용하는 것은 허용되지 않습니다.</p></div>
+  <div class="callout important"><div class="callout-title">표절 및 저작권 검증을 실시합니다</div><p>제출물은 팀 간·외부 출처 대비 표절 검증과 제공 계정의 개발 세션 확인을 거칩니다. AI 사용 자체는 문제되지 않으나, 다른 팀이나 외부 출처의 코드를 그대로 사용하는 것은 허용되지 않습니다.</p><p style="margin-top:var(--sp-2)"><strong>AI로 코드를 생성했더라도 저작권·특허·보안에 대한 책임이 면제되지 않으며, 제출물에 대한 최종 책임은 참가자에게 있습니다.</strong></p></div>
 
   <table class="data-table" style="margin-top:var(--sp-4)">
     <thead><tr><th>항목</th><th>허용 ✓</th><th>주의 필요 ⚠</th></tr></thead>
@@ -62,8 +62,8 @@
 <section class="page-section wrap tight">
   <div class="section-head"><p class="kicker">Security</p><h2>API 키·비밀값 보안</h2></div>
   <div class="callout important">
-    <div class="callout-title">API 키·비밀값은 코드에 노출되지 않게</div>
-    <p>API 키를 비롯한 모든 비밀값(키·토큰·인증 정보 등)은 코드에 노출되지 않도록 다뤄야 합니다. 기상청 API 키뿐 아니라 외부 서비스에서 발급받은 어떤 키라도 마찬가지입니다. GitHub에 올라간 코드와 배포된 웹페이지는 누구나 열어볼 수 있어, 노출된 키는 도용·과금 사고로 이어질 수 있습니다. 보안을 고려한 설계 여부는 <strong>본선 기술 평가</strong>에서 살펴봅니다.</p>
+    <div class="callout-title">API 키가 노출되면 실격입니다</div>
+    <p>API 키를 비롯한 모든 비밀값(키·토큰·인증 정보 등)은 코드에 노출되지 않도록 다뤄야 합니다. 기상청 API 키뿐 아니라 외부 서비스에서 발급받은 어떤 키라도 마찬가지입니다. GitHub에 올라간 코드와 배포된 웹페이지는 누구나 열어볼 수 있어, 노출된 키는 도용·과금 사고로 이어질 수 있습니다. <strong>API 키가 노출되면 실격 처리되므로</strong>, 키가 필요 없는 공개 데이터·API를 우선 사용하고 키가 꼭 필요하면 코드가 아닌 환경변수에 두도록 설계하세요.</p>
   </div>
 
   <p style="margin-top:var(--sp-4)">다음과 같은 노출에 유의하세요.</p>
