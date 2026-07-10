@@ -117,6 +117,7 @@ strong { font-weight: 700; }
   letter-spacing: -0.02em; white-space: nowrap;
 }
 .topbar-logo .dot { width: 12px; height: 12px; background: var(--accent); border: var(--bd-1) solid var(--ink); border-radius: 50%; }
+.topbar-logo .topbar-mark { width: 26px; height: 26px; display: block; }
 .tracklist {
   display: flex; align-items: stretch; flex: 1; overflow-x: auto; scrollbar-width: none;
 }
