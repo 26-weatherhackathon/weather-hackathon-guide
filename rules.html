@@ -11,7 +11,13 @@
 <link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="stylesheet" href="assets/css/base.css">
-<style>@view-transition { navigation: auto; }</style>
+<style>
+  @view-transition { navigation: auto; }
+  .dont-grid { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-3); margin-top: var(--sp-3); }
+  .dont-grid li { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); border: var(--bd-2) solid var(--ink); background: var(--surface); border-radius: var(--r-md); box-shadow: var(--shadow-sm); font-size: var(--fs-sm); font-weight: 600; }
+  .dont-grid .x { flex: none; width: 26px; height: 26px; display: grid; place-items: center; background: var(--temp-scorch); color: #fff; border-radius: 50%; font-weight: 800; font-size: 0.8rem; }
+  @media (max-width: 720px) { .dont-grid { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
@@ -53,6 +59,8 @@
   </table>
 
   <div class="callout" style="margin-top:var(--sp-4)"><div class="callout-title">README에 꼭 써야 할 것</div><p>사용한 외부 리소스 목록(라이브러리명·버전·라이선스) / 이미지·폰트 출처 / 데이터 출처 표기.</p></div>
+
+  <div class="callout" style="margin-top:var(--sp-4)"><div class="callout-title">기상청 자료를 이용할 때</div><p>기상청 홈페이지 자료는 공공누리(KOGL) 유형을 확인하고 출처를 구체적으로 표시해 이용합니다. 제1유형(출처표시)은 출처만 밝히면 자유이용이 가능하며, 제2·3·4유형은 상업적 이용·변형 등 제한사항을 확인해야 합니다. 공공누리 표시가 없는 자료는 기상청 담당자와 사전 협의가 필요합니다. 자세한 내용은 <a href="https://www.kma.go.kr/kma/guide/copyright.jsp" target="_blank" rel="noopener" style="color:var(--accent-deep);font-weight:700">기상청 저작권 보호 및 정책</a>을 확인하세요.</p></div>
 </section>
 
 <!-- ===== SECURITY ===== -->
@@ -64,11 +72,11 @@
   </div>
 
   <p style="margin-top:var(--sp-4)">다음과 같은 노출에 유의하세요.</p>
-  <ul>
-    <li>API 키·토큰을 HTML·JS 코드에 직접 써넣는 경우</li>
-    <li>키를 GitHub 저장소에 커밋하는 경우</li>
-    <li>키를 Slack·PR·스크린샷 등에 노출하는 경우</li>
-    <li>노출된 키를 그대로 방치하는 경우</li>
+  <ul class="dont-grid">
+    <li><span class="x">✕</span>API 키·토큰을 HTML·JS 코드에 직접 써넣기</li>
+    <li><span class="x">✕</span>키를 GitHub 저장소에 커밋</li>
+    <li><span class="x">✕</span>키를 Slack·PR·스크린샷 등에 노출</li>
+    <li><span class="x">✕</span>노출된 키를 그대로 방치</li>
   </ul>
 </section>
 
