@@ -79,7 +79,21 @@
       </figure>
     </div>
     <div class="step-note">이 연결을 한 번 해 두면 이후 Claude Code가 코드를 작성할 때마다 GitHub에 자동으로 저장합니다.</div>
-    <div class="step-note"><strong>참고</strong> 이 연결이 되려면 <strong>Claude GitHub App</strong>(github.com/apps/claude)이 저장소에 설치되어 접근·쓰기 권한을 가지고 있어야 합니다. 저장소 목록이 보이지 않거나 이후 저장(푸시)이 거부되면 App 설치와 권한을 확인하세요. 자세한 방법은 팀 협업 페이지의 'Push할 때 SSH 키 에러' 항목을 참고하세요.</div>
+  </div>
+
+  <div class="step" style="border-color:var(--accent)">
+    <div class="step-badge" style="background:var(--accent);color:var(--ink)">!</div>
+    <h3>연결·Push 에러가 날 때 (개인·팀 공통)</h3>
+    <p>저장(푸시)하거나 새 브랜치를 올릴 때 <strong>&quot;Permission denied (publickey)&quot;</strong> 에러가 나거나 저장소 목록이 보이지 않을 수 있습니다. 웹 Claude Code는 개인 SSH 키를 쓰지 않고 <strong>Claude GitHub App</strong>(github.com/apps/claude) 연결로 인증하므로, 이 에러는 대부분 <strong>App 설치·권한 문제</strong>입니다. 혼자 작업할 때도 동일하게 발생할 수 있습니다.</p>
+    <p style="margin-top:var(--sp-3)"><strong>GitHub App 설치·권한 확인하기</strong></p>
+    <ol class="step-list">
+      <li>GitHub 프로필 → <strong>Settings</strong> → <strong>Applications</strong> → <strong>Installed GitHub Apps</strong></li>
+      <li>Claude(연결된 App) 옆 <strong>Configure</strong> 클릭</li>
+      <li><strong>Repository access</strong>에 작업 중인 저장소가 포함됐는지 확인 (없으면 <strong>Select repositories</strong>로 추가)</li>
+      <li>권한에서 <strong>Contents: Read and write</strong>, <strong>Pull requests: Read and write</strong> 허용 확인</li>
+      <li>claude.ai/code로 돌아와 <strong>&quot;+ 레포 선택...&quot;</strong>으로 저장소를 다시 선택</li>
+    </ol>
+    <div class="step-note"><strong>핵심</strong> 웹 환경에서는 SSH 키를 직접 만들거나 바꿀 필요가 없습니다. &quot;SSH&quot;·&quot;publickey&quot;가 보여도, 해결은 항상 <strong>GitHub App 설치 화면에서 저장소·권한 다시 확인</strong>입니다.</div>
   </div>
 
   <!-- STEP 2 -->

@@ -80,7 +80,7 @@ Claude Code 웹 인터페이스는 설치가 없습니다. 초보자용 Claude C
 
 이 연결을 한 번 해 두면 이후 Claude Code가 코드를 작성할 때마다 GitHub에 자동으로 저장합니다.
 
-참고: 이 연결이 되려면 Claude GitHub App(github.com/apps/claude)이 저장소에 설치되어 접근·쓰기 권한을 가지고 있어야 합니다. 저장소 목록이 보이지 않거나 이후 저장(푸시)이 거부되면 App 설치와 권한을 확인하세요. 자세한 방법은 3장 트러블슈팅의 'SSH 키 에러' 항목을 참고하세요.
+연결·Push 에러가 날 때(개인·팀 공통): 저장(푸시)하거나 새 브랜치를 올릴 때 "Permission denied (publickey)" 에러가 나거나 저장소 목록이 보이지 않을 수 있습니다. 웹 Claude Code는 개인 SSH 키가 아니라 Claude GitHub App(github.com/apps/claude) 연결로 인증하므로, 대부분 App 설치·권한 문제입니다. GitHub 프로필 → Settings → Applications → Installed GitHub Apps → Claude의 Configure에서 작업 저장소가 Repository access에 포함됐는지, 권한이 Contents: Read and write / Pull requests: Read and write인지 확인한 뒤 claude.ai/code에서 저장소를 다시 선택하세요. 혼자 작업할 때도 동일하게 발생할 수 있습니다.
 
 ### 2.2 Step 2 — Claude Code로 만들기
 
@@ -217,14 +217,9 @@ PR을 올린 뒤 팀원에게 리뷰를 요청합니다. Claude Code에 팀원 G
 
 리뷰가 완료되고 승인을 받으면 main 브랜치에 합칩니다. 머지 후 Vercel이 자동으로 최신 버전을 다시 배포합니다. 머지 후 배포 주소를 다시 열어 기능이 정상 동작하는지 확인하세요.
 
-### 3.9 트러블슈팅
-
-**3.9.1 충돌(Conflict)이 생겼을 때**
+### 3.9 충돌(Conflict)이 생겼을 때
 두 팀원이 같은 파일의 같은 부분을 동시에 수정하면 충돌이 생깁니다. 당황하지 말고 Claude Code에 상황을 그대로 전달하면 됩니다. 어느 쪽을 유지할지, 두 내용을 합칠지 물어보면 처리합니다.
 
-**3.9.2 Push할 때 SSH 키 에러가 날 때**
-이 문제는 팀뿐 아니라 혼자 작업할 때도 발생할 수 있습니다. 새 브랜치를 올릴 때 "Permission denied (publickey)" 에러가 날 수 있습니다. 웹 Claude Code는 개인 SSH 키를 쓰지 않고 GitHub App 연결로 인증하므로, 이 에러는 대부분 App 설치·권한 문제입니다.
-해결: GitHub 프로필 → Settings → Applications → Installed GitHub Apps → Claude의 Configure에서, 작업 중인 저장소가 Repository access에 포함됐는지, 권한이 Contents: Read and write / Pull requests: Read and write로 되어 있는지 확인한 뒤, claude.ai/code에서 저장소를 다시 선택합니다.
 
 팀 작업 권장 흐름: 기능별로 브랜치를 나눈다 → 각자 개발 후 PR → 팀원 1명 이상 리뷰 → 머지 → Vercel 자동 배포. main 브랜치에는 항상 동작하는 코드만 유지하는 것을 원칙으로 합니다.
 
