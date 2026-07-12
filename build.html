@@ -79,7 +79,7 @@
       </figure>
     </div>
     <div class="step-note">이 연결을 한 번 해 두면 이후 Claude Code가 코드를 작성할 때마다 GitHub에 자동으로 저장합니다.</div>
-    <div class="step-note"><strong>참고</strong> 저장소 목록이 보이지 않거나 이후 저장(푸시)이 거부되면, <strong>Claude GitHub App</strong>(github.com/apps/claude)을 설치하고 해당 저장소에 접근·쓰기 권한을 부여해야 합니다. 확인 방법은 팀 협업 페이지의 'Push할 때 SSH 키 에러' 항목을 참고하세요.</div>
+    <div class="step-note"><strong>참고</strong> 이 연결이 되려면 <strong>Claude GitHub App</strong>(github.com/apps/claude)이 저장소에 설치되어 접근·쓰기 권한을 가지고 있어야 합니다. 저장소 목록이 보이지 않거나 이후 저장(푸시)이 거부되면 App 설치와 권한을 확인하세요. 자세한 방법은 팀 협업 페이지의 'Push할 때 SSH 키 에러' 항목을 참고하세요.</div>
   </div>
 
   <!-- STEP 2 -->
@@ -96,19 +96,6 @@
       <div class="chat-bubble bot">배경색과 반응형 레이아웃을 적용했습니다. 변경 사항을 GitHub에 저장했습니다.</div>
     </div>
   </div>
-  <div class="step right">
-    <div class="step-badge">P</div>
-    <h3>예시 프롬프트</h3>
-    <p>대괄호 부분만 우리 팀 주제로 바꾸세요.</p>
-    <ul class="prompt-list">
-      <li><b>기본형</b> — "[기온]과 [풍속] 슬라이더로 [체감온도]를 보여주는 웹페이지를 index.html 하나로 만들어 줘."</li>
-      <li><b>응용형</b> — "[강수량] 슬라이더를 조절하면 [홍수 위험도]가 바뀌는 인터랙티브 웹페이지를 초등학생도 이해할 수 있게 만들어 줘. index.html 하나로."</li>
-      <li><b>디자인</b> — "방금 페이지를 더 보기 좋게 다듬어 줘. 파란 하늘색 계열, 모바일에서도 잘 보이게."</li>
-      <li><b>오류 해결</b> — "방금 페이지에서 [오류 메시지]가 나와. 원인을 알려주고 고쳐 줘."</li>
-    </ul>
-    <div class="step-note"><strong>팁</strong> 한 번에 완성하지 않아도 괜찮습니다. "여기를 이렇게 바꿔 달라"는 식으로 대화를 이어가며 다듬으세요. 수정할 때마다 GitHub에 자동 저장됩니다.</div>
-  </div>
-
   <!-- STEP 3 -->
   <span class="stage-label">Step 3 — CLAUDE.md 설정하기</span>
   <div class="step">
@@ -174,8 +161,8 @@
     <h3>제출 항목 4가지</h3>
     <p class="lead">제출은 아래 4가지입니다. 웹으로 만들었든 터미널로 만들었든 동일하게 적용됩니다.</p>
     <ul>
-      <li><strong>① 구동 가능한 URL</strong> — 누구나 접속해 바로 조작할 수 있는 웹 주소입니다. Vercel 배포를 권장하며 GitHub Pages·Netlify 등 다른 배포도 인정됩니다. 로그인·결제 없이 열려야 하며, 구동 환경은 크롬 브라우저(해상도 1366×768·1920×1080·2560×1440 지원) 기준입니다.</li>
-      <li><strong>② 소스 코드 (구글 폼 업로드)</strong> — 완성된 소스를 압축(zip)해 운영팀이 안내하는 구글 폼에 업로드합니다. GitHub 저장소 화면의 <strong>Code → Download ZIP</strong>으로 zip을 받으면 편리합니다. GitHub 링크 제출이 아니라 파일 업로드이며, node_modules·빌드 산출물은 제외하고 소스만 담으세요. (구글 폼 주소: 운영팀 별도 안내)</li>
+      <li><strong>① 구동 가능한 URL</strong> — 누구나 접속해 바로 조작할 수 있는 웹 주소입니다. Vercel, GitHub Pages, Netlify 등 어떤 배포 방식이든 인정됩니다. 로그인·결제 없이 열려야 하며, 구동 환경은 크롬 브라우저(해상도 1366×768·1920×1080·2560×1440 지원) 기준입니다.</li>
+      <li><strong>② 소스 코드 (구글 폼 업로드)</strong> — 완성된 소스를 압축(zip)해 운영팀이 안내하는 구글 폼에 업로드합니다. 만약 GitHub에서 코드를 다운로드 받는다면 <strong>&quot;Download ZIP&quot;</strong> 버튼을 클릭하여 압축된 zip 파일을 업로드 하세요. GitHub 링크 제출이 아니라 파일 업로드이며, node_modules·빌드 산출물은 제외하고 소스만 담으세요. (구글 폼 주소: 운영팀 별도 안내)</li>
       <li><strong>③ 주요 프롬프트 세션</strong> — 제공받은 팀 계정에서 개발에 사용한 대화 세션의 공유 링크를 제출합니다. AI 활용의 진정성을 확인하기 위한 자료입니다. 개발을 팀 대표 계정에 모아 진행하면 세션 정리·제출이 간편합니다. (세션 공유 방법: 운영팀 별도 안내)</li>
       <li><strong>④ 구동 환경 / 배포 방법 문서 (README 등)</strong> — 다른 사람이 그대로 실행·배포할 수 있도록 정리합니다. 정적 페이지(index.html)는 "브라우저에서 열면 됨" 수준이면 충분하고, 프레임워크(React/Next/Astro 등)나 빌드 도구(Vite 등)를 사용했다면 설치·실행·빌드·배포 명령을 단계로 적습니다. 사용한 외부 리소스(라이브러리·이미지·폰트·데이터)의 출처·라이선스도 함께 명시합니다.</li>
     </ul>
