@@ -61,7 +61,7 @@ Claude Code 웹 인터페이스는 설치가 없습니다. 초보자용 Claude C
 
 ### 2.1 Step 1 — 웹 Claude Code 시작하기
 
-웹 Claude Code는 GitHub 저장소에 연결되어 동작합니다. 따라서 저장소를 먼저 만들지만, 이 저장소는 개발용 작업 공간이며 최종 소스는 GitHub이 아니라 구글 폼에 업로드합니다(Step 5).
+웹 Claude Code를 GitHub 저장소에 연결하여 동작하는 것을 가정합니다. 따라서 저장소를 먼저 만들지만, 이 저장소는 개발용 작업 공간이며 최종 소스는 GitHub이 아니라 구글 폼에 업로드합니다(Step 5).
 
 **2.1.1 GitHub 저장소 먼저 만들기**
 
