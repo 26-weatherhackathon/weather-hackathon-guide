@@ -41,8 +41,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   /* 타입 스케일 */
   --fs-hero:clamp(3.5rem,12vw,11rem);
   --fs-display:clamp(2.2rem,6vw,4.5rem);
-  --fs-h2:clamp(1.6rem,3vw,2.5rem);
-  --fs-h3:1.25rem; --fs-body:1.0625rem; --fs-sm:0.8125rem; --fs-mono:0.75rem;
+  --fs-h2:clamp(1.8rem,3.2vw,2.7rem);
+  --fs-h3:1.38rem; --fs-body:1.125rem; --fs-sm:0.95rem; --fs-mono:0.82rem;
 
   /* 폰트 패밀리 — 전부 Wanted Sans로 통일 */
   --ff-display:'Wanted Sans Variable','Wanted Sans', system-ui, sans-serif;
@@ -113,7 +113,7 @@ strong { font-weight: 700; }
 .topbar-logo {
   display: flex; align-items: center; gap: 10px;
   padding: 0 var(--sp-4); border-right: var(--bd-2) solid var(--ink);
-  font-family: var(--ff-display); font-weight: 800; font-size: 0.95rem;
+  font-family: var(--ff-display); font-weight: 800; font-size: 1.05rem;
   letter-spacing: -0.02em; white-space: nowrap;
 }
 .topbar-logo .dot { width: 12px; height: 12px; background: var(--accent); border: var(--bd-1) solid var(--ink); border-radius: 50%; }
@@ -128,8 +128,8 @@ strong { font-weight: 700; }
   border-right: var(--bd-1) solid color-mix(in srgb, var(--ink) 18%, transparent);
   transition: background var(--dur-fast), color var(--dur-fast);
 }
-.tracklist a .tno { font-family: var(--ff-mono); font-size: 0.7rem; font-weight: 700; color: var(--accent-deep); }
-.tracklist a .tname { font-weight: 600; font-size: 0.9rem; }
+.tracklist a .tno { font-family: var(--ff-mono); font-size: 0.8rem; font-weight: 700; color: var(--accent-deep); }
+.tracklist a .tname { font-weight: 600; font-size: 0.98rem; }
 .tracklist a:hover { background: var(--paper-2); }
 .tracklist a.active { box-shadow: inset 0 -3px 0 var(--accent); }
 .tracklist a.active .tname { color: var(--accent-strong); }
@@ -142,7 +142,7 @@ strong { font-weight: 700; }
 }
 .marquee-track {
   display: inline-flex; gap: var(--sp-5); padding: 7px 0;
-  font-family: var(--ff-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: var(--ff-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
   animation: marquee 32s linear infinite; will-change: transform;
 }
 .marquee-track span { display: inline-flex; align-items: center; gap: var(--sp-5); }
@@ -189,7 +189,7 @@ strong { font-weight: 700; }
 }
 .code-label {
   position: absolute; top: 0; right: 0;
-  font-family: var(--ff-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+  font-family: var(--ff-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--ink); background: var(--accent);
   padding: 4px 10px; border-left: var(--bd-1) solid var(--ink); border-bottom: var(--bd-1) solid var(--ink);
 }
@@ -225,7 +225,7 @@ strong { font-weight: 700; }
   padding: var(--sp-4); border-radius: var(--r-md); margin-block: var(--sp-3);
   display: flex; flex-direction: column; gap: var(--sp-2); box-shadow: var(--shadow-sm);
 }
-.chat-label { font-family: var(--ff-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-deep); margin-bottom: 2px; }
+.chat-label { font-family: var(--ff-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-deep); margin-bottom: 2px; }
 .chat-bubble { font-size: var(--fs-sm); line-height: 1.55; padding: var(--sp-3); border: var(--bd-1) solid var(--ink); max-width: 85%; }
 .chat-bubble.user { align-self: flex-end; background: var(--ink); color: var(--paper); border-radius: 14px 14px 2px 14px; }
 .chat-bubble.bot { align-self: flex-start; background: var(--paper); border-radius: 14px 14px 14px 2px; }
@@ -239,8 +239,8 @@ strong { font-weight: 700; }
 }
 .glossary-item:nth-child(odd) { border-radius: var(--r-md); }
 .glossary-item:nth-child(3n) { border-radius: var(--r-sharp); box-shadow: var(--shadow-md); }
-.glossary-term { font-weight: 800; font-size: 1.1rem; margin-bottom: 6px; }
-.glossary-aka { font-family: var(--ff-mono); font-size: 0.7rem; color: var(--accent-deep); font-weight: 700; }
+.glossary-term { font-weight: 800; font-size: 1.2rem; margin-bottom: 6px; }
+.glossary-aka { font-family: var(--ff-mono); font-size: 0.8rem; color: var(--accent-deep); font-weight: 700; }
 .glossary-def { font-size: var(--fs-sm); color: color-mix(in srgb, var(--ink) 82%, transparent); line-height: 1.6; }
 .glossary-analogy { font-size: var(--fs-sm); margin-top: 8px; padding-top: 8px; border-top: var(--bd-1) dashed color-mix(in srgb, var(--ink) 35%, transparent); color: var(--accent-deep); font-weight: 600; }
 
@@ -268,7 +268,7 @@ strong { font-weight: 700; }
 
 /* ---------- 15. TABLE ---------- */
 .data-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); border: var(--bd-2) solid var(--ink); box-shadow: var(--shadow-sm); background: var(--paper); }
-.data-table th { background: var(--ink); color: var(--paper); text-align: left; padding: var(--sp-3); font-family: var(--ff-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.data-table th { background: var(--ink); color: var(--paper); text-align: left; padding: var(--sp-3); font-family: var(--ff-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .data-table td { padding: var(--sp-3); border-top: var(--bd-1) solid color-mix(in srgb,var(--ink) 25%, transparent); vertical-align: top; }
 .data-table .label-col { font-weight: 700; white-space: nowrap; }
 
@@ -286,7 +286,7 @@ strong { font-weight: 700; }
   padding: var(--sp-6) var(--sp-4); font-size: var(--fs-sm); line-height: 1.9; text-align: center;
 }
 .doc-footer .footer-nav { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; margin-bottom: var(--sp-4); padding-bottom: var(--sp-4); border-bottom: var(--bd-1) solid var(--line); }
-.doc-footer .footer-nav a { font-family: var(--ff-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none; color: var(--ink-soft); }
+.doc-footer .footer-nav a { font-family: var(--ff-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none; color: var(--ink-soft); }
 .doc-footer .footer-nav a:hover { color: var(--accent); }
 
 /* ---------- 18. PAGE HEADER (서브 페이지 공통) ---------- */
@@ -327,9 +327,9 @@ strong { font-weight: 700; }
 }
 .pager a:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--accent); }
 .pager a.next { text-align: right; background: var(--surface); }
-.pager .p-dir { font-family: var(--ff-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-deep); }
+.pager .p-dir { font-family: var(--ff-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-deep); }
 .pager a.next .p-dir { color: var(--accent); }
-.pager .p-title { font-family: var(--ff-display); font-weight: 700; font-size: 1.1rem; margin-top: 4px; }
+.pager .p-title { font-family: var(--ff-display); font-weight: 700; font-size: 1.2rem; margin-top: 4px; }
 
 /* ---------- 20. SCREENSHOTS ---------- */
 .screenshot-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin-block: var(--sp-3); }
