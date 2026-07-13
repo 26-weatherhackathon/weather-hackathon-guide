@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>만들기 — Claude Code로 제작·배포 · 기상·기후 AI 해커톤 2026</title>
-<meta name="description" content="웹 Claude Code 시작부터 제작, CLAUDE.md 설정, Vercel 배포, 제출까지 5단계 워크스루.">
+<meta name="description" content="웹 Claude Code 시작부터 제작, CLAUDE.md 설정, Vercel 배포까지 4단계 워크스루.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -31,7 +31,8 @@
     <a href="build.html" class="active"><span class="tno">02</span><span class="tname">만들기</span></a>
     <a href="collab.html"><span class="tno">03</span><span class="tname">팀 협업</span></a>
     <a href="rules.html"><span class="tno">04</span><span class="tname">규정</span></a>
-    <a href="faq.html"><span class="tno">05</span><span class="tname">FAQ</span></a>
+    <a href="submit.html"><span class="tno">05</span><span class="tname">제출하기</span></a>
+    <a href="faq.html"><span class="tno">06</span><span class="tname">FAQ</span></a>
   </div>
 </nav>
 
@@ -39,7 +40,7 @@
   <span class="ghost-num">02</span>
   <span class="track-id">TRACK 02 / BUILD &amp; SHIP</span>
   <h1><span class="kr">만들기</span></h1>
-  <p class="lead">만들고자 하는 내용을 한국어로 설명하면 Claude가 코드를 작성하고 작업 저장소(GitHub)에 저장합니다. 아래 5단계는 초보자용 웹 인터페이스를 기준으로 하며, 터미널·IDE로 작업해도 됩니다.</p>
+  <p class="lead">만들고자 하는 내용을 한국어로 설명하면 Claude가 코드를 작성하고 작업 저장소(GitHub)에 저장합니다. 아래 4단계는 초보자용 웹 인터페이스를 기준으로 하며, 터미널·IDE로 작업해도 됩니다.</p>
   <img class="hero-mascot" src="assets/img/gisangi-professor.png" alt="박사모를 쓴 척척박사 기상이" width="168" height="168">
 </header>
 <hr class="stripe">
@@ -166,30 +167,6 @@
     <div class="step-note"><strong>참고</strong> GitHub에서 index.html을 수정하면 Vercel이 자동으로 다시 배포하므로, 별도로 재배포할 필요가 없습니다.</div>
     <div class="callout"><div class="callout-title">배포 후 확인</div><p>다른 컴퓨터에서도 링크가 열리는지, 슬라이더 등 인터랙티브 기능이 정상 작동하는지 확인하세요. 구동 환경은 크롬 브라우저 기준이며, 1366×768·1920×1080·2560×1440 해상도에서 정상 표시되어야 합니다.</p></div>
   </div>
-
-  <!-- STEP 5 -->
-  <span class="stage-label">Step 5 — 제출하기</span>
-  <div class="step">
-    <div class="step-badge">8</div>
-    <h3>제출 항목 4가지</h3>
-    <p class="lead">제출은 아래 4가지입니다. 웹으로 만들었든 터미널로 만들었든 동일하게 적용됩니다.</p>
-    <ul>
-      <li><strong>① 구동 가능한 URL</strong> — 누구나 접속해 바로 조작할 수 있는 웹 주소입니다. Vercel, GitHub Pages, Netlify 등 어떤 배포 방식이든 인정됩니다. 로그인·결제 없이 열려야 하며, 구동 환경은 크롬 브라우저(해상도 1366×768·1920×1080·2560×1440 지원) 기준입니다.</li>
-      <li><strong>② 소스 코드 (구글 폼 업로드)</strong> — 완성된 소스를 압축(zip)해 운영팀이 안내하는 구글 폼에 업로드합니다. 만약 GitHub에서 코드를 다운로드 받는다면 <strong>&quot;Download ZIP&quot;</strong> 버튼을 클릭하여 압축된 zip 파일을 업로드 하세요. GitHub 링크 제출이 아니라 파일 업로드이며, node_modules·빌드 산출물은 제외하고 소스만 담으세요. (구글 폼 주소: 운영팀 별도 안내)</li>
-      <li><strong>③ 주요 프롬프트 세션</strong> — 각 팀의 프로젝트 수행 시 AI 활용 근거가 되는 주요 대화 세션을 .md 또는 .txt 포맷으로 내보내기 후, zip 파일로 압축하여 운영팀이 안내하는 구글폼에 업로드 합니다.</li>
-      <li><strong>④ 구동 환경 / 배포 방법 문서 (README 등)</strong> — 대회 이후 공공 교육을 위해 실행·배포할 수 있도록 필요한 사항을 꼼꼼하게 정리합니다. 사용한 외부 리소스(라이브러리·이미지·폰트·데이터)의 출처·라이선스도 함께 명시합니다.</li>
-    </ul>
-  </div>
-  <div class="step right">
-    <div class="step-badge">✓</div>
-    <h3>제출 전 체크리스트</h3>
-    <ul class="checklist">
-      <li><div class="check-box"></div> URL이 크롬 브라우저에서 열리고 인터랙션이 정상 동작하는가</li>
-      <li><div class="check-box"></div> 소스 zip을 구글 폼에 올렸는가 (node_modules·빌드 산출물 제외)</li>
-      <li><div class="check-box"></div> 프로젝트에 사용한 대화 세션을 구글 폼에 올렸는가</li>
-      <li><div class="check-box"></div> README(필수)를 작성했고, 실행/배포 방법과 외부 리소스 출처·라이선스가 적혀 있는가</li>
-    </ul>
-  </div>
 </section>
 
 <div class="wrap">
@@ -202,7 +179,7 @@
 <footer class="doc-footer">
   <div class="footer-nav">
     <a href="index.html">00 홈</a><a href="start.html">01 시작 전에</a><a href="build.html">02 만들기</a>
-    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="faq.html">05 FAQ</a>
+    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="submit.html">05 제출하기</a><a href="faq.html">06 FAQ</a>
   </div>
   기상·기후 AI 해커톤 2026 · 참가자 개발·배포 가이드<br>
   주최 기상청 · 후원 기후에너지환경부 · 주관 기상기후인재개발원<br>
