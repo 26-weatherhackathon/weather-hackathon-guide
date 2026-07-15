@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
+<link rel="icon" href="favicon.ico" sizes="any">
 <link rel="stylesheet" href="assets/css/base.css">
 <style>
   @view-transition { navigation: auto; }
@@ -23,32 +24,29 @@
   .faq-item summary .q { font-family: var(--ff-mono); font-size: 0.8rem; color: var(--accent-deep); }
   .faq-item summary .plus { font-family: var(--ff-mono); font-weight: 700; transition: transform var(--dur-fast); }
   .faq-item[open] summary .plus { transform: rotate(45deg); color: var(--accent); }
-  .faq-item .a { padding: 0 var(--sp-4) var(--sp-4); font-size: var(--fs-sm); line-height: 1.7; color: color-mix(in srgb,var(--ink) 82%, transparent); }
+  .faq-item .a { padding: var(--sp-4) var(--sp-4) var(--sp-4); font-size: var(--fs-sm); line-height: 1.7; color: color-mix(in srgb,var(--ink) 82%, transparent); }
   .faq-item[open] summary { border-bottom: var(--bd-1) solid var(--ink); }
 </style>
 </head>
 <body>
 
 <nav class="topbar">
-  <div class="topbar-logo"><span class="dot"></span>기상·기후 AI 해커톤</div>
+  <div class="topbar-logo"><img class="topbar-mark" src="assets/img/kma-logo.png" alt="기상청 로고">기상·기후 AI 해커톤</div>
   <div class="tracklist">
     <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
     <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
     <a href="build.html"><span class="tno">02</span><span class="tname">만들기</span></a>
     <a href="collab.html"><span class="tno">03</span><span class="tname">팀 협업</span></a>
     <a href="rules.html"><span class="tno">04</span><span class="tname">규정</span></a>
-    <a href="faq.html" class="active"><span class="tno">05</span><span class="tname">FAQ</span></a>
+    <a href="submit.html"><span class="tno">05</span><span class="tname">제출하기</span></a>
+    <a href="faq.html" class="active"><span class="tno">06</span><span class="tname">FAQ</span></a>
+    <a href="slack.html"><span class="tno">07</span><span class="tname">커뮤니케이션 채널</span></a>
   </div>
 </nav>
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track"><span>
-    코딩 못해도 OK <i class="sep">✺</i> 서버 필요 없음 <i class="sep">✺</i> 질문은 Slack #질문-공통 <i class="sep">✺</i> 막히면 돌아와 <i class="sep">✺</i>&nbsp;
-  </span></div>
-</div>
 
 <header class="page-hero wrap">
-  <span class="ghost-num">05</span>
-  <span class="track-id">TRACK 05 / FAQ</span>
+  <span class="ghost-num">06</span>
+  <span class="track-id">TRACK 06 / FAQ</span>
   <h1><span class="kr">자주 묻는</span> 질문</h1>
   <p class="lead">막히는 지점 대부분은 여기 있어요. 그래도 안 풀리면 Slack <strong>#질문-공통</strong>으로.</p>
   <img class="hero-mascot" src="assets/img/gisangi-wink.png" alt="윙크하는 기상이" width="168" height="168">
@@ -58,50 +56,58 @@
 <section class="page-section wrap">
   <details class="faq-item" open>
     <summary><span><span class="q">Q.</span> 코딩을 전혀 못하는데 가능한가요?</span><span class="plus">＋</span></summary>
-    <div class="a">가능합니다. 웹 Claude Code에 한국어로 요청하면 코드를 대신 짜줘요. 이 가이드 순서대로만 따라 하면 됩니다.</div>
-  </details>
-  <details class="faq-item">
-    <summary><span><span class="q">Q.</span> 백엔드 서버가 꼭 필요한가요?</span><span class="plus">＋</span></summary>
-    <div class="a">아닙니다. 브라우저에서 동작하는 웹페이지(index.html) 하나로 충분합니다.</div>
+    <div class="a">가능합니다. 웹 Claude Code에 한국어로 요청하면 코드를 대신 작성합니다. 이 가이드의 순서대로 따라 하면 됩니다.</div>
   </details>
   <details class="faq-item">
     <summary><span><span class="q">Q.</span> 팀원과 함께 작업하려면?</span><span class="plus">＋</span></summary>
-    <div class="a">GitHub 저장소 Settings → Collaborators에서 팀원을 추가하면 됩니다. 각자 Claude Code에서 같은 저장소에 연결해 작업할 수 있어요. 자세한 협업 흐름은 <a href="collab.html" style="color:var(--accent-deep);font-weight:700">트랙 03 팀 협업</a>을 보세요.</div>
+    <div class="a">GitHub 저장소 Settings → Collaborators에서 팀원을 추가하면 됩니다. 각자 Claude Code에서 같은 저장소에 연결해 작업할 수 있습니다. 최종 소스는 운영팀이 안내하는 구글 폼에 업로드해 제출합니다(GitHub 링크 제출이 아닙니다). 자세한 흐름은 <a href="collab.html" style="color:var(--accent-deep);font-weight:700">트랙 03 팀 협업</a>을 참고하세요.</div>
   </details>
   <details class="faq-item">
-    <summary><span><span class="q">Q.</span> 기술·도구 문의는 어디에 하나요?</span><span class="plus">＋</span></summary>
-    <div class="a">Slack의 <strong>#질문-공통</strong> 채널에 올려주세요. 운영팀이 직접 응대합니다. 정규 응대일은 매주 공지를 확인해주세요.</div>
+    <summary><span><span class="q">Q.</span> 문의는 어디에 하나요?</span><span class="plus">＋</span></summary>
+    <div class="a">문의 사항별 <strong>Slack 채널</strong>에 올려주세요. 운영팀이 직접 응대합니다. 정규 응대일은 매주 공지를 확인해 주세요.</div>
   </details>
   <details class="faq-item">
     <summary><span><span class="q">Q.</span> Claude Code 계정은 어떻게 받나요?</span><span class="plus">＋</span></summary>
-    <div class="a">본선 진출 15팀에게 운영팀이 이메일로 계정을 발급합니다. 계정 접속 문제는 Slack #질문-공통 채널 또는 긴급 시 운영팀에 직접 연락하세요.</div>
+    <div class="a">본선 진출 15팀에 운영팀이 이메일로 초대합니다. 계정 접속에 문제가 있으면 Slack 채널에 남겨주세요.</div>
   </details>
   <details class="faq-item">
     <summary><span><span class="q">Q.</span> AI가 만든 코드를 그대로 제출해도 되나요?</span><span class="plus">＋</span></summary>
-    <div class="a">됩니다. 이 대회는 AI 활용을 권장해요. 단, 다른 팀이나 외부 출처 코드를 그대로 복사하는 건 표절로 처리됩니다. AI로 생성했더라도 우리 팀의 아이디어와 구성이 담겨 있어야 합니다.</div>
+    <div class="a">가능합니다. 이 대회는 AI 활용을 권장합니다. 다만 다른 팀이나 외부 출처의 코드를 그대로 복사하는 것은 표절로 처리됩니다. AI로 생성했더라도 우리 팀의 아이디어와 구성이 담겨 있어야 합니다.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 소스 코드는 어떻게 제출하나요?</span><span class="plus">＋</span></summary>
+    <div class="a">완성된 소스를 압축(zip)해 운영팀이 안내하는 구글 폼에 업로드합니다. GitHub 저장소 링크 제출이 아니며, node_modules·빌드 산출물은 제외하고 소스만 담으면 됩니다.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 터미널로 개발해도 되나요?</span><span class="plus">＋</span></summary>
+    <div class="a">됩니다. 이 가이드는 초보자용 웹 인터페이스를 기준으로 하지만, 터미널·IDE로 작업해도 무방합니다. 제출물 4가지 요건만 충족하면 됩니다.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 기획서에 안내된 '기상자료개방포털 대용량 API 서비스'는 반드시 사용해야 하나요?</span><span class="plus">＋</span></summary>
+    <div class="a">기획서상 안내는 참고 예시이며, 필수 조건은 아닙니다. 콘텐츠 제작에 필요하다면 공공데이터포털, 국가기상위성센터 등 다른 신뢰할 수 있는 공공 기상·기후 데이터도 함께 활용할 수 있습니다.</div>
+  </details>
+  <details class="faq-item">
+    <summary><span><span class="q">Q.</span> 대용량 API 서비스 카탈로그 항목이면 모두 활용 가능한가요?</span><span class="plus">＋</span></summary>
+    <div class="a">기상자료개방포털(기상청 데이터 허브)에서 제공 중인 데이터는 활용 가능합니다. 기상청 API를 활용해 콘텐츠를 개발하는 경우 개발에 필요한 대용량 API 키는 대회 측에서 제공합니다. 다만 카탈로그의 개별 항목이 팀 콘텐츠에 실제로 적용 가능한지, 원하는 방식으로 활용될 수 있는지는 팀에서 직접 확인 후 판단해야 합니다.</div>
   </details>
 
-  <div class="callout important" style="margin-top:var(--sp-5)">
-    <div class="callout-title">아직 안 풀렸다면</div>
-    <p>Slack <strong>#질문-공통</strong>에 질문을 남겨주세요. 운영팀 문의: kpc_weather26@kpc.or.kr · 02-398-4397</p>
-  </div>
 </section>
 
 <div class="wrap">
   <nav class="pager">
-    <a href="rules.html"><div class="p-dir">← Prev / 04</div><div class="p-title">규정</div></a>
-    <a class="next" href="index.html"><div class="p-dir">Back / 00 →</div><div class="p-title">홈으로</div></a>
+    <a href="submit.html"><div class="p-dir">← Prev / 05</div><div class="p-title">제출하기</div></a>
+    <a class="next" href="slack.html"><div class="p-dir">Next / 07 →</div><div class="p-title">커뮤니케이션 채널</div></a>
   </nav>
 </div>
 
 <footer class="doc-footer">
   <div class="footer-nav">
     <a href="index.html">00 홈</a><a href="start.html">01 시작 전에</a><a href="build.html">02 만들기</a>
-    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="faq.html">05 FAQ</a>
+    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="submit.html">05 제출하기</a><a href="faq.html">06 FAQ</a><a href="slack.html">07 커뮤니케이션 채널</a>
   </div>
   기상·기후 AI 해커톤 2026 · 참가자 개발·배포 가이드<br>
-  주최 기상청 · 후원 기후에너지환경부 · 주관 기상기후인재개발원<br>
-  문의 kpc_weather26@kpc.or.kr · 02-398-4397
+  주최·주관 기상청 기상기후인재개발원 · 후원 기후에너지환경부<br>
+  기상청 상징 및 마스코트 '기상이'의 저작권은 기상청에 있습니다. 본 가이드는 기상청 주최 해커톤을 위한 비영리 교육용으로 출처를 밝혀 사용하며, 무단 상업적 이용을 금합니다.
 </footer>
 
 <script src="assets/js/site.js" defer></script>

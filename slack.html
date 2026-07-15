@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slack — 초대·가입·채널 활용 · 기상·기후 AI 해커톤 2026</title>
+<meta name="description" content="Slack 초대 메일로 가입하는 방법, 멘토·운영 채널 구조, 질문 채널 고르는 법과 응대 시간.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" rel="stylesheet">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>@view-transition { navigation: auto; }</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-logo"><img class="topbar-mark" src="assets/img/kma-logo.png" alt="기상청 로고">기상·기후 AI 해커톤</div>
+  <div class="tracklist">
+    <a href="index.html"><span class="tno">00</span><span class="tname">홈</span></a>
+    <a href="start.html"><span class="tno">01</span><span class="tname">시작 전에</span></a>
+    <a href="build.html"><span class="tno">02</span><span class="tname">만들기</span></a>
+    <a href="collab.html"><span class="tno">03</span><span class="tname">팀 협업</span></a>
+    <a href="rules.html"><span class="tno">04</span><span class="tname">규정</span></a>
+    <a href="submit.html"><span class="tno">05</span><span class="tname">제출하기</span></a>
+    <a href="faq.html"><span class="tno">06</span><span class="tname">FAQ</span></a>
+    <a href="slack.html" class="active"><span class="tno">07</span><span class="tname">커뮤니케이션 채널</span></a>
+  </div>
+</nav>
+
+<header class="page-hero wrap">
+  <span class="ghost-num">07</span>
+  <span class="track-id">TRACK 07 / SLACK</span>
+  <h1><span class="kr">커뮤니케이션 채널</span> Slack 입장하기</h1>
+  <p class="lead">멘토에게 질문하고 공지를 받는 공간이에요. 운영팀이 보내는 초대 메일을 수락하면 바로 참여할 수 있고, 채널은 목적별로 나뉘어 있으니 질문 성격에 맞게 골라 쓰면 됩니다.</p>
+  <img class="hero-mascot" src="assets/img/gisangi-hello.png" alt="인사하는 기상이" width="168" height="168">
+</header>
+<hr class="stripe">
+
+
+<!-- ===== JOIN ===== -->
+<section class="page-section wrap">
+  <div class="section-head"><p class="kicker">Join</p><h2>초대받고 가입하기</h2></div>
+
+  <div class="callout important">
+    <div class="callout-title">먼저 확인하세요 — 참여는 이메일 초대로만</div>
+    <p>참가자는 이메일 초대로만 워크스페이스에 참여합니다. 운영팀이 참가자 이메일을 모은 뒤, 그 주소로 초대 메일을 보내드려요. 직접 가입 신청하거나 링크를 찾을 필요는 없습니다.</p>
+  </div>
+
+  <div class="step" style="margin-top:var(--sp-5)">
+    <div class="step-badge">1</div>
+    <h3>가입 순서</h3>
+    <ol>
+      <li>운영팀이 보낸 <strong>Slack 초대 메일</strong>을 엽니다.</li>
+      <li>메일 안의 <strong>참여(Join 또는 초대수락) 버튼</strong>을 누릅니다.</li>
+      <li>이름·비밀번호를 설정하면(또는 Google 계정 등으로 계속) 가입이 끝납니다.</li>
+      <li>워크스페이스 <strong>26k-weatherhackathon.slack.com</strong>에 입장하면 멘토·운영 채널이 보입니다.</li>
+    </ol>
+    <div class="step-note">데스크톱 앱 설치를 권장하지만 브라우저 로그인만으로도 쓸 수 있어요. 알림을 놓치지 않으려면 모바일 앱(iOS·Android)을 함께 설치하는 걸 권합니다.</div>
+  </div>
+</section>
+
+<!-- ===== CHANNELS ===== -->
+<section class="page-section wrap tight">
+  <div class="section-head"><p class="kicker">Channels</p><h2>채널 구조</h2><p>채널은 멘토링을 진행하는 〈멘토〉 채널과 공지·기타 문의를 다루는 〈운영〉 채널, 두 묶음으로 나뉩니다.</p></div>
+
+  <h3 style="font-size:var(--fs-h3);margin-bottom:var(--sp-3)">〈멘토〉 — 분야별 멘토가 질의에 답하는 채널</h3>
+  <table class="data-table">
+    <thead><tr><th>채널명</th><th>설명</th></tr></thead>
+    <tbody>
+      <tr><td class="label-col">멘토_교육_api관련</td><td>교육 콘텐츠 설계, 데이터 API 활용 등 교육·API 접점</td></tr>
+      <tr><td class="label-col">멘토_대기_과학</td><td>대기·기상·기후 등 과학 개념과 데이터 해석</td></tr>
+      <tr><td class="label-col">멘토_서비스_기획</td><td>서비스 기획, 사용자 경험, 콘텐츠 구성 방향</td></tr>
+      <tr><td class="label-col">멘토_ai기술_개발</td><td>AI 도구 활용, 개발·구현 방법 등 기술</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:var(--fs-h3);margin:var(--sp-6) 0 var(--sp-3)">〈운영〉 — 공지와 기타 문의를 다루는 채널</h3>
+  <table class="data-table">
+    <thead><tr><th>채널명</th><th>설명</th></tr></thead>
+    <tbody>
+      <tr><td class="label-col">운영_전체공지</td><td>운영팀이 일정·마감·안내 등 공식 공지를 올리는 채널</td></tr>
+      <tr><td class="label-col">운영_기타문의</td><td>멘토링 외 운영·계정·환경 관련 문의에 운영팀이 답하는 채널</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===== ASKING ===== -->
+<section class="page-section wrap tight">
+  <div class="section-head"><p class="kicker">Ask</p><h2>질문하기</h2></div>
+
+  <div class="step right">
+    <div class="step-badge">2</div>
+    <h3>이렇게 질문하면 좋아요</h3>
+    <div class="chat-demo">
+      <div class="chat-label">채널: 운영_기타문의</div>
+      <div class="chat-bubble user">Claude 계정 초대 메일이 오지 않아요.</div>
+      <div class="chat-bubble bot">먼저 스팸함과 프로모션함을 확인해 주세요. 그래도 없으면 운영_기타문의에 가입 신청하신 이메일 주소를 남겨 주시면, 운영팀이 발송 내역을 확인해 다시 보내드립니다.</div>
+    </div>
+    <div class="step-note">계정·환경·접속처럼 운영팀이 확인해 줄 수 있는 문제는 이렇게 운영 채널에서 빠르게 풀립니다.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-badge">3</div>
+    <h3>이런 질문은 멘토가 대신 풀어주지 않아요</h3>
+    <p>성격상 멘토_ai기술_개발처럼 보이지만, 팀이 직접 해결해야 하는 문제예요.</p>
+    <div class="chat-demo">
+      <div class="chat-label">채널: 멘토_ai기술_개발</div>
+      <div class="chat-bubble user">코드 오류를 어떻게 해결해야 하나요?</div>
+      <div class="chat-bubble bot">특정 코드의 오류를 대신 고쳐 드리지는 않아요. 개발 과정에서 팀이 스스로 해결해야 하는 부분이고, 문제 해결 능력도 평가 대상이기 때문입니다. 다만 "이 접근 방식이 맞는 방향인지", "어떤 도구·개념을 참고하면 좋을지"처럼 방향을 묻는 질문에는 멘토가 조언해 드릴 수 있어요.</div>
+    </div>
+    <div class="step-note">멘토 채널은 팀의 문제를 대신 풀어주는 곳이 아니라, 분야별로 방향성을 짚어주는 곳이에요. 모든 질문은 다른 팀도 확인할 수 있도록 공유되는 만큼 구체적인 구현, 디버깅과 같이 평가에 반영될 수 있는 점인지 유의하여 질문을 올려주세요.</div>
+  </div>
+
+  <div class="callout" style="margin-top:var(--sp-5)">
+    <div class="callout-title">문의에 대한 답변은 언제 받을 수 있나요</div>
+    <p>문의에 대한 답변은 평일 기준으로 운영팀 또는 멘토가 <strong>최대 24시간 이내</strong> 답변을 드릴 예정이며, 답변에 대해 내부적으로 논의가 필요한 경우 답변이 늦어질 수 있습니다.</p>
+  </div>
+</section>
+
+<!-- ===== TIPS ===== -->
+<section class="page-section wrap tight">
+  <div class="section-head"><p class="kicker">Tips</p><h2>Slack 기본 사용 팁</h2></div>
+  <ul style="font-size:var(--fs-sm);line-height:1.8">
+    <li><strong>스레드로 답하기</strong> — 한 질문에 답이 여러 개 이어질 때는 원글 하단의 회신(스레드)을 쓰면 채널이 깔끔해요.</li>
+    <li><strong>멘션</strong> — <code>@이름</code>으로 특정 멘토·운영자를 부를 수 있어요. 급하지 않은 질문은 채널에 남겨두면 담당 멘토가 확인합니다.</li>
+    <li><strong>파일 첨부</strong> — 스크린샷·로그를 바로 올릴 수 있어요. 단, 개인 API 키나 비밀값은 절대 올리지 마세요.</li>
+    <li><strong>검색</strong> — 상단 검색창에서 키워드로 이전 답변을 찾아 중복 질문을 줄일 수 있어요.</li>
+  </ul>
+</section>
+
+
+<div class="wrap">
+  <nav class="pager">
+    <a href="faq.html"><div class="p-dir">← Prev / 06</div><div class="p-title">FAQ</div></a>
+    <a class="next" href="index.html"><div class="p-dir">Back / 00 →</div><div class="p-title">홈으로</div></a>
+  </nav>
+</div>
+
+<footer class="doc-footer">
+  <div class="footer-nav">
+    <a href="index.html">00 홈</a><a href="start.html">01 시작 전에</a><a href="build.html">02 만들기</a>
+    <a href="collab.html">03 팀 협업</a><a href="rules.html">04 규정</a><a href="submit.html">05 제출하기</a><a href="faq.html">06 FAQ</a><a href="slack.html">07 커뮤니케이션 채널</a>
+  </div>
+  기상·기후 AI 해커톤 2026 · 참가자 개발·배포 가이드<br>
+  주최 기상청 · 후원 기후에너지환경부 · 주관 기상기후인재개발원<br>
+  기상청 상징 및 마스코트 '기상이'의 저작권은 기상청에 있습니다. 본 가이드는 기상청 주최 해커톤을 위한 비영리 교육용으로 출처를 밝혀 사용하며, 무단 상업적 이용을 금합니다.
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
