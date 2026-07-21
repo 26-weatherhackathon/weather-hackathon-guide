@@ -1,0 +1,4 @@
+#!/bin/sh
+# guide.md의 CLAUDE.md 예시 블록을 content/claude-md-example.md 기준으로
+# 커밋 전 자동 재생성합니다. (1회 설정: git config core.hooksPath .githooks)
+node scripts/generate-guide.js && git add guide.md

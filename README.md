@@ -26,6 +26,18 @@
 - 운영팀 저장소입니다. 변경은 PR + 코드오너 리뷰 후 머지 (`.github/CODEOWNERS`, `CLAUDE.md`).
 - 출품작 데모(forecaster)는 별도 저장소 `weather-hackathon-demo`에서 관리합니다.
 
+### 콘텐츠 동기화 (CLAUDE.md 예시)
+
+`content/claude-md-example.md`가 CLAUDE.md 예시 텍스트의 단일 소스입니다. `build.html`은 이 파일을 브라우저에서 직접 fetch하고, `guide.md`는 `node scripts/generate-guide.js`로 생성합니다.
+
+로컬에서 한 번만 아래를 실행해 두면, 커밋할 때마다 guide.md가 자동으로 갱신됩니다.
+
+```
+git config core.hooksPath .githooks
+```
+
+깜빡하고 그냥 커밋해도 PR에서 CI(`guide.md sync check`)가 어긋남을 잡아냅니다.
+
 ## 기여
 
 문서 수정은 `main` 대상 PR로만 진행합니다. 자세한 규칙은 [CLAUDE.md](CLAUDE.md)를 참고하세요.
