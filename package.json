@@ -1,8 +1,0 @@
-{
-  "name": "weather-hackathon-guide",
-  "private": true,
-  "scripts": {
-    "sync-content": "node scripts/sync-content.js",
-    "verify-content-sync": "node scripts/sync-content.js && git diff --exit-code -- guide.md build.html"
-  }
-}
