@@ -26,9 +26,9 @@
 - 운영팀 저장소입니다. 변경은 PR + 코드오너 리뷰 후 머지 (`.github/CODEOWNERS`, `CLAUDE.md`).
 - 출품작 데모(forecaster)는 별도 저장소 `weather-hackathon-demo`에서 관리합니다.
 
-### 콘텐츠 단일 소스 (CLAUDE.md 예시)
+### CLAUDE.md 예시 수정 시
 
-`content/claude-md-example.md`가 CLAUDE.md 예시 텍스트의 유일한 소스입니다. `build.html`은 이 파일을 브라우저에서 직접 fetch해 표시합니다. `guide.md`(Notion 편집용 사본)는 텍스트를 복제하지 않고 이 파일을 가리키는 참조만 남겨 두므로, 어긋날 대상 자체가 없습니다. 예시 내용을 고치려면 `content/claude-md-example.md` 한 곳만 수정하면 됩니다.
+`content/claude-md-example.md` 한 곳만 고치면 됩니다. `build.html`이 이 파일을 fetch해 표시하고, `guide.md`는 사본 없이 이 파일을 참조만 합니다.
 
 ## 기여
 
