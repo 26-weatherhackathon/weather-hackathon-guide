@@ -26,6 +26,10 @@
 - 운영팀 저장소입니다. 변경은 PR + 코드오너 리뷰 후 머지 (`.github/CODEOWNERS`, `CLAUDE.md`).
 - 출품작 데모(forecaster)는 별도 저장소 `weather-hackathon-demo`에서 관리합니다.
 
+### CLAUDE.md 예시 수정 시
+
+`content/claude-md-example.md` 한 곳만 고치면 됩니다. `build.html`이 이 파일을 fetch해 표시하고, `guide.md`는 사본 없이 이 파일을 참조만 합니다.
+
 ## 기여
 
 문서 수정은 `main` 대상 PR로만 진행합니다. 자세한 규칙은 [CLAUDE.md](CLAUDE.md)를 참고하세요.
